@@ -51,7 +51,7 @@ fetch_base_git(){
   if [ -d "${base_dir}" ] ; then
     rm -rf "${base_dir}"
   fi
-  git clone --depth 1 -b "${base_branch_tag}" https://github.com/%{base_repo}.git "${base_dir}"
+  git clone --depth 1 -b "${base_branch_tag}" https://github.com/${base_repo}.git "${base_dir}"
 }
 
 build_base(){
