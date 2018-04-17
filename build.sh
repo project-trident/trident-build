@@ -30,7 +30,7 @@ fetch_base(){
   base_url="https://github.com/${base_repo}/tarball/${base_branch_tag}"
   #NOTE: Fetch works, but is *much* slower than using curl
   #fetch --retry -o "${base_tarball}" "${base_url}"
-  curl -L "${base_url}" > "${base_tarball}"
+  curl -L "${base_url}" -o "${base_tarball}"
 }
 
 extract_base(){
