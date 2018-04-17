@@ -66,3 +66,4 @@ build_base
 check_error $? "Could not build base"
 
 echo "[SUCCESS]"
+exit 0
