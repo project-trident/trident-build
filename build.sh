@@ -13,7 +13,7 @@ key_files=""
 
 #Internal definitions
 base_tarball="base.tgz"
-base_dir="base"
+base_dir="/usr/src_auto"
 
 ###############
 #  FUNCTIONS  #
@@ -79,7 +79,9 @@ else
   echo "[SETUP] Extracting base..."
   extract_base
   check_error $? "Could not extract base tarball"
+
 fi
+
 echo "[BUILD] Building base..."
 build_base
 check_error $? "Could not build base"
