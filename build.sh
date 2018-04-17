@@ -39,29 +39,48 @@ extract_base(){
   fi
   mkdir -p "${base_dir}"
   tar -xf "${base_tarball}" -C "${base_dir}"
+  if [ $? -eq 0 ] ; then
+    rm ${base_tarball}
+    #tarball method has a subdir - change the base_dir to match it
+    base_subdir=`ls ${base_dir}`
+    base_dir="${base_dir}/${base_subdir}"
+  fi
+}
+
+fetch_base_git(){
+  if [ -d "${base_dir}" ] ; then
+    rm -rf "${base_dir}"
+  fi
+  git clone --depth 1 -b "${base_branch_tag}" https://github.com/%{base_repo}.git "${base_dir}"
 }
 
 build_base(){
   cd ${base_dir}
   make buildworld buildkernel
+  check_error $? "Unable to build world & kernel"
   make packages
+  check_error $? "Unable to build packages"
   cd release && make release
 }
 
 ###############
 #  MAIN CODE  #
 ###############
-tot=3 #total number of steps for the build routine
+if [ -x /usr/local/bin/git ] ; then
+  echo "[SETUP] Fetching Source Repository..."
+  fetch_base_git
+  check_error $? "Could not fetch source repository: ${base_repo}/${base_branch_tag}"
+  
+else
+  echo "[SETUP] Fetching base..."
+  fetch_base
+  check_error $? "Could not fetch base: ${base_repo}/${base_branch_tag}"
 
-echo "[1/${tot}] Fetching base..."
-fetch_base
-check_error $? "Could not fetch base: ${base_repo}/${base_branch_tag}"
-
-echo "[2/${tot}] Extracting base..."
-extract_base
-check_error $? "Could not extract base tarball"
-
-echo "[3/${tot}] Building base..."
+  echo "[SETUP] Extracting base..."
+  extract_base
+  check_error $? "Could not extract base tarball"
+fi
+echo "[BUILD] Building base..."
 build_base
 check_error $? "Could not build base"
 
