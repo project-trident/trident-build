@@ -1,0 +1,121 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'Trident-master' }
+
+  triggers {
+    cron('01 17 * * 5')
+  }
+
+  environment {
+    GH_ORG = 'trueos'
+    GH_REPO = 'trueos'
+
+    // Set the MANIFEST we want to use for this build
+    TRUEOS_MANIFEST='${WORKSPACE}/release/manifests/trueos-master.json'
+  }
+
+  stages {
+    stage('Queued') {
+        agent {
+        label 'JenkinsMaster'
+      }
+      steps {
+        echo "Build queued"
+      }
+    }
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Pre-Clean') {
+      steps {
+        sh 'make clean'
+        sh 'cd release && make clean'
+      }
+    }
+    stage('World') {
+      steps {
+        sh 'make -j32 buildworld'
+      }
+    }
+    stage('Kernel') {
+      steps {
+        sh 'make -j32 buildkernel'
+      }
+    }
+    stage('Base Packages') {
+      environment {
+	   // Get our credentials from Jenkins
+           PKGSIGNKEY = credentials('a50f9ddd-1460-4951-a304-ddbf6f2f7990')
+      }
+      steps {
+        sh 'rm -rf /usr/obj${WORKSPACE}/amd64.amd64/repo'
+        sh 'make -j32 packages'
+      }
+    }
+    stage('Ports') {
+      environment {
+	   // Get our credentials from Jenkins
+           PKG_REPO_SIGNING_KEY = credentials('a50f9ddd-1460-4951-a304-ddbf6f2f7990')
+      }
+      steps {
+        sh 'cd release && make poudriere'
+        // Sign the repo with our repo signing key
+        sh 'cd /usr/local/poudriere/data/packages/trueos-mk-base-trueos-mk-ports && pkg-static repo . ${PKG_REPO_SIGNING_KEY}'
+      }
+    }
+    stage('Release') {
+      post {
+        success {
+          archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
+        }
+      }
+      steps {
+        sh 'rm -rf ${WORKSPACE}/artifacts'
+        sh 'cd release && make release'
+        sh 'mkdir -p ${WORKSPACE}/artifacts/repo'
+        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/*.iso ${WORKSPACE}/artifacts'
+        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/*.txz ${WORKSPACE}/artifacts'
+        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/MANIFEST ${WORKSPACE}/artifacts'
+      }
+    }
+
+    stage('Publish') {
+      environment {
+        REMOTE_USER='trident_syncbot'
+        REMOTE_SERVER='pkg.project-trident.org'
+        REMOTE_PKG_DIR='/data/pkg/master'
+        REMOTE_ISO_DIR='/data/iso/master'
+      }
+      steps {
+        sshagent (credentials: ['${REMOTE_USER}-credentials']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/local/poudriere/data/packages/trueos-mk-base-trueos-mk-ports/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest/'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/base/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/obj${WORKSPACE}/repo/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_PKG_DIR}/base/'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifacts/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
+        }
+      }
+    }
+  }
+  post {
+    success {
+      sh 'make clean'
+      sh 'cd release && make clean'
+      sh 'rm -rf /usr/obj${WORKSPACE}'
+      script {
+        cleanWs notFailBuild: true
+      }
+    }
+  }
+}
