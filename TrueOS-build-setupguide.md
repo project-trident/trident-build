@@ -19,11 +19,10 @@
 
 ## Custom Branding at bootup
 There are 3 files which need to be created to brand the boot menu:
-1. (trueos repository): stand/lua/brand-[distro].lua (copy/modify the brand-trueos.lua file)
-2. (trueos repository): stand/lua/logo-[distro].lua (copy/modify one of the other logo-*.lua files)
-3. (trueos repository): Add the new files to the list in stand/lua/Makefile
-4. (overlay file): /boot/loader.conf.local
-Add the following entries to it:
+1. (trueos repository): *stand/lua/brand-[distro].lua* (copy/modify the *brand-trueos.lua* file)
+2. (trueos repository): *stand/lua/logo-[distro].lua* (copy/modify one of the other *logo-*.lua* files)
+3. (trueos repository): Add the new files to the list in *stand/lua/Makefile*
+4. (overlay file): Add the following entries or to /boot/loader.conf.local (you may need to create this file):
 ```
 loader_brand="[distro]"
 loader_logo="[distro]"
