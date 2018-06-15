@@ -17,7 +17,7 @@ pipeline {
     GH_REPO = 'trueos'
 
     // Set the MANIFEST we want to use for this build
-    TRUEOS_MANIFEST='${WORKSPACE}/release/manifests/trueos-master.json'
+    TRUEOS_MANIFEST='${WORKSPACE}/TRIDENT/trident-master.json'
   }
 
   stages {
