@@ -40,11 +40,13 @@ make release
 3. Copy the contents of the public key file into the JSON manifest ("pkg-repo" and "base-pkg-repo" sections - add the "pubkey" variable which contains an array of the lines of the public key file.
 
 ## Settings up Jenkins automation framework
-1. Create an SSH key to use when publishing files to a remote distribution server/system: Run `ssh-keygen` and follow the prompts.
+1. You will need an SSH key to use when publishing files to a remote distribution server/system: 
+   * To create one, run `ssh-keygen` and follow the prompts.
+   * Then add the public key to the distribution system so it can be used for login authentication.
 2. Add the SSH key and SSL private key to the Jenkins instance and get the credential ID number for each one.
 3. Copy one of the "Jenkinsfile-*" examples from the trueos/trueos repository.
 4. In the new jenkins file, adjust all the "credentials('*')" entries with the credential ID's for your keys.
-5. In the "Publish" stage of the jenkins file, adjust the 
+5. In the "Publish" stage of the jenkins file, adjust the user, server, and directories as needed for your distribution system.
 
 ## Custom Branding at bootup
 There are 3 files which need to be created to brand the boot menu:
