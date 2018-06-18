@@ -1,9 +1,38 @@
 # Setup guide for creating a TrueOS distribution
 
 ## Initial Setup
-1. Fork the trueos/trueos Github repository
-2. Copy/edit the release/
-3. 
+1. Find/fork the trueos/trueos Github repository
+2. Copy/edit the "release/TrueOS-manifest.json" file as desired for the distribution.
+3. Setup the environment variables to use during the build:
+   * *TRUEOS_MANIFEST* : Path to your customized JSON manifest'
+   * *PKGSIGNKEY* : OpenSSL private key to use for signing base packages
+   * *PKG_REPO_SIGNING_KEY* : OpenSSL private key to use for signing "ports" packages.
+4. Follow the build instructions listed in the trueos/trueos repo.
+This will can be compressed down to a small script like this (for example purposes - untested):
+```
+#!/bin/sh
+#Fetch the TrueOS source repo
+git clone https://github.com/trueos/trueos.git --depth 1
+#Copy your custom manifest into the repo
+TRUEOS_MANIFEST="MyManifest.json"
+cp My_Manifest.json trueos/${TRUEOS_MANIFEST}
+#Setup signing keys
+PKGSIGNKEY=`cat my_private_key.key`
+PKG_REPO_SIGNING_KEY="${PKGSIGNKEY}"
+#Now start the build
+cd trueos
+make buildworld buildkernel
+make packages
+cd release
+make poudriere
+make release
+
+#Copy the results out of the dir
+# TODO
+
+#Cleanup the repo dir
+# TODO
+```
 
 ## Signing Packages
 1. Create a private SSL Key: `openssl genrsa -out my_private_key.key [2048/4096/8192]`
@@ -22,7 +51,7 @@ There are 3 files which need to be created to brand the boot menu:
 1. (trueos repository): *stand/lua/brand-[distro].lua* (copy/modify the *brand-trueos.lua* file)
 2. (trueos repository): *stand/lua/logo-[distro].lua* (copy/modify one of the other *logo-*.lua* files)
 3. (trueos repository): Add the new files to the list in *stand/lua/Makefile*
-4. (overlay file): Add the following entries or to /boot/loader.conf.local (you may need to create this file):
+4. (overlay file): Add the following entries to /boot/loader.conf.local (you may need to create this file):
 ```
 loader_brand="[distro]"
 loader_logo="[distro]"
