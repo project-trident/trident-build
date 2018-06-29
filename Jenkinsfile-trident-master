@@ -13,13 +13,15 @@ pipeline {
   }
 
   environment {
-    GH_ORG = 'project-trident'
+    GH_ORG = 'trueos'
     GH_REPO = 'trueos'
+    GH_COMMIT = 'fa44468db5fb87f041f749f9086d080b40614eb7'
+    GH_CO_DIR = '${WORKSPACE}/trueos'
     MAX_THREADS = '79'
     POUDRIERE_BASE = 'trident-master'
 
     // Set the MANIFEST we want to use for this build
-    TRUEOS_MANIFEST='${WORKSPACE}/TRIDENT/trident-master.json'
+    TRUEOS_MANIFEST='${WORKSPACE}/trident-master.json'
   }
 
   stages {
@@ -34,7 +36,13 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        checkout scm
+	checkout([
+		$class: 'GitSCM', 
+		branches: [[name: 'fa44468db5fb87f041f749f9086d080b40614eb7']],
+		doGenerateSubmoduleConfigurations: false,
+		extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
+		submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/trueos/trueos.git']]
+		])
       }
     }
 
