@@ -7,7 +7,7 @@ full weekly build images.
 
 pipeline {
   agent { label 'Trident-Master' }
-
+  
   triggers {
     cron('01 17 * * 5')
   }
@@ -15,6 +15,8 @@ pipeline {
   environment {
     GH_ORG = 'project-trident'
     GH_REPO = 'trueos'
+    MAX_THREADS = '79'
+    POUDRIERE_BASE = 'trident-master'
 
     // Set the MANIFEST we want to use for this build
     TRUEOS_MANIFEST='${WORKSPACE}/TRIDENT/trident-master.json'
@@ -22,8 +24,8 @@ pipeline {
 
   stages {
     stage('Queued') {
-        agent {
-        label 'Trident-Master'
+      agent {
+        label 'JenkinsMaster'
       }
       steps {
         echo "Build queued"
@@ -44,12 +46,12 @@ pipeline {
     }
     stage('World') {
       steps {
-        sh 'make -j32 buildworld'
+        sh 'make -j${MAX_THREADS} buildworld'
       }
     }
     stage('Kernel') {
       steps {
-        sh 'make -j32 buildkernel'
+        sh 'make -j${MAX_THREADS} buildkernel'
       }
     }
     stage('Base Packages') {
@@ -59,7 +61,7 @@ pipeline {
       }
       steps {
         sh 'rm -rf /usr/obj${WORKSPACE}/amd64.amd64/repo'
-        sh 'make -j32 packages'
+        sh 'make -j${MAX_THREADS} packages'
       }
     }
     stage('Ports') {
