@@ -271,7 +271,7 @@ case $1 in
 		make_kernel
 		;;
 	base)
-		make_base
+		make_base_pkg
 		;;
 	ports)
 		make_ports
