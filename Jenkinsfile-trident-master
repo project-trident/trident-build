@@ -14,7 +14,7 @@ pipeline {
 
   environment {
     // Set the MANIFEST we want to use for this build
-    TRUEOS_MANIFEST='${WORKSPACE}/trident-master.json'
+    TRUEOS_MANIFEST='trident-master.json'
   }
 
   stages {
@@ -33,9 +33,10 @@ pipeline {
       }
     }
 
-    stage('Pre-Clean') {
+    stage('Prepare') {
       steps {
         sh '${WORKSPACE}/build-distro.sh clean'
+	sh '${WORKSPACE}/build-distro.sh checkout'
       }
     }
     stage('World') {
