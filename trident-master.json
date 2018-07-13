@@ -1,4 +1,8 @@
 {
+  "base-github-org" : "trueos",
+  "base-github-repo" : "trueos",
+  "base-github-tag" : "f85aa1c3b7c623b30642b8f53f49e3bfd1a614be",
+  "iso-name" : "trident-beta",
   "ports-url":"https://github.com/trueos/trueos-ports",
   "ports-branch":"trueos-master",
   "ports-conf":[
@@ -36,9 +40,11 @@
 	"audio_harp_UNSET=OSS",
 	"audio_mp3info_SET=GTK2",
 	"audio_musicpd_SET=AAC HTTPD LAME SHOUTCAST",
-	"audio_openal-soft_UNSET=OSS",
+	"audio_openal-soft_SET=PORTAUDIO OSS SNDIO",
+	"audio_openal-soft_UNSET=PULSEAUDIO JACK",
 	"audio_pavucontrol_UNSET=GTK2",
 	"audio_pavucontrol_SET=GTK3",
+	"audio_portaudio_SET=SNDIO",
 	"audio_xmms2_SET=MODPLUG MUSEPACK MMS SAMBA FAM ICES",
 	"comms_fldigi_SET=FLARQ HAMLIB OSS",
 	"comms_morse_UNSET=OSS",
@@ -102,7 +108,8 @@
 	"multimedia_mythtv_SET=BINDINGS LIRC",
 	"multimedia_qmmp-qt5_SET=OSS",
 	"multimedia_qmmp-qt5_UNSET=OSS4 JACK HAL",
-	"multimedia_qt5-multimedia_UNSET=ALSA",
+	"multimedia_qt5-multimedia_UNSET=ALSA PULSEAUDIO",
+	"multimedia_qt5-multimedia_SET=OPENAL GSTREAMER",
 	"multimedia_quodlibet_SET=EXTENSIONS",
 	"multimedia_vlc_SET=AALIB ASS CACA DIRAC FLUID GOOM LIVEMEDIA NCURSES PORTAUDIO SAMBA SCHROED SHOUTCAST UPNP ZVBI",
 	"multimedia_vlc_UNSET=MATROSKA",
@@ -219,30 +226,41 @@
 	"x11-fonts/noto-lite"
   ],
   "iso-install-packages":[
+	"graphics/drm-next-kmod",
 	"sysutils/diskscrub",
-	"sysutils/fusefs-ntfs",
-	"trident/trident-core",
-	"x11-drivers/xf86-video-scfb"
+	"trident/trident-icons",
+	"x11/lumina-coreutils",
+	"x11/xorg-minimal",
+	"x11-drivers/xf86-input-evdev",
+	"x11-drivers/xf86-input-wacom",
+	"x11-drivers/xf86-video-scfb",
+	"x11-fonts/noto-lite"
   ],
   "dist-packages":[
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
+	"shells/bash",
+	"shells/fish",
+	"shells/zsh",
+	"sysutils/diskscrub",
+	"sysutils/fusefs-ntfs",
+	"trident/trident-core",
 	"x11/nvidia-driver",
 	"x11/nvidia-driver-304",
 	"x11/nvidia-driver-340",
-	"x11-fonts/noto",
-	"x11-fonts/noto-lite",
-	"x11-fonts/droid-fonts-ttf"
+	"x11-drivers/xf86-input-evdev",
+	"x11-drivers/xf86-input-wacom",
+	"x11-drivers/xf86-video-scfb",
+	"x11-drivers/xf86-video-ati",
+	"x11-drivers/xf86-video-amdgpu",
+	"x11-drivers/xf86-video-intel",
+	"x11-drivers/xf86-video-nv",
+	"x11-fonts/noto-lite"
   ],
   "auto-install-packages":[
 	"audio/pianobar",
 	"devel/git",
 	"graphics/phototonic",
-	"mail/trojita",
-	"multimedia/openh264",
-	"multimedia/libdvdcss",
-	"multimedia/vlc",
-	"multimedia/webcamd",
 	"mail/trojita",
 	"multimedia/openh264",
 	"multimedia/libdvdcss",
@@ -257,14 +275,16 @@
 	"sysutils/sysadm-client",
 	"trident/trident-core",
 	"www/falkon",
+	"www/lynx-current",
 	"x11/qterminal"
+
   ],
   "install-overlay":"",
   "install-script":"",
   "auto-install-script":"",
   "poudriere-conf": [
-	"PARALLEL_JOBS=78",
-	"USE_TMPFS=all",
+	"PARALLEL_JOBS=76",
+	"USE_TMPFS=wrkdir data",
 	"NOHANG_TIME=14400"
   ],
   "pkg-repo": {

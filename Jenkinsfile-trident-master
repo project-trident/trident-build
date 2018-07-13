@@ -13,13 +13,6 @@ pipeline {
   }
 
   environment {
-    GH_ORG = 'trueos'
-    GH_REPO = 'trueos'
-    GH_COMMIT = 'fa44468db5fb87f041f749f9086d080b40614eb7'
-    GH_CO_DIR = '${WORKSPACE}/trueos'
-    MAX_THREADS = '79'
-    POUDRIERE_BASE = 'trident-master'
-
     // Set the MANIFEST we want to use for this build
     TRUEOS_MANIFEST='${WORKSPACE}/trident-master.json'
   }
@@ -36,30 +29,23 @@ pipeline {
 
     stage('Checkout') {
       steps {
-	checkout([
-		$class: 'GitSCM', 
-		branches: [[name: 'fa44468db5fb87f041f749f9086d080b40614eb7']],
-		doGenerateSubmoduleConfigurations: false,
-		extensions: [[$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
-		submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/trueos/trueos.git']]
-		])
+        checkout scm
       }
     }
 
     stage('Pre-Clean') {
       steps {
-        sh 'make clean'
-        sh 'cd release && make clean'
+        sh '${WORKSPACE}/build-distro.sh clean'
       }
     }
     stage('World') {
       steps {
-        sh 'make -j${MAX_THREADS} buildworld'
+        sh '${WORKSPACE}/build-distro.sh world'
       }
     }
     stage('Kernel') {
       steps {
-        sh 'make -j${MAX_THREADS} buildkernel'
+        sh '${WORKSPACE}/build-distro.sh kernel'
       }
     }
     stage('Base Packages') {
@@ -68,8 +54,7 @@ pipeline {
            PKGSIGNKEY = credentials('Trident-sign')
       }
       steps {
-        sh 'rm -rf /usr/obj${WORKSPACE}/amd64.amd64/repo'
-        sh 'make -j${MAX_THREADS} packages'
+        sh '${WORKSPACE}/build-distro.sh base'
       }
     }
     stage('Ports') {
@@ -78,9 +63,7 @@ pipeline {
            PKG_REPO_SIGNING_KEY = credentials('Trident-sign')
       }
       steps {
-        sh 'cd release && make poudriere'
-        // Sign the repo with our repo signing key
-        sh 'cd /usr/local/poudriere/data/packages/trueos-mk-base-trueos-mk-ports && pkg-static repo . ${PKG_REPO_SIGNING_KEY}'
+        sh '${WORKSPACE}/build-distro.sh ports'
       }
     }
     stage('Release') {
@@ -90,26 +73,33 @@ pipeline {
         }
       }
       steps {
-        sh 'rm -rf ${WORKSPACE}/artifacts'
-        sh 'cd release && make release'
-        sh 'mkdir -p ${WORKSPACE}/artifacts/repo'
-        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/*.iso ${WORKSPACE}/artifacts'
-        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/*.txz ${WORKSPACE}/artifacts'
-        sh 'cp /usr/obj${WORKSPACE}/amd64.amd64/release/MANIFEST ${WORKSPACE}/artifacts'
+        sh '${WORKSPACE}/build-distro.sh release'
       }
     }
 
     stage('Publish') {
       environment {
-        REMOTE_USER='triton'
+        REMOTE_USER='poseidon'
         REMOTE_SERVER='pkg.project-trident.org'
         REMOTE_PKG_DIR='/data/pkg/master'
         REMOTE_ISO_DIR='/data/iso/master'
+        POUDRIERE_BASE= sh (
+		script: 'basename -s ".json" "${TRUEOS_MANIFEST}"',
+		returnStdout: true
+		).trim()
+        POUDRIERE_PORTS= sh (
+		script: 'jq -r \'."ports-branch"\' "${TRUEOS_MANIFEST}"',
+		returnStdout: true
+		).trim()
+        ABI= sh (
+		script: 'pkg-static -o ABI_FILE=/bin/sh config ABI',
+		returnStdout: true
+		).trim()
       }
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest || true'
-          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/local/poudriere/data/packages/trueos-mk-base-trueos-mk-ports/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest/'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/ports/${ABI}/latest || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest/'
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/base/ || true'
           sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/obj${WORKSPACE}/repo/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_PKG_DIR}/base/'
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
@@ -120,9 +110,7 @@ pipeline {
   }
   post {
     success {
-      sh 'make clean'
-      sh 'cd release && make clean'
-      sh 'rm -rf /usr/obj${WORKSPACE}'
+      sh '${WORKSPACE}/build-distro.sh clean'
       script {
         cleanWs notFailBuild: true
       }
