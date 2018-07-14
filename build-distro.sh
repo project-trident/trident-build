@@ -27,6 +27,12 @@ if [ -z "${TRUEOS_MANIFEST}" ] ; then
     return 1
   fi
 fi
+#Ensure the JSON manifest exists and is an absolute path
+# - (since later stages of the build will be in different dirs)
+if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
+  echo "[ERROR] Specified manifest cannot be found: ${TRUEOS_MANIFEST}"
+fi
+TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
 
 #Build Server Settings (automatically determined: overwrite as needed)
 if [ -z "${MAX_THREADS}" ] ; then
