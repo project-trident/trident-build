@@ -40,8 +40,8 @@ if [ -z "${MAX_THREADS}" ] ; then
   fi
 fi
 
-POUDRIERE_BASE=`basename -s ".json" "${TRUEOS_MANIFEST}"`
-POUDRIERE_PORTS=`jq -r '."ports-branch"' "${TRUEOS_MANIFEST}"`
+export POUDRIERE_BASE=`basename -s ".json" "${TRUEOS_MANIFEST}"`
+export POUDRIERE_PORTS=`jq -r '."ports-branch"' "${TRUEOS_MANIFEST}"`
 
 #NOTE: the "${WORKSPACE}" variable is set by jenkins as the prefix for the repo checkout
 #  The "CURDIR" method below should automatically catch/include the workspace in the path
@@ -50,7 +50,7 @@ CURDIR=$(dirname $0)
 #Other Paths (generally static)
 BASEDIR="${CURDIR}/base"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
-INTERNAL_RELEASE_BASEDIR="/usr/obj${WORKSPACE}"
+INTERNAL_RELEASE_BASEDIR="/usr/obj"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
 INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/repo"
 
