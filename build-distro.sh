@@ -175,7 +175,7 @@ make_ports(){
   echo "[INFO] Building ports..."
   cd "${BASEDIR}/release"
   make poudriere
-  if [$? -eq 0 ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
+  if [ $? -eq 0 ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
     cd "${POUD_PKG_DIR}"
     echo "[INFO] Signing Packages..."
     pkg-static repo . "${PKG_REPO_SIGNING_KEY}"
