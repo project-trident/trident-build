@@ -1,7 +1,7 @@
 {
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "f85aa1c3b7c623b30642b8f53f49e3bfd1a614be",
+  "base-github-tag" : "e50a6beff87baf4998bbc343e17dc48299accd29",
   "iso-name" : "trident-beta",
   "ports-url":"https://github.com/trueos/trueos-ports",
   "ports-branch":"trueos-master",
