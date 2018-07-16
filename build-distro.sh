@@ -222,6 +222,48 @@ make_release(){
   fi
 }
 
+make_pkg_manifest(){
+  echo "[INFO] Creating package manifest..."
+  #Note: This will **replace** the manifest info in the file!!
+  _pkgdir="${POUD_PKG_DIR}/All"
+  _pkgfile="${ARTIFACTS_DIR}/pkg.list"
+
+  #Remove the old file if it exists
+  if [ -e "${_pkgfile}" ] ; then
+    rm "${_pkgfile}"
+  fi
+  
+  for _line in `find "${_pkgdir}" -depth 1 -name "*.txz" | sort`
+  do
+    #Cleanup the individual line (directory, suffix)
+    _line=$(echo ${_line} | rev | cut -d "/" -f 1| rev | sed "s|.txz||g")
+    #Make sure it is a valid package name - otherwise skip it
+    case "${_line}" in
+	fbsd-distrib) continue ;;
+	*-*) ;;
+	*) continue ;;
+    esac
+    #Grab the version tag (ignore the first word - name might start with a number)
+    _version=$(echo ${_line} | cut -d '-' -f 2-12 | rev | cut -d '-' -f 1-2 | rev)
+    #check that the version string starts with a number, otherwise only use the last "-" section
+    _tmp=$(echo ${_version} | egrep '^[0-9]+')
+    if [ -z "${_tmp}" ] ; then
+      _version=$(echo ${_line} | rev | cut -d '-' -f 1 | rev)
+    fi
+    _name=$(echo ${_line} | sed "s|-${_version}||g")
+    echo "${_name} : ${_version}" >> ${_pkgfile}
+    #echo "Name: ${_name}  : Version: ${_version}"
+    #echo "  -raw line: ${line}"
+  done
+  #cleanup the temporary variables
+  unset _pkgdir
+  unset _pkgfile
+  unset _line
+  unset _name
+  unset _version
+  unset _tmp
+}
+
 make_all(){
   clean_base
   if [ $? -eq 0 ] ; then
@@ -285,8 +327,11 @@ case $1 in
 	release)
 		make_release
 		;;
+	manifest)
+		make_pkg_manifest
+		;;
 	*)
 		echo "Unknown Option: $1"
-		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release"
+		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest"
 		;;
 esac

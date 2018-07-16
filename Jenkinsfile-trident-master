@@ -69,6 +69,7 @@ pipeline {
       }
       steps {
         sh '${WORKSPACE}/build-distro.sh release'
+        sh '${WORKSPACE}/build-distro.sh manifest'
       }
     }
 

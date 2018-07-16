@@ -17,6 +17,7 @@ Syntax:
    * **base** : Build/sign base packages. Corresponds to "make packages". The "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" environment variable must be set for this stage in order to sign the base packages.
    * **ports** : Build/sign ports packages. Corresponds to "cd release && make poudriere". The "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" environment variable must be set for this stage in order to sign the packages.
    * **release** : Build ISO files and artifacts. Corresponds to "cd release && make release".
+   * **manifest** : Generate a manifest of all non-base packages ("artifacts/pkg.list")
    
 #### Extra supported/required fields in the TrueOS JSON manifest:
    * "base-github-org" : [Required] (string) Name of the organization on GitHub (example: "trueos")
