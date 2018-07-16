@@ -25,6 +25,17 @@ Syntax:
    * "iso-name" : (string) Base name of the ISO to create (example: "mydistro")
       * [Optional] Default value is the name of the JSON manifest file ("mydistro.json" -> "mydistro-<BuildDate>.iso")
 
+#### Supported environment variables (inputs/overrides)
+* "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" [optional]
+   * Format: String with the contents of the private SSL key to use when signing the packages.
+   * PKGSIGNKEY: Used during the "base" process to sign FreeBSD base packages.
+   * PKG_REPO_SIGNING_KEY: Used during the "ports" process to sign FreeBSD ports packages
+   * Note: If only one of these variables is set, it will automatically copy/use it for the other as well.
+* "MAX_THREADS" [optional]
+   * Format: Integer (number of threads to use, 1 or higher)
+   * This is passed via the "-j[number]" flag to the build procedures to speed up the compilation processes.
+   * Default value: One less than the detected number of CPU's on the system (sysctl -n hw.ncpu): Example: An 8-core system will result in MAX_THREADS getting automatically set to 7.
+
 ### Output Files
  * Build artifacts (ISO, MANIFEST, various *.tgz) will be placed in a new "artifacts/" subdirectory relative to the location of the build-distro.sh script.
 * "Ports" Package Files are located in "/usr/local/poudriere/data/packages/<manifest-name>-<ports-branch>"
