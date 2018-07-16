@@ -23,7 +23,7 @@ Syntax:
    * "base-github-repo" : [Required] (string) Name of the repository on GitHub (example: "trueos")
    * "base-github-tag" : [Required] (string) Tag name or commit ID to fetch from the GitHub org/repo
    * "iso-name" : (string) Base name of the ISO to create (example: "mydistro")
-      * [Optional] Default value is the name of the JSON manifest file ("mydistro.json" -> "mydistro-<BuildDate>.iso")
+      * [Optional] Default value is the name of the JSON manifest file ("mydistro.json" -> "mydistro-[BuildDate].iso")
 
 #### Supported environment variables (inputs/overrides)
 * "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" [optional]
