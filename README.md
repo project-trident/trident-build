@@ -8,7 +8,7 @@ Syntax:
  * `build-distro.sh <command> [JSON Manifest File]`
 **Note:** The JSON manifest file can also be supplied via the "TRUEOS_MANIFEST" environment variable. That manifest **must** be provided in order to perform the build.
 
-**Commands:**
+#### Commands:
    * **all** : Perform the following stages (in-order): clean, checkout, world, kernel, base, ports, release
    * **clean** : Cleanup any temporary working directories and output dirs/files
    * **checkout** : Fetch/extract the base repository (cached by tag - will only re-download if the tag changes)
@@ -18,7 +18,7 @@ Syntax:
    * **ports** : Build/sign ports packages. Corresponds to "cd release && make poudriere". The "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" environment variable must be set for this stage in order to sign the packages.
    * **release** : Build ISO files and artifacts. Corresponds to "cd release && make release".
    
-Extra supported/required fields in the TrueOS JSON manifest:
+#### Extra supported/required fields in the TrueOS JSON manifest:
    * "base-github-org" : [Required] (string) Name of the organization on GitHub (example: "trueos")
    * "base-github-repo" : [Required] (string) Name of the repository on GitHub (example: "trueos")
    * "base-github-tag" : [Required] (string) Tag name or commit ID to fetch from the GitHub org/repo
