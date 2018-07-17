@@ -64,7 +64,7 @@ pipeline {
     stage('Make ISO') {
       post {
         success {
-          archiveArtifacts artifacts: 'artifacts/**', fingerprint: true
+          archiveArtifacts artifacts: 'artifacts/pkg.list', fingerprint: true
         }
       }
       steps {
