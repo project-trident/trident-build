@@ -283,7 +283,7 @@
   "install-script":"",
   "auto-install-script":"",
   "poudriere-conf": [
-	"PARALLEL_JOBS=76",
+	"PARALLEL_JOBS=70",
 	"USE_TMPFS='wrkdir data'",
 	"NOHANG_TIME=14400"
   ],
