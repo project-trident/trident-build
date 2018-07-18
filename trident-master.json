@@ -6,7 +6,6 @@
   "ports-url":"https://github.com/trueos/trueos-ports",
   "ports-branch":"trueos-master",
   "ports-conf":[
-	"MAKE_JOBS_NUMBER_LIMIT=3",
 	"WITH_DVD_DEVICE=/dev/cd0",
 	"WITH_CDROM_DEVICE=/dev/cd0",
 	"# Accept Licenses automatically to build all packages",
@@ -284,6 +283,7 @@
   "auto-install-script":"",
   "poudriere-conf": [
 	"PARALLEL_JOBS=70",
+	"PREPARE_PARALLEL_JOBS=79",
 	"USE_TMPFS='wrkdir data'",
 	"NOHANG_TIME=14400"
   ],
