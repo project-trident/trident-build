@@ -11,7 +11,7 @@ if [ `id -u`-ne 0 ] ; then
 fi
 
 # PACKAGES
-req_pkg="jenkins rsync git"
+req_pkg="jenkins rsync git nginx"
 for _pkg in ${req_pkg}
 do
   pkg info -e ${_pkg}
@@ -35,3 +35,10 @@ do
   if [ $? -ne 0 ] ; then
     echo ${_tune} >> /boot/loader.conf
 done
+
+# NGINX Service for viewing poudriere build logs
+curdir=`dirname $0`
+cp "${curdir}/poudriere-nginx.conf" "/usr/local/etc/poudriere-nginx.conf"
+sysrc "nginx_config=/usr/local/etc/poudriere-nginx.conf"
+rc-update add nginx
+service nginx start
