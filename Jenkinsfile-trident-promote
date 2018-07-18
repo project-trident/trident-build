@@ -1,0 +1,59 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'Trident-Master' }
+  environment {
+        REMOTE_USER='poseidon'
+        REMOTE_SERVER='pkg.project-trident.org'
+        REMOTE_PKG_DIR_STAGE='/data/pkg/stage'
+        REMOTE_ISO_DIR_STAGE='/data/iso/stage'
+        REMOTE_PKG_DIR_RELEASE='/data/pkg/release'
+        REMOTE_ISO_DIR_RELEASE='/data/iso/release'
+        REMOTE_PKG_DIR_OLD='/data/pkg/old'
+        REMOTE_ISO_DIR_OLD='/data/iso/old'
+  }
+
+  stages {
+    stage('Queued') {
+      agent {
+        label 'JenkinsMaster'
+      }
+      steps {
+        echo "Build queued"
+      }
+    }
+
+    stage('Promote Packages') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_OLD} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_STAGE} ${REMOTE_PKG_DIR_RELEASE} || true'
+        }
+      }
+    }
+    stage('Promote ISOs') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_RELEASE} ${REMOTE_ISO_DIR_OLD} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_STAGE} ${REMOTE_ISO_DIR_RELEASE} || true'
+        }
+      }
+    }
+    stage('Delete Old') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rm -rf ${REMOTE_ISO_DIR_OLD} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rm -rf ${REMOTE_PKG_DIR_OLD} || true'
+
+        }
+      }
+    }
+
+  }
+
+}
