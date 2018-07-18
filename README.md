@@ -15,10 +15,13 @@ Simple build system for creating a TrueOS distribution
 ## Files:
 * trident-master.json
    * JSON manifest used to build Project Trident
+   * **Ensure the package repo URLs match the package server setup**
 * Jenkinsfile-trident-master
    * Pipeline script for Jenkins to manage the build of Project Trident and push files to a remote server.
+   * **Ensure the publication dirs align with the package server setup**
 * Jenkinsfile-trident-promote
    * Pipeline script for Jenkins to promote "staged" packages/iso on remote server to release.
+   * **Ensure the remote directory structure aligns with the package server setup**
 
 ### build-distro.sh
 Primary script to run to perform builds.
