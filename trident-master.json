@@ -283,9 +283,9 @@
   "install-script":"",
   "auto-install-script":"",
   "poudriere-conf": [
-	"PARALLEL_JOBS=60",
-	"PREPARE_PARALLEL_JOBS=79",
-	"USE_TMPFS='wrkdir data'",
+	"PARALLEL_JOBS=40",
+	"PREPARE_PARALLEL_JOBS=78",
+	"USE_TMPFS='yes'",
 	"NOHANG_TIME=14400"
   ],
   "pkg-repo": {
