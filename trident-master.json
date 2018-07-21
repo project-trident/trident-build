@@ -1,8 +1,8 @@
 {
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "e50a6beff87baf4998bbc343e17dc48299accd29",
-  "iso-name" : "trident-beta",
+  "base-github-tag" : "a5209c9005c9c61b9031b9df7d62b1c28b2291e2",
+  "iso-name" : "trident-alpha",
   "ports-url":"https://github.com/trueos/trueos-ports",
   "ports-branch":"trueos-master",
   "ports-conf":[
