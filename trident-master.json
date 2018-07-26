@@ -265,7 +265,7 @@
 	"x11/nvidia-driver",
 	"x11/nvidia-driver-304",
 	"x11/nvidia-driver-340",
-	"x11/qterminal"
+	"x11/qterminal",
 	"x11-drivers/xf86-input-evdev",
 	"x11-drivers/xf86-input-wacom",
 	"x11-drivers/xf86-video-scfb",
