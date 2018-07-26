@@ -246,6 +246,7 @@
 	"multimedia/libbluray",
 	"multimedia/vlc",
 	"multimedia/webcamd",
+	"net-im/telegram-desktop",
 	"print/cups-pdf",
 	"print/cups-filters",
 	"print/gutenprint",
