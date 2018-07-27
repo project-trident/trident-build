@@ -208,14 +208,32 @@ make_release(){
   cd "${BASEDIR}/release"
   make release
   if [ $? -eq 0 ] ; then
-    mkdir -p "${ARTIFACTS_DIR}/repo"
+    #mkdir -p "${ARTIFACTS_DIR}/repo"
     cp "${INTERNAL_RELEASE_DIR}/*.iso" "${ARTIFACTS_DIR}"
+    if [ $? - ne 0 ] ; then
+      echo "[WARNING] ISO files not found in dir: ${INTERNAL_RELEASE_DIR}"
+    fi
     cp "${INTERNAL_RELEASE_DIR}/*.txz" "${ARTIFACTS_DIR}"
+    if [ $? - ne 0 ] ; then
+      echo "[WARNING] TXZ files not found in dir: ${INTERNAL_RELEASE_DIR}"
+    fi
     cp "${INTERNAL_RELEASE_DIR}/MANIFEST" "${ARTIFACTS_DIR}"
+    if [ $? - ne 0 ] ; then
+      echo "[WARNING] MANIFEST file not found in dir: ${INTERNAL_RELEASE_DIR}"
+    fi
     if [ -f "${ARTIFACTS_DIR}/disk1.iso" ] ; then
       mv "${ARTIFACTS_DIR}/disk1.iso" "${ARTIFACTS_DIR}/${ISONAME}.iso"
     fi
-    echo "[INFO] Artifact files located in: ${ARTIFACTS_DIR}"
+    if [ "$(ls -A ${ARTIFACTS_DIR})" ] ; then
+      #Got artifact files
+      echo "[INFO] Artifact files located in: ${ARTIFACTS_DIR}"
+    else
+      #No artifact files
+      echo "[ERROR] No files could be artifacted!"
+      _tmp=`ls -l "${INTERNAL_RELEASE_DIR}"`
+      echo "Internal Release Dir contents:\\n${_tmp}"
+      return 1
+    fi
   else
     echo "[ERROR] Could not build TrueOS ISO and other artifacts"
     return 1
