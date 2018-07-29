@@ -56,9 +56,9 @@ CURDIR=$(dirname $0)
 #Other Paths (generally static)
 BASEDIR="${CURDIR}/base"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
-INTERNAL_RELEASE_BASEDIR="/usr/obj${WORKSPACE}"
-INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/base/amd64.amd64/release"
-INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/base/amd64.amd64/repo"
+INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
+INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
+INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/repo"
 
 if [ -n "${WORKSPACE}" ] ; then
   #Special dir for Jenkins artifacts
