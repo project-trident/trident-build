@@ -54,7 +54,7 @@ export POUDRIERE_PORTS=`jq -r '."ports-branch"' "${TRUEOS_MANIFEST}"`
 CURDIR=$(dirname $0)
 
 #Other Paths (generally static)
-BASEDIR="${CURDIR}/base"
+BASEDIR="/usr/src_tmp" #"${CURDIR}/base"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
 INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
