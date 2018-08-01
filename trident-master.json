@@ -3,7 +3,7 @@
   "base-github-repo" : "trueos",
   "base-github-tag" : "2220ce775edd7639a818bb0ead2eb9e5011db272",
   "iso-name" : "trident-alpha",
-  "iso-file-name" : "Trident_Alpha-x64-%%DATE%%"
+  "iso-file-name" : "Trident_Alpha-x64-%%DATE%%",
   "ports" : {
     "type" : "git",
     "url" : "https://github.com/trueos/trueos-ports",
