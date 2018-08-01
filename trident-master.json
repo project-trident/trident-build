@@ -5,9 +5,8 @@
   "iso-name" : "trident-alpha",
   "iso-file-name" : "Trident_Alpha-x64-%%DATE%%",
   "ports" : {
-    "type" : "git",
-    "url" : "https://github.com/trueos/trueos-ports",
-    "branch" : "438ed11332120a49117aaf19aa5cca4fe7311f48",
+    "type" : "tar",
+    "url" : "https://github.com/trueos/trueos-ports/tarball/438ed11332120a49117aaf19aa5cca4fe7311f48",
     "make.conf":[
 	"MAKE_JOBS_NUMBER_LIMIT=3",
 	"WITH_DVD_DEVICE=/dev/cd0",
