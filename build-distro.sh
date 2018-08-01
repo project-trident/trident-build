@@ -291,32 +291,32 @@ make_all(){
   if [ $? -eq 0 ] ; then
     checkout
   else
-    return 1; 
+    return 1
   fi
   if [ $? -eq 0 ] ; then
     make_world
   else
-    return 1; 
+    return 1
   fi
   if [ $? -eq 0 ] ; then
     make_kernel
   else
-    return 1; 
+    return 1
   fi
   if [ $? -eq 0 ] ; then
     make_base_pkg
   else
-    return 1; 
+    return 1
   fi
   if [ $? -eq 0 ] ; then
     make_ports
   else
-    return 1; 
+    return 1
   fi
   if [ $? -eq 0 ] ; then
     make_release
   else
-    return 1; 
+    return 1
   fi
 }
 
