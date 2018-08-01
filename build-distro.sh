@@ -54,7 +54,7 @@ export POUDRIERE_PORTS=`jq -r '."ports-branch"' "${TRUEOS_MANIFEST}"`
 CURDIR=$(dirname $0)
 
 #Other Paths (generally static)
-BASEDIR="/usr/src_tmp" #"${CURDIR}/base"
+BASEDIR="/usr/src_tmp"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
 INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
@@ -109,8 +109,13 @@ checkout(){
   mkdir -p "${BASEDIR}"
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
   #  - need to ignore that dir path when extracting
-  echo "[INFO] Extracting base repo..."
-  tar -xf "${BASE_TAR}" -C "${BASEDIR}" --strip-components 1
+  if [ -e "${BASE_TAR}" ] ; then
+    echo "[INFO] Extracting base repo..."
+    tar -xf "${BASE_TAR}" -C "${BASEDIR}" --strip-components 1
+  else
+    echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
+    return 1
+  fi
 }
 
 clean_base(){
@@ -293,26 +298,31 @@ make_all(){
   else
     return 1
   fi
+
   if [ $? -eq 0 ] ; then
     make_world
   else
     return 1
   fi
+
   if [ $? -eq 0 ] ; then
     make_kernel
   else
     return 1
   fi
+
   if [ $? -eq 0 ] ; then
     make_base_pkg
   else
     return 1
   fi
+
   if [ $? -eq 0 ] ; then
     make_ports
   else
     return 1
   fi
+
   if [ $? -eq 0 ] ; then
     make_release
   else

@@ -291,7 +291,7 @@
     "type" : "",
     "url" : "",
     "branch" : ""
-  }
+  },
   "install-script" : "/usr/local/bin/start-trident-installer",
   "auto-install-script" : "",
   "pkg-repo": {
