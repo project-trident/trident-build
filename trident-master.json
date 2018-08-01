@@ -3,9 +3,12 @@
   "base-github-repo" : "trueos",
   "base-github-tag" : "2220ce775edd7639a818bb0ead2eb9e5011db272",
   "iso-name" : "trident-alpha",
-  "ports-url":"https://github.com/trueos/trueos-ports",
-  "ports-branch":"trueos-master",
-  "ports-conf":[
+  "iso-file-name" : "Trident_Alpha-x64-%%DATE%%"
+  "ports" : {
+    "type" : "git",
+    "url" : "https://github.com/trueos/trueos-ports",
+    "branch" : "438ed11332120a49117aaf19aa5cca4fe7311f48",
+    "make.conf":[
 	"MAKE_JOBS_NUMBER_LIMIT=3",
 	"WITH_DVD_DEVICE=/dev/cd0",
 	"WITH_CDROM_DEVICE=/dev/cd0",
@@ -189,6 +192,13 @@
 	"x11-drivers_xf86-input-evdev_SET=MULTITOUCH",
 	"x11-fonts_webfonts_SET=MSWINDOWS_LICENSE",
 	"x11-toolkits_gnustep-gui_UNSET=DOCS"
+    ]
+  },
+  "poudriere-conf": [
+	"PARALLEL_JOBS=32",
+	"PREPARE_PARALLEL_JOBS=78",
+	"USE_TMPFS='yes'",
+	"NOHANG_TIME=14400"
   ],
   "package-all":true,
   "packages":[],
@@ -277,15 +287,13 @@
 	"x11-fonts/noto-lite"
   ],
   "auto-install-packages":[],
-  "install-overlay":"",
-  "install-script":"/usr/local/bin/start-trident-installer",
-  "auto-install-script":"",
-  "poudriere-conf": [
-	"PARALLEL_JOBS=32",
-	"PREPARE_PARALLEL_JOBS=78",
-	"USE_TMPFS='yes'",
-	"NOHANG_TIME=14400"
-  ],
+  "iso-overlay" : {
+    "type" : "",
+    "url" : "",
+    "branch" : ""
+  }
+  "install-script" : "/usr/local/bin/start-trident-installer",
+  "auto-install-script" : "",
   "pkg-repo": {
 	  "url":"https://pkg.project-trident.org/pkg/release/ports/${ABI}/latest",
 	  "pubKey": [

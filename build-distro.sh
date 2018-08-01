@@ -205,28 +205,32 @@ make_release(){
   if [ -d "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
   fi
+  mkdir -p "${ARTIFACTS_DIR}"
   cd "${BASEDIR}/release"
   make release
   if [ $? -eq 0 ] ; then
-    mkdir -p "${ARTIFACTS_DIR}"
-    cp "${INTERNAL_RELEASE_DIR}/*.iso" "${ARTIFACTS_DIR}/."
+    cd "${INTERNAL_RELEASE_DIR}"
+    cp *.iso "${ARTIFACTS_DIR}/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] ISO files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp "${INTERNAL_RELEASE_DIR}/*.txz" "${ARTIFACTS_DIR}/."
+    cp *.txz "${ARTIFACTS_DIR}/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] TXZ files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp "${INTERNAL_RELEASE_DIR}/MANIFEST" "${ARTIFACTS_DIR}/."
+    cp MANIFEST "${ARTIFACTS_DIR}/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] MANIFEST file not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
     if [ -f "${ARTIFACTS_DIR}/disc1.iso" ] ; then
+      echo "[INFO] Renaming disc1.iso to ${ISONAME}.iso"
       mv "${ARTIFACTS_DIR}/disc1.iso" "${ARTIFACTS_DIR}/${ISONAME}.iso"
     fi
-    if [ "$(ls -A ${ARTIFACTS_DIR})" ] ; then
+    num_files=`ls -Ap1 "${ARTIFACTS_DIR}" | wc -l`
+    if [ ${num_files} -gt 1 ] ; then
       #Got artifact files
       echo "[INFO] Artifact files located in: ${ARTIFACTS_DIR}"
+      return 0
     else
       #No artifact files
       echo "[ERROR] No files could be artifacted!"
