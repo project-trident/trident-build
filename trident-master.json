@@ -2,11 +2,14 @@
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "2220ce775edd7639a818bb0ead2eb9e5011db272",
+  "ports-github-org" : "trueos",
+  "ports-github-repo" : "trueos-ports",
+  "ports-github-tag" : "438ed11332120a49117aaf19aa5cca4fe7311f48",
   "iso-name" : "trident-alpha",
   "iso-file-name" : "Trident_Alpha-x64-%%DATE%%",
   "ports" : {
-    "type" : "tar",
-    "url" : "https://github.com/trueos/trueos-ports/tarball/438ed11332120a49117aaf19aa5cca4fe7311f48",
+    "type" : "local",
+    "url" : "/usr/ports_tmp",
     "make.conf":[
 	"MAKE_JOBS_NUMBER_LIMIT=3",
 	"WITH_DVD_DEVICE=/dev/cd0",

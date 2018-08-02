@@ -32,7 +32,7 @@ Syntax:
 #### Commands:
    * **all** : Perform the following stages (in-order): clean, checkout, world, kernel, base, ports, release
    * **clean** : Cleanup any temporary working directories and output dirs/files
-   * **checkout** : Fetch/extract the base repository (cached by tag - will only re-download if the tag changes)
+   * **checkout** : Fetch/extract the base/ports repositories (cached by tag - will only re-download if the tag changes)
    * **world** : Build FreeBSD world. Corresponds to "make buildworld"
    * **kernel** : Build FreeBSD kernel. Corresponds to "make buildkernel"
    * **base** : Build/sign base packages. Corresponds to "make packages". The "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" environment variable must be set for this stage in order to sign the base packages.
@@ -44,8 +44,13 @@ Syntax:
    * "base-github-org" : [Required] (string) Name of the organization on GitHub (example: "trueos")
    * "base-github-repo" : [Required] (string) Name of the repository on GitHub (example: "trueos")
    * "base-github-tag" : [Required] (string) Tag name or commit ID to fetch from the GitHub org/repo
+   * "ports-github-org" : [Optional] (string) Name of the organization on GitHub (example: "trueos")
+   * "ports-github-repo" : [Optional] (string) Name of the repository on GitHub (example: "trueos")
+   * "ports-github-tag" : [Optional] (string) Tag name or commit ID to fetch from the GitHub org/repo
    * "iso-name" : (string) Base name of the ISO to create (example: "mydistro")
       * [Optional] Default value is the name of the JSON manifest file ("mydistro.json" -> "mydistro-[BuildDate].iso")
+
+***[WARNING]*** If you use the "ports-github-*" manifest options, you need to ensure to set the TrueOS ports type to "local" and the url to "/usr/ports_tmp". Those options allow checking out specific tags/commits, and bypass the built-in ports repo checkout procedures within TrueOS. If you want to use a standard tarball or git branch, enable the standard TrueOS port options and remove the "ports-github-*" options from the manifest.
 
 #### Supported environment variables (inputs/overrides)
 * "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" [optional]

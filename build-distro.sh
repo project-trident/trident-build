@@ -55,6 +55,7 @@ CURDIR=$(dirname $0)
 
 #Other Paths (generally static)
 BASEDIR="/usr/src_tmp"
+PORTSDIR="/usr/ports_tmp"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
 INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
@@ -79,15 +80,32 @@ fi
 
 #STAGES
 checkout(){
-  GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
-  GH_BASE_REPO=`jq -r '."base-github-repo"' "${TRUEOS_MANIFEST}"`
-  GH_BASE_TAG=`jq -r '."base-github-tag"' "${TRUEOS_MANIFEST}"`
+  if [ "$1" = "base" ] ; then
+    GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
+    GH_BASE_REPO=`jq -r '."base-github-repo"' "${TRUEOS_MANIFEST}"`
+    GH_BASE_TAG=`jq -r '."base-github-tag"' "${TRUEOS_MANIFEST}"`
+    SRC_DIR="${BASEDIR}"
+    if [ -z "${GH_BASE_ORG}" ] ; then
+      echo "[ERROR] Could not read base-github-org from JSON manifest!"
+      return 1
+    fi
+  elif [ "$1" = "ports" ] ; then
+    GH_BASE_ORG=`jq -r '."ports-github-org"' "${TRUEOS_MANIFEST}"`
+    GH_BASE_REPO=`jq -r '."ports-github-repo"' "${TRUEOS_MANIFEST}"`
+    GH_BASE_TAG=`jq -r '."ports-github-tag"' "${TRUEOS_MANIFEST}"`
+    SRC_DIR="${PORTSDIR}"
+    if [ -z "${GH_BASE_ORG}" ] ; then
+      #This is optional - just skip it if not set/used in the manifest
+      return 0
+    fi
+  fi
+
   BASE_CACHE_DIR="/tmp/trueos-repo-cache"
   BASE_TAR="${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_${GH_BASE_TAG}.tgz"
   if [ ! -f "${BASE_TAR}" ] ; then
     if [ -d "${BASE_CACHE_DIR}" ] ; then
       #Got a different tag - clear the old files from the cache
-      rm -f "${BASE_CACHE_DIR}/*.tgz"
+      rm -f ${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_*.tgz
     else
       mkdir -p "${BASE_CACHE_DIR}"
     fi
@@ -103,15 +121,15 @@ checkout(){
   fi
 
   # Now that we have the tarball, lets extract it to the base dir
-  if [ -d "${BASEDIR}" ] ; then
-   rm -rf "${BASEDIR}"
+  if [ -d "${SRCDIR}" ] ; then
+   rm -rf "${SRCDIR}"
   fi
-  mkdir -p "${BASEDIR}"
+  mkdir -p "${SRCDIR}"
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
   #  - need to ignore that dir path when extracting
   if [ -e "${BASE_TAR}" ] ; then
     echo "[INFO] Extracting base repo..."
-    tar -xf "${BASE_TAR}" -C "${BASEDIR}" --strip-components 1
+    tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
   else
     echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
     return 1
@@ -294,11 +312,15 @@ make_pkg_manifest(){
 make_all(){
   clean_base
   if [ $? -eq 0 ] ; then
-    checkout
+    checkout base
   else
     return 1
   fi
-
+  if [ $? -eq 0 ] ; then
+    checkout ports
+  else
+    return 1
+  fi
   if [ $? -eq 0 ] ; then
     make_world
   else
@@ -342,7 +364,10 @@ case $1 in
 		clean_base
 		;;
 	checkout)
-		checkout
+		checkout base
+		if [ $? -eq 0 ] ; then
+		  checkout ports
+		fi
 		;;
 	world)
 		make_world
