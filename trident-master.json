@@ -267,7 +267,6 @@
 	"shells/fish",
 	"shells/zsh",
 	"sysutils/fusefs-exfat",
-	"sysutils/fusefs-ext2",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
 	"sysutils/sysadm",
