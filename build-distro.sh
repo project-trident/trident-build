@@ -84,7 +84,8 @@ checkout(){
     GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
     GH_BASE_REPO=`jq -r '."base-github-repo"' "${TRUEOS_MANIFEST}"`
     GH_BASE_TAG=`jq -r '."base-github-tag"' "${TRUEOS_MANIFEST}"`
-    SRC_DIR="${BASEDIR}"
+    SRCDIR="${BASEDIR}"
+    echo "[INFO] Check out base repository"
     if [ -z "${GH_BASE_ORG}" ] ; then
       echo "[ERROR] Could not read base-github-org from JSON manifest!"
       return 1
@@ -93,11 +94,12 @@ checkout(){
     GH_BASE_ORG=`jq -r '."ports-github-org"' "${TRUEOS_MANIFEST}"`
     GH_BASE_REPO=`jq -r '."ports-github-repo"' "${TRUEOS_MANIFEST}"`
     GH_BASE_TAG=`jq -r '."ports-github-tag"' "${TRUEOS_MANIFEST}"`
-    SRC_DIR="${PORTSDIR}"
+    SRCDIR="${PORTSDIR}"
     if [ -z "${GH_BASE_ORG}" ] ; then
       #This is optional - just skip it if not set/used in the manifest
       return 0
     fi
+    echo "[INFO] Check out ports repository"
   fi
 
   BASE_CACHE_DIR="/tmp/trueos-repo-cache"
