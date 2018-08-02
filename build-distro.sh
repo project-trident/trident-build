@@ -113,7 +113,7 @@ checkout(){
     fi
     BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_TAG}"
     #NOTE: Fetch works, but seems slower than using curl
-    echo "[INFO] Downloading Base Repo..."
+    echo "[INFO] Downloading Repo..."
     fetch --retry -o "${BASE_TAR}" "${BASE_URL}"
     #curl -L "${base_url}" -o "${BASE_TAR}"
     if [ $? -ne 0 ] ; then
@@ -130,8 +130,9 @@ checkout(){
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
   #  - need to ignore that dir path when extracting
   if [ -e "${BASE_TAR}" ] ; then
-    echo "[INFO] Extracting base repo..."
+    echo "[INFO] Extracting repo..."
     tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
+    echo "[INFO] Done: ${SRCDIR}"
   else
     echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
     return 1
