@@ -227,7 +227,7 @@ make_release(){
   ISONAME="${ISOBASE}-${CURDATE}"
 
   #Remove old artifacts (if any)
-  if [ -d "${ARTIFACTS_DIR}" ] ; then
+  if [ -e "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
   fi
   mkdir -p "${ARTIFACTS_DIR}"
@@ -260,7 +260,7 @@ make_release(){
       #No artifact files
       echo "[ERROR] No files could be artifacted!"
       _tmp=`ls -l "${INTERNAL_RELEASE_DIR}"`
-      echo "Internal Release Dir contents:\\n${_tmp}"
+      echo "Internal Release Dir contents:\n${_tmp}"
       return 1
     fi
   else
