@@ -230,7 +230,7 @@ make_release(){
   if [ -e "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
   fi
-  mkdir -p "${ARTIFACTS_DIR}"
+  mkdir -p "${ARTIFACTS_DIR}/tar"
   cd "${BASEDIR}/release"
   make release
   if [ $? -eq 0 ] ; then
@@ -239,11 +239,11 @@ make_release(){
     if [ $? -ne 0 ] ; then
       echo "[WARNING] ISO files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp *.txz "${ARTIFACTS_DIR}/"
+    cp *.txz "${ARTIFACTS_DIR}/tar/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] TXZ files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp MANIFEST "${ARTIFACTS_DIR}/"
+    cp MANIFEST "${ARTIFACTS_DIR}/tar/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] MANIFEST file not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
