@@ -78,6 +78,21 @@ elif [ -z "${PKGSIGNKEY}" ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
   PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
 fi
 
+#Quick function for putting a variable/value combination into a JSON file
+add_to_json_str(){
+  #Inputs:
+  # $1 : Variable name
+  # $2 : Value (string)
+  # $3 : json file
+  if [ ! -e "${3}" ] ; then
+    #touch "${3}"
+    echo "{}" >> "${3}"
+  fi
+  val=$(echo $2 | sed 's|"||g'| xargs echo -n)
+  jq '. += {"'${1}'": "'${val}'"}' "${3}" > "${3}.new"
+  mv "${3}.new" "${3}"
+}
+
 #STAGES
 checkout(){
   if [ "$1" = "base" ] ; then
@@ -311,6 +326,49 @@ make_pkg_manifest(){
   unset _tmp
 }
 
+make_sign_artifacts(){
+  #NOTE: This will use the PKGSIGNKEY environment variable to sign ISO files
+  echo "[INFO] Organizing Artifacts..."
+  #Quick check for the *other* signing key variable
+  if [ -z "${PKGSIGNKEY}" ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
+    PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
+  fi
+  cd "${ARTIFACTS_DIR}"
+  manifest="manifest.json"
+  if [ -e "${PKGSIGNKEY}" ] ; then
+    keyfile="${PKGSIGNKEY}"
+  else
+    keyfile="priv.key"
+    echo "${PKGSIGNKEY}" > "${keyfile}"
+  fi
+
+  #Note: There should only be 1 ISO in the artifacts dir typically
+  for iso in `ls *.iso`
+  do
+    add_to_json_str "iso" "${iso}" "${manifest}"
+    size=`ls -lh "${iso}" | cut -w -f 5`
+    add_to_json_str "iso_size" "${size}" "${manifest}"
+    if [ -n "${PKGSIGNKEY}" ] ; then
+      echo "[INFO] Signing ISO: ${iso}"
+      openssl dgst -sha512 -sign "${PKGSIGNKEY}" -out "${iso}.sha512" "${iso}"
+      add_to_json_str "iso_signature" "${iso}.sha512" "${manifest}"
+      echo "[INFO] Creating public key for verification later"
+      openssl rsa -in "${keyfile}" -pubout -out "${POUDRIERE_BASE}.pubkey"
+      add_to_json_str "iso_pubkey" "${POUDRIERE_BASE}.pubkey" "${manifest}"
+    fi
+    echo "[INFO] Generating MD5: ${iso}"
+    md5 "${iso}" | cut -d = -f 2 | tr -d '[:space:]' > "${iso}.md5"
+    add_to_json_str "iso_md5" "${iso}.md5" "${manifest}"  
+
+  done
+
+  #Make sure we delete any temporary private key file
+  if [ "${keyfile}" = "priv.key" ] ; then
+    rm "${keyfile}"
+  fi
+  echo "[DONE] Manifest of artifacts available: ${manifest}"
+}
+
 make_all(){
   clean_base
   if [ $? -eq 0 ] ; then
@@ -352,6 +410,18 @@ make_all(){
   else
     return 1
   fi
+
+  if [ $? -eq 0 ] ; then
+    make_pkg_manifest
+  else
+    return 1
+  fi
+
+  if [ $? -eq 0 ] ; then
+    make_sign_artifacts
+  else
+    return 1
+  fi
 }
 
 #===================
@@ -389,8 +459,11 @@ case $1 in
 	manifest)
 		make_pkg_manifest
 		;;
+	sign_artifacts)
+		make_sign_artifacts
+		;;
 	*)
 		echo "Unknown Option: $1"
-		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest"
+		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest, sign_artifacts"
 		;;
 esac
