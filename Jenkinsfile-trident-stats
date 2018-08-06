@@ -15,7 +15,7 @@ pipeline {
   environment {
         REMOTE_USER='poseidon'
         REMOTE_SERVER='pkg.project-trident.org'
-        REMOTE_LOG='/var/log/nginx-stats.0.log.bz2'
+        REMOTE_LOG='/var/log/nginx-stats.log.0.bz2'
         TMP_LOG_COMPRESSED='${WORKSPACE}/stats.log.bz2'
         TMP_LOG='${WORKSPACE}/stats.log'
   }
