@@ -252,6 +252,7 @@
 	"devel/git",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
+	"graphics/intel_backlight",
 	"graphics/phototonic",
 	"mail/trojita",
 	"multimedia/openh264",
@@ -270,6 +271,7 @@
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
+	"sysutils/powerdxx",
 	"sysutils/sysadm",
 	"sysutils/sysadm-client",
 	"trident/trident-core",
@@ -286,7 +288,9 @@
 	"x11-drivers/xf86-video-amdgpu",
 	"x11-drivers/xf86-video-intel",
 	"x11-drivers/xf86-video-nv",
-	"x11-fonts/noto-lite"
+	"x11-drivers/xf86-video-vmware",
+	"x11-fonts/noto-lite",
+	"x11-themes/lumina-themes"
   ],
   "auto-install-packages":[],
   "iso-overlay" : {
