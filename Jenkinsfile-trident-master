@@ -62,6 +62,10 @@ pipeline {
       }
     }
     stage('Make ISO') {
+      environment {
+           // Get our credentials from Jenkins
+           PKGSIGNKEY = credentials('Trident-sign')
+      }
       post {
         success {
           archiveArtifacts artifacts: 'artifacts/pkg.list', fingerprint: true
