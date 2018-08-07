@@ -7,6 +7,11 @@
   "ports-github-tag" : "9c85e3145cd5d8de85178c187d4ba5fef293dc8e",
   "iso-name" : "trident-alpha",
   "iso-file-name" : "Trident_alpha-x64-%%DATE%%",
+  "ports-add-category" : [{
+    "name" : "trident",
+    "local_path" : "trident-ports"
+    }
+  ],
   "ports" : {
     "type" : "local",
     "url" : "/usr/ports_tmp",

@@ -93,6 +93,75 @@ add_to_json_str(){
   mv "${3}.new" "${3}"
 }
 
+validate_portcat_makefile(){
+  #Inputs:
+  # $1 : makefile directory
+  origdir=`pwd`
+  cd "$1"
+  comment="`cat Makefile | grep 'COMMENT ='`"
+  echo "# \$FreeBSD\$
+#
+
+$comment
+" > Makefile.tmp
+
+  for d in `ls`
+  do
+    if [ "$d" = ".." ]; then continue ; fi
+    if [ "$d" = "." ]; then continue ; fi
+    if [ "$d" = "Makefile" ]; then continue ; fi
+    if [ ! -f "$d/Makefile" ]; then continue ; fi
+    echo "    SUBDIR += $d" >> Makefile.tmp
+  done
+  echo "" >> Makefile.tmp
+  echo ".include <bsd.port.subdir.mk>" >> Makefile.tmp
+  mv Makefile.tmp Makefile
+
+  cd "${origdir}"
+}
+
+validate_port_makefile(){
+  #Inputs:
+  # $1 : makefile directory
+  # $2 : Name of new port category
+  origdir=`pwd`
+  cd "${PORTSDIR}"
+  for d in `ls`
+  do
+    if [ "$d" = ".." ]; then continue ; fi
+    if [ "$d" = "." ]; then continue ; fi
+    if [ ! -f "$d/Makefile" ]; then continue ; fi
+    grep -q "SUBDIR += ${d}" Makefile
+    if [ $? -ne 0 ] && [ "${d}" != "${2}" ] ; then continue ; fi
+    echo "SUBDIR += $d" >> Makefile.tmp
+  done
+  echo "" >> Makefile.tmp
+  #Now strip out the subdir info from the original Makefile
+  cp Makefile Makefile.skel
+  sed -i '' "s|SUBDIR += lang|%%TMP%%|g" Makefile.skel
+  cat Makefile.skel | grep -v "SUBDIR +=" > Makefile.skel.2
+  mv Makefile.skel.2 Makefile.skel
+  #Insert the new subdir list into the skeleton file and replace the original
+  awk '/%%TMP%%/{system("cat Makefile.tmp");next}1' Makefile.skel > Makefile
+  #Now cleanup the temporary files
+  rm Makefile.tmp Makefile.skel
+  cd "${origdir}"
+}
+
+add_cat_to_ports(){
+  #Inputs:
+  # $1 : category name
+  # $2 : local path to dir
+  echo "[INFO] Adding overlay category to ports tree: ${1}"
+  #Copy the dir to the ports tree
+  cp -R "$2" "${PORTSDIR}/${1}"
+  #Verify that the Makefile for the new category is accurate
+  validate_portcat_makefile "${PORTSDIR}/${1}"
+  #Enable the directory in the top-level Makefile
+  validate_port_makefile "${1}"
+}
+
+
 #STAGES
 checkout(){
   if [ "$1" = "base" ] ; then
@@ -128,7 +197,7 @@ checkout(){
     fi
     BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_TAG}"
     #NOTE: Fetch works, but seems slower than using curl
-    echo "[INFO] Downloading Base Repo..."
+    echo "[INFO] Downloading Repo..."
     fetch --retry -o "${BASE_TAR}" "${BASE_URL}"
     #curl -L "${base_url}" -o "${BASE_TAR}"
     if [ $? -ne 0 ] ; then
@@ -145,11 +214,25 @@ checkout(){
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
   #  - need to ignore that dir path when extracting
   if [ -e "${BASE_TAR}" ] ; then
-    echo "[INFO] Extracting base repo..."
+    echo "[INFO] Extracting ${1} repo..."
     tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
   else
     echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
     return 1
+  fi
+  # =====
+  # Ports Tree Overlay
+  # =====
+  if [ "$1" = "ports" ] ; then
+    num=`jq -r '."ports-add-category" | length' "${TRUEOS_MANIFEST}"`
+    i=0
+    while [ ${i} -lt ${num} ]
+    do
+      _name=`jq -r '."ports-add-category"['${i}'].name' "${TRUEOS_MANIFEST}"`
+      _path=`jq -r '."ports-add-category"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
+      add_cat_to_ports "${_name}" "${_path}"
+      i=`expr ${i} + 1`
+    done
   fi
 }
 
