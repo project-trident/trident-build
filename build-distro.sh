@@ -154,6 +154,9 @@ add_cat_to_ports(){
   # $2 : local path to dir
   echo "[INFO] Adding overlay category to ports tree: ${1}"
   #Copy the dir to the ports tree
+  if [ -e "${PORTSDIR}/${1}" ] ; then
+    rm -rf "${PORTSDIR}/${1}"
+  fi
   cp -R "$2" "${PORTSDIR}/${1}"
   #Verify that the Makefile for the new category is accurate
   validate_portcat_makefile "${PORTSDIR}/${1}"
