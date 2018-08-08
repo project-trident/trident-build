@@ -49,13 +49,34 @@ Syntax:
    * "ports-github-tag" : [Optional] (string) Tag name or commit ID to fetch from the GitHub org/repo
    * "iso-name" : (string) Base name of the ISO to create (example: "mydistro")
       * [Optional] Default value is the name of the JSON manifest file ("mydistro.json" -> "mydistro-[BuildDate].iso")
+   * "ports-overlay" : [Optional] (Array of JSON objects) paths to directories to add/replace items in the ports tree
+      * ***[WARNING]*** This is only possible if the "ports-github-*" mechanism is used to fetch the ports repository.
+      * Syntax for objects within the array:
+         * "type" : (string) Either "category" (adding a new category to the ports tree) or "port" (adding a single port to the tree)
+         * "name" : (string) Category name ("mydistro") or port origin ("devel/myport") depending on the type of overlay.
+         * "local_path" : (string) path to the local directory which will be used as the overlay.
+         * Example:
+```
+"ports-overlay" : [
+  {
+    "type" : "category",
+    "name" : "mydistro",
+    "local_path" : "overlay/mydistro"
+  },
+  {
+    "type" : "port",
+    "name" : "devel/myport",
+    "local_path" : "overlay/devel/myport"
+  }
+]
+```
 
 ***[WARNING]*** If you use the "ports-github-*" manifest options, you need to ensure to set the TrueOS ports type to "local" and the url to "/usr/ports_tmp". Those options allow checking out specific tags/commits, and bypass the built-in ports repo checkout procedures within TrueOS. If you want to use a standard tarball or git branch, enable the standard TrueOS port options and remove the "ports-github-*" options from the manifest.
 
 #### Supported environment variables (inputs/overrides)
 * "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" [optional]
    * Format: String with the contents of the private SSL key to use when signing the packages.
-   * PKGSIGNKEY: Used during the "base" process to sign FreeBSD base packages.
+   * PKGSIGNKEY: Used during the "base" process to sign FreeBSD base packages in addition to the "sign_artifacts" process to sign the ISO file.
    * PKG_REPO_SIGNING_KEY: Used during the "ports" process to sign FreeBSD ports packages
    * Note: If only one of these variables is set, it will automatically copy/use it for the other as well.
 * "MAX_THREADS" [optional]
