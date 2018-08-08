@@ -218,7 +218,7 @@ checkout(){
   #  - need to ignore that dir path when extracting
   if [ -e "${BASE_TAR}" ] ; then
     echo "[INFO] Extracting ${1} repo..."
-    tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
+    tar -xfv "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
   else
     echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
     return 1
