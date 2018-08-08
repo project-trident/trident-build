@@ -164,8 +164,47 @@ add_cat_to_ports(){
   validate_port_makefile "${1}"
 }
 
+add_port_to_ports(){
+  #Inputs:
+  # $1 : port (category/origin)
+  # $2 : local path to dir
+  echo "[INFO] Adding overlay port to ports tree: ${1}"
+  #Copy the dir to the ports tree
+  if [ -e "${PORTSDIR}/${1}" ] ; then
+    rm -rf "${PORTSDIR}/${1}"
+  fi
+  cp -R "$2" "${PORTSDIR}/${1}"
+  #Verify that the Makefile for the category includes the port
+  validate_portcat_makefile "${PORTSDIR}/${1}/.."
+}
 
-#STAGES
+apply_ports_overlay(){
+  num=`jq -r '."ports-overlay" | length' "${TRUEOS_MANIFEST}"`
+  if [ "${num}" = "null" ] || [ -z "${num}" ] ; then
+    #nothing to do
+    return 0
+  fi
+  i=0
+  while [ ${i} -lt ${num} ]
+  do
+    _type=`jq -r '."ports-overlay"['${i}'].type' "${TRUEOS_MANIFEST}"`
+    _name=`jq -r '."ports-overlay"['${i}'].name' "${TRUEOS_MANIFEST}"`
+    _path=`jq -r '."ports-overlay"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
+    if [ "${_type}" = "category" ] ; then
+      add_cat_to_ports "${_name}" "${_path}"
+    elif [ "${_type}" = "port" ] ; then
+      add_port_to_ports "${_name}" "${_path}"
+    else
+      echo "[WARNING] Unknown port overlay type: ${_type} (${_name})"
+    fi
+    i=`expr ${i} + 1`
+  done
+  return 0
+}
+
+# ======
+#  STAGES
+# ======
 checkout(){
   if [ "$1" = "base" ] ; then
     GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
@@ -227,15 +266,7 @@ checkout(){
   # Ports Tree Overlay
   # =====
   if [ "$1" = "ports" ] ; then
-    num=`jq -r '."ports-add-category" | length' "${TRUEOS_MANIFEST}"`
-    i=0
-    while [ ${i} -lt ${num} ]
-    do
-      _name=`jq -r '."ports-add-category"['${i}'].name' "${TRUEOS_MANIFEST}"`
-      _path=`jq -r '."ports-add-category"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
-      add_cat_to_ports "${_name}" "${_path}"
-      i=`expr ${i} + 1`
-    done
+    apply_ports_overlay
   fi
 }
 
