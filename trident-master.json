@@ -207,6 +207,7 @@
 	"PARALLEL_JOBS=32",
 	"PREPARE_PARALLEL_JOBS=78",
 	"USE_TMPFS='yes'",
+	"ALLOW_MAKE_JOBS=yes",
 	"NOHANG_TIME=14400"
   ],
   "package-all":true,
