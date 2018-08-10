@@ -65,4 +65,5 @@ share/trident-installer/i18n/tri-install_zh_CN.qm
 share/trident-installer/i18n/tri-install_zh_HK.qm
 share/trident-installer/i18n/tri-install_zh_TW.qm
 share/trident-installer/i18n/tri-install_zu.qm
+/boot/loader.conf.local
 /etc/machine-id
