@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-mediaplayer
 PORTVERSION=	1.4.2
-PORTREVISION=	201808101006
+PORTREVISION=	201808101129
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -10,7 +10,7 @@ COMMENT=	Streaming media player from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
 
-RUN_DEPENDS=	gstreamer1-qt5>=0:multimedia/gstreamer1-qt5 \
+RUN_DEPENDS=	gstreamer1-qt5>=0:multimedia/gstreamer1-qt5@qt5 \
 		gstreamer1-plugins-gl>=0:graphics/gstreamer1-plugins-gl
 
 OPTIONS_DEFINE=	I18N
@@ -28,7 +28,7 @@ USE_QT=		core gui widgets network svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	a549a994aae74d93deb5011777e2117e77b63a02
+GH_TAGNAME=	acfd5db4233823da3c76cf4027a8299d91a45b8e
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
