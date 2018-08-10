@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-core
 PORTVERSION=	1.4.2
-PORTREVISION=	201808100810
+PORTREVISION=	201808101006
 CATEGORIES=	x11
 
 MAINTAINER=	jt@ixsystems.com
@@ -38,18 +38,18 @@ RUN_DEPENDS+=	gstreamer1-plugins-core>=0:multimedia/gstreamer1-plugins-core
 .endif
 
 MAKE_JOBS_UNSAFE=yes
-USES=		qmake
+USES=		qmake qt:5
 
 USE_GL=		gl
 USE_XORG=	x11 xdamage xcb
 USE_LDCONFIG=	yes
-USE_QT5=	core gui widgets network svg multimedia imageformats \
+USE_QT=		core gui widgets network svg multimedia imageformats \
 		buildtools_build x11extras concurrent
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	a9a6c9daeb450f4cee3eb7c077d2abad15d81415
+GH_TAGNAME=	a549a994aae74d93deb5011777e2117e77b63a02
 WRKSRC_SUBDIR=	src-qt5/core
 
 #Setup the qmake configuration options
