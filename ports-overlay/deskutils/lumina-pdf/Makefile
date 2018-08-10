@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-pdf
 PORTVERSION=	1.4.2
-PORTREVISION=	201808101006
+PORTREVISION=	201808101606
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -30,7 +30,7 @@ MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
 MUPDF_QMAKE_ON=			USE_MUPDF=true
 
 I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			qt5=linguist_build
+I18N_USE=			qt+=linguist_build
 
 .include <bsd.port.options.mk>
 
@@ -42,7 +42,7 @@ USE_QT=		core gui widgets network svg multimedia \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	a549a994aae74d93deb5011777e2117e77b63a02
+GH_TAGNAME=	2be80fd648c25e17b091e24c0e7312f289d78c82
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .include <bsd.port.mk>
