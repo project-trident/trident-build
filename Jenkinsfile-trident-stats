@@ -15,9 +15,9 @@ pipeline {
   environment {
         REMOTE_USER='poseidon'
         REMOTE_SERVER='pkg.project-trident.org'
-        REMOTE_LOG='/var/log/nginx-stats.0.log.bz2'
-        TMP_LOG_COMPRESSED='${WORKSPACE}/stats.log.bz2'
-        TMP_LOG='${WORKSPACE}/stats.log'
+        REMOTE_LOG='/var/log/nginx-stats.log.0.bz2'
+        TMP_LOG_COMPRESSED='stats.log.bz2'
+        TMP_LOG='stats.log'
   }
 
   stages {
@@ -33,7 +33,7 @@ pipeline {
     stage('Fetch Log') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'scp -v -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_LOG} ${TMP_LOG_COMPRESSED}'
+          sh 'scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_LOG} ${TMP_LOG_COMPRESSED}'
         }
       }
     }

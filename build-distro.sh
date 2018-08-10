@@ -78,7 +78,133 @@ elif [ -z "${PKGSIGNKEY}" ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
   PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
 fi
 
-#STAGES
+#Quick function for putting a variable/value combination into a JSON file
+add_to_json_str(){
+  #Inputs:
+  # $1 : Variable name
+  # $2 : Value (string)
+  # $3 : json file
+  if [ ! -e "${3}" ] ; then
+    #touch "${3}"
+    echo "{}" >> "${3}"
+  fi
+  val=$(echo $2 | sed 's|"||g'| xargs echo -n)
+  jq '. += {"'${1}'": "'${val}'"}' "${3}" > "${3}.new"
+  mv "${3}.new" "${3}"
+}
+
+validate_portcat_makefile(){
+  #Inputs:
+  # $1 : makefile directory
+  origdir=`pwd`
+  cd "$1"
+  comment="`cat Makefile | grep 'COMMENT ='`"
+  echo "# \$FreeBSD\$
+#
+
+$comment
+" > Makefile.tmp
+
+  for d in `ls`
+  do
+    if [ "$d" = ".." ]; then continue ; fi
+    if [ "$d" = "." ]; then continue ; fi
+    if [ "$d" = "Makefile" ]; then continue ; fi
+    if [ ! -f "$d/Makefile" ]; then continue ; fi
+    echo "    SUBDIR += $d" >> Makefile.tmp
+  done
+  echo "" >> Makefile.tmp
+  echo ".include <bsd.port.subdir.mk>" >> Makefile.tmp
+  mv Makefile.tmp Makefile
+
+  cd "${origdir}"
+}
+
+validate_port_makefile(){
+  #Inputs:
+  # $1 : makefile directory
+  # $2 : Name of new port category
+  origdir=`pwd`
+  cd "${PORTSDIR}"
+  for d in `ls`
+  do
+    if [ "$d" = ".." ]; then continue ; fi
+    if [ "$d" = "." ]; then continue ; fi
+    if [ ! -f "$d/Makefile" ]; then continue ; fi
+    grep -q "SUBDIR += ${d}" Makefile
+    if [ $? -ne 0 ] && [ "${d}" != "${2}" ] ; then continue ; fi
+    echo "SUBDIR += $d" >> Makefile.tmp
+  done
+  echo "" >> Makefile.tmp
+  #Now strip out the subdir info from the original Makefile
+  cp Makefile Makefile.skel
+  sed -i '' "s|SUBDIR += lang|%%TMP%%|g" Makefile.skel
+  cat Makefile.skel | grep -v "SUBDIR +=" > Makefile.skel.2
+  mv Makefile.skel.2 Makefile.skel
+  #Insert the new subdir list into the skeleton file and replace the original
+  awk '/%%TMP%%/{system("cat Makefile.tmp");next}1' Makefile.skel > Makefile
+  #Now cleanup the temporary files
+  rm Makefile.tmp Makefile.skel
+  cd "${origdir}"
+}
+
+add_cat_to_ports(){
+  #Inputs:
+  # $1 : category name
+  # $2 : local path to dir
+  echo "[INFO] Adding overlay category to ports tree: ${1}"
+  #Copy the dir to the ports tree
+  if [ -e "${PORTSDIR}/${1}" ] ; then
+    rm -rf "${PORTSDIR}/${1}"
+  fi
+  cp -R "$2" "${PORTSDIR}/${1}"
+  #Verify that the Makefile for the new category is accurate
+  validate_portcat_makefile "${PORTSDIR}/${1}"
+  #Enable the directory in the top-level Makefile
+  validate_port_makefile "${1}"
+}
+
+add_port_to_ports(){
+  #Inputs:
+  # $1 : port (category/origin)
+  # $2 : local path to dir
+  echo "[INFO] Adding overlay port to ports tree: ${1}"
+  #Copy the dir to the ports tree
+  if [ -e "${PORTSDIR}/${1}" ] ; then
+    rm -rf "${PORTSDIR}/${1}"
+  fi
+  cp -R "$2" "${PORTSDIR}/${1}"
+  #Verify that the Makefile for the category includes the port
+  validate_portcat_makefile "${PORTSDIR}/${1}/.."
+}
+
+apply_ports_overlay(){
+  num=`jq -r '."ports-overlay" | length' "${TRUEOS_MANIFEST}"`
+  if [ "${num}" = "null" ] || [ -z "${num}" ] ; then
+    #nothing to do
+    return 0
+  fi
+  i=0
+  while [ ${i} -lt ${num} ]
+  do
+    _type=`jq -r '."ports-overlay"['${i}'].type' "${TRUEOS_MANIFEST}"`
+    _name=`jq -r '."ports-overlay"['${i}'].name' "${TRUEOS_MANIFEST}"`
+    _path=`jq -r '."ports-overlay"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
+    if [ "${_type}" = "category" ] ; then
+      add_cat_to_ports "${_name}" "${_path}"
+    elif [ "${_type}" = "port" ] ; then
+      add_port_to_ports "${_name}" "${_path}"
+    else
+      echo "[WARNING] Unknown port overlay type: ${_type} (${_name})"
+    fi
+    i=`expr ${i} + 1`
+  done
+  return 0
+}
+
+# ======
+#  STAGES
+# ======
 checkout(){
   if [ "$1" = "base" ] ; then
     GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
@@ -130,12 +256,18 @@ checkout(){
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
   #  - need to ignore that dir path when extracting
   if [ -e "${BASE_TAR}" ] ; then
-    echo "[INFO] Extracting repo..."
+    echo "[INFO] Extracting ${1} repo..."
     tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
     echo "[INFO] Done: ${SRCDIR}"
   else
     echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
     return 1
+  fi
+  # =====
+  # Ports Tree Overlay
+  # =====
+  if [ "$1" = "ports" ] ; then
+    apply_ports_overlay
   fi
 }
 
@@ -228,10 +360,10 @@ make_release(){
   ISONAME="${ISOBASE}-${CURDATE}"
 
   #Remove old artifacts (if any)
-  if [ -d "${ARTIFACTS_DIR}" ] ; then
+  if [ -e "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
   fi
-  mkdir -p "${ARTIFACTS_DIR}"
+  mkdir -p "${ARTIFACTS_DIR}/tar"
   cd "${BASEDIR}/release"
   make release
   if [ $? -eq 0 ] ; then
@@ -240,11 +372,11 @@ make_release(){
     if [ $? -ne 0 ] ; then
       echo "[WARNING] ISO files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp *.txz "${ARTIFACTS_DIR}/"
+    cp *.txz "${ARTIFACTS_DIR}/tar/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] TXZ files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
-    cp MANIFEST "${ARTIFACTS_DIR}/"
+    cp MANIFEST "${ARTIFACTS_DIR}/tar/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] MANIFEST file not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
@@ -261,7 +393,7 @@ make_release(){
       #No artifact files
       echo "[ERROR] No files could be artifacted!"
       _tmp=`ls -l "${INTERNAL_RELEASE_DIR}"`
-      echo "Internal Release Dir contents:\\n${_tmp}"
+      echo "Internal Release Dir contents:\n${_tmp}"
       return 1
     fi
   else
@@ -312,6 +444,49 @@ make_pkg_manifest(){
   unset _tmp
 }
 
+make_sign_artifacts(){
+  #NOTE: This will use the PKGSIGNKEY environment variable to sign ISO files
+  echo "[INFO] Organizing Artifacts..."
+  #Quick check for the *other* signing key variable
+  if [ -z "${PKGSIGNKEY}" ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
+    PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
+  fi
+  cd "${ARTIFACTS_DIR}"
+  manifest="manifest.json"
+  if [ -e "${PKGSIGNKEY}" ] ; then
+    keyfile="${PKGSIGNKEY}"
+  else
+    keyfile="priv.key"
+    echo "${PKGSIGNKEY}" > "${keyfile}"
+  fi
+
+  #Note: There should only be 1 ISO in the artifacts dir typically
+  for iso in `ls *.iso`
+  do
+    add_to_json_str "iso" "${iso}" "${manifest}"
+    size=`ls -lh "${iso}" | cut -w -f 5`
+    add_to_json_str "iso_size" "${size}" "${manifest}"
+    if [ -n "${PKGSIGNKEY}" ] ; then
+      echo "[INFO] Signing ISO: ${iso}"
+      openssl dgst -sha512 -sign "${PKGSIGNKEY}" -out "${iso}.sha512" "${iso}"
+      add_to_json_str "iso_signature" "${iso}.sha512" "${manifest}"
+      echo "[INFO] Creating public key for verification later"
+      openssl rsa -in "${keyfile}" -pubout -out "${POUDRIERE_BASE}.pubkey"
+      add_to_json_str "iso_pubkey" "${POUDRIERE_BASE}.pubkey" "${manifest}"
+    fi
+    echo "[INFO] Generating MD5: ${iso}"
+    md5 "${iso}" | cut -d = -f 2 | tr -d '[:space:]' > "${iso}.md5"
+    add_to_json_str "iso_md5" "${iso}.md5" "${manifest}"  
+
+  done
+
+  #Make sure we delete any temporary private key file
+  if [ "${keyfile}" = "priv.key" ] ; then
+    rm "${keyfile}"
+  fi
+  echo "[DONE] Manifest of artifacts available: ${manifest}"
+}
+
 make_all(){
   clean_base
   if [ $? -eq 0 ] ; then
@@ -353,6 +528,18 @@ make_all(){
   else
     return 1
   fi
+
+  if [ $? -eq 0 ] ; then
+    make_pkg_manifest
+  else
+    return 1
+  fi
+
+  if [ $? -eq 0 ] ; then
+    make_sign_artifacts
+  else
+    return 1
+  fi
 }
 
 #===================
@@ -390,8 +577,11 @@ case $1 in
 	manifest)
 		make_pkg_manifest
 		;;
+	sign_artifacts)
+		make_sign_artifacts
+		;;
 	*)
 		echo "Unknown Option: $1"
-		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest"
+		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest, sign_artifacts"
 		;;
 esac

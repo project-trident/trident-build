@@ -4,9 +4,71 @@
   "base-github-tag" : "2220ce775edd7639a818bb0ead2eb9e5011db272",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "438ed11332120a49117aaf19aa5cca4fe7311f48",
+  "ports-github-tag" : "9c85e3145cd5d8de85178c187d4ba5fef293dc8e",
   "iso-name" : "trident-alpha",
-  "iso-file-name" : "Trident_Alpha-x64-%%DATE%%",
+  "iso-file-name" : "Trident_alpha-x64-%%DATE%%",
+  "ports-overlay" : [
+    {
+      "type" : "category",
+      "name" : "trident",
+      "local_path" : "ports-overlay/trident"
+    },
+    {
+      "type" : "port",
+      "name" : "x11/lumina",
+      "local_path" : "ports-overlay/x11/lumina"
+    },
+    {
+      "type" : "port",
+      "name" : "x11/lumina-core",
+      "local_path" : "ports-overlay/x11/lumina-core"
+    },
+    {
+      "type" : "port",
+      "name" : "x11/lumina-coreutils",
+      "local_path" : "ports-overlay/x11/lumina-coreutils"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-archiver",
+      "local_path" : "ports-overlay/deskutils/lumina-archiver"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-calculator",
+      "local_path" : "ports-overlay/deskutils/lumina-calculator"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-fileinfo",
+      "local_path" : "ports-overlay/deskutils/lumina-fileinfo"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-fm",
+      "local_path" : "ports-overlay/deskutils/lumina-fm"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-mediaplayer",
+      "local_path" : "ports-overlay/deskutils/lumina-mediaplayer"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-pdf",
+      "local_path" : "ports-overlay/deskutils/lumina-pdf"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-screeshot",
+      "local_path" : "ports-overlay/deskutils/lumina-screenshot"
+    },
+    {
+      "type" : "port",
+      "name" : "deskutils/lumina-textedit",
+      "local_path" : "ports-overlay/deskutils/lumina-textedit"
+    }
+  ],
   "ports" : {
     "type" : "local",
     "url" : "/usr/ports_tmp",
@@ -200,6 +262,7 @@
 	"PARALLEL_JOBS=32",
 	"PREPARE_PARALLEL_JOBS=78",
 	"USE_TMPFS='yes'",
+	"ALLOW_MAKE_JOBS=yes",
 	"NOHANG_TIME=14400"
   ],
   "package-all":true,
@@ -239,6 +302,7 @@
 	"x11-fonts/noto-lite"
   ],
   "iso-install-packages":[
+	"emulators/virtualbox-ose-additions",
 	"sysutils/diskscrub",
 	"trident/trident-installer",
 	"www/lynx-current",
@@ -251,6 +315,7 @@
 	"devel/git",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
+	"graphics/intel-backlight",
 	"graphics/phototonic",
 	"mail/trojita",
 	"multimedia/openh264",
@@ -267,9 +332,9 @@
 	"shells/fish",
 	"shells/zsh",
 	"sysutils/fusefs-exfat",
-	"sysutils/fusefs-ext2",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
+	"sysutils/powerdxx",
 	"sysutils/sysadm",
 	"sysutils/sysadm-client",
 	"trident/trident-core",
@@ -286,7 +351,9 @@
 	"x11-drivers/xf86-video-amdgpu",
 	"x11-drivers/xf86-video-intel",
 	"x11-drivers/xf86-video-nv",
-	"x11-fonts/noto-lite"
+	"x11-drivers/xf86-video-vmware",
+	"x11-fonts/noto-lite",
+	"x11-themes/lumina-themes"
   ],
   "auto-install-packages":[],
   "iso-overlay" : {
