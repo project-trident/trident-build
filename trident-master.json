@@ -260,7 +260,7 @@
 	"devel/git",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
-	"graphics/intel_backlight",
+	"graphics/intel-backlight",
 	"graphics/phototonic",
 	"mail/trojita",
 	"multimedia/openh264",
