@@ -259,7 +259,7 @@
     ]
   },
   "poudriere-conf": [
-	"PARALLEL_JOBS=32",
+	"PARALLEL_JOBS=26",
 	"PREPARE_PARALLEL_JOBS=78",
 	"USE_TMPFS='yes'",
 	"ALLOW_MAKE_JOBS=yes",

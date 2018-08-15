@@ -47,7 +47,7 @@ if [ -z "${MAX_THREADS}" ] ; then
 fi
 
 export POUDRIERE_BASE=`basename -s ".json" "${TRUEOS_MANIFEST}"`
-export POUDRIERE_PORTS=`jq -r '."ports-branch"' "${TRUEOS_MANIFEST}"`
+export POUDRIERE_PORTS="ports"
 
 #NOTE: the "${WORKSPACE}" variable is set by jenkins as the prefix for the repo checkout
 #  The "CURDIR" method below should automatically catch/include the workspace in the path
