@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-pdf
 PORTVERSION=	1.4.2
-PORTREVISION=	201808101606
+PORTREVISION=	201808160902
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -24,14 +24,6 @@ I18N_DESC= Install localization files
 POPPLER_DESC=	Use Poppler-qt5 backend renderer
 MUPDF_DESC=		Use MuPDF backend renderer
 
-POPPLER_LIB_DEPENDS=		libpoppler-qt5.so:graphics/poppler-qt5
-POPPLER_QMAKE_ON=		USE_POPPLER=true
-MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
-MUPDF_QMAKE_ON=			USE_MUPDF=true
-
-I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			qt+=linguist_build
-
 .include <bsd.port.options.mk>
 
 MAKE_JOBS_UNSAFE=yes
@@ -42,7 +34,14 @@ USE_QT=		core gui widgets network svg multimedia \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	2be80fd648c25e17b091e24c0e7312f289d78c82
+GH_TAGNAME=	91e10e06bfec28a13eb0c1357764e08f90b41cb9
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
+
+POPPLER_LIB_DEPENDS=		libpoppler-qt5.so:graphics/poppler-qt5
+POPPLER_QMAKE_ON=		USE_POPPLER=true
+MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
+MUPDF_QMAKE_ON=			USE_MUPDF=true
+I18N_QMAKE_ON=		CONFIG+=WITH_I18N
+I18N_USE=			USE_QT+=linguist_build
 
 .include <bsd.port.mk>
