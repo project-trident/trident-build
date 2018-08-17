@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-pdf
 PORTVERSION=	1.4.2
-PORTREVISION=	201808160902
+PORTREVISION=	201808171611
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -34,14 +34,20 @@ USE_QT=		core gui widgets network svg multimedia \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	91e10e06bfec28a13eb0c1357764e08f90b41cb9
+GH_TAGNAME=	da4aeb89f5f42f6e11754abe27eb1fda7078ce08
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
-POPPLER_LIB_DEPENDS=		libpoppler-qt5.so:graphics/poppler-qt5
-POPPLER_QMAKE_ON=		USE_POPPLER=true
-MUPDF_LIB_DEPENDS=		libmupdf.so:graphics/mupdf
-MUPDF_QMAKE_ON=			USE_MUPDF=true
-I18N_QMAKE_ON=		CONFIG+=WITH_I18N
-I18N_USE=			USE_QT+=linguist_build
+.if${PORT_OPTIONS:MPOPPLER}
+QMAKE_ARGS+=	USE_POPPLER=true
+LIB_DEPENDS+=	libpoppler-qt5.so:graphics/poppler-qt5
+.elif${PORT_OPTIONS:MMUPDF}
+QMAKE_ARGS+=	USE_MUPDF=true
+LIB_DEPENDS+=	libmupdf.so:graphics/mupdf
+.endif
+
+.if${PORT_OPTIONS:MI18N}
+USE_QT+= linguist_build
+QMAKE_ARGS+=CONFIG+=WITH_I18N
+.endif
 
 .include <bsd.port.mk>
