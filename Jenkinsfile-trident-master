@@ -68,7 +68,7 @@ pipeline {
       }
       post {
         success {
-          archiveArtifacts artifacts: 'artifacts/pkg.list', fingerprint: true
+          archiveArtifacts artifacts: 'artifact-iso/pkg.list', fingerprint: true
         }
       }
       steps {
