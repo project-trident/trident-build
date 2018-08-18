@@ -84,14 +84,6 @@ pipeline {
         REMOTE_SERVER='pkg.project-trident.org'
         REMOTE_PKG_DIR='/data/pkg/stage'
         REMOTE_ISO_DIR='/data/iso/stage'
-        POUDRIERE_BASE= sh (
-		script: 'basename -s ".json" "${TRUEOS_MANIFEST}"',
-		returnStdout: true
-		).trim()
-        POUDRIERE_PORTS= sh (
-		script: 'jq -r \'."ports-branch"\' "${TRUEOS_MANIFEST}"',
-		returnStdout: true
-		).trim()
         ABI= sh (
 		script: 'pkg-static -o ABI_FILE=/bin/sh config ABI',
 		returnStdout: true
@@ -99,12 +91,15 @@ pipeline {
       }
       steps {
         sshagent (credentials: ['Trident-publish']) {
+          // PORTS Packages
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/ports/${ABI}/latest || true'
-          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/ports/$(pkg-static -o ABI_FILE=/bin/sh config ABI)/latest/'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-pkg/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/ports/${ABI}/latest/'
+          // BASE Packages
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/base/ || true'
-          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" /usr/obj${WORKSPACE}/base/repo/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_PKG_DIR}/base/'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-pkg-base/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_PKG_DIR}/base/'
+          // ISO Artifacts
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
-          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifacts/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-iso/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
         }
       }
     }

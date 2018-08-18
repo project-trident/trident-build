@@ -63,10 +63,14 @@ INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/repo"
 
 if [ -n "${WORKSPACE}" ] ; then
   #Special dir for Jenkins artifacts
-  ARTIFACTS_DIR="${WORKSPACE}/artifacts"
+  ARTIFACTS_DIR="${WORKSPACE}/artifact-iso"
+  PKG_RELEASE_PORTS="${WORKSPACE}/artifact-pkg"
+  PKG_RELEASE_BASE="${WORKSPACE}/artifact-pkg-base"
 else
   #Create/use an artifacts dir in the current dir
   ARTIFACTS_DIR="${CURDIR}/artifacts"
+  PKG_RELEASE_LINK="${CURDIR}/artifact-pkg"
+  PKG_RELEASE_BASE="${CURDIR}/artifact-pkg-base"
 fi
 
 
@@ -322,6 +326,12 @@ make_base_pkg(){
     echo "[ERROR] Could not build TrueOS base packages"
     return 1
   fi
+  #Now make a symlink to the final package directories
+  # Do not copy them! This dir is large!
+  if [ -e "${PKG_RELEASE_BASE}" ] ; then
+    rm "${PKG_RELEASE_BASE}"
+  fi
+  ln -s "${INTERNAL_RELEASE_REPODIR}" "${PKG_RELEASE_BASE}"
 }
 
 make_ports(){
@@ -345,6 +355,12 @@ make_ports(){
     echo "[ERROR] Could not build TrueOS ports"
     return 1
   fi
+  #Now make a symlink to the final package directories
+  # Do not copy them! This dir is massive!
+  if [ -e "${PKG_RELEASE_LINK}" ] ; then
+    rm "${PKG_RELEASE_LINK}"
+  fi
+  ln -s "${POUD_PKG_DIR}" "${PKG_RELEASE_LINK}"
 }
 
 make_release(){

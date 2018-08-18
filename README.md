@@ -85,11 +85,9 @@ Syntax:
    * Default value: One less than the detected number of CPU's on the system (sysctl -n hw.ncpu): Example: An 8-core system will result in MAX_THREADS getting automatically set to 7.
 
 ### Output Files
- * Build artifacts (ISO, MANIFEST, various *.tgz) will be placed in a new "artifacts/" subdirectory relative to the location of the build-distro.sh script.
-* "Ports" Package Files are located in "/usr/local/poudriere/data/packages/<manifest-name>-<ports-branch>"
-   * Example: For a manifest called "trident.json" with a ports-branch entry of "trueos-master" the directory will be "/usr/local/poudriere/data/packages/trident-trueos-master"
-   * This directory is *not* cleaned when the "clean" command is run. This allows port builds to be iterative in order to save a lot of time when doing regular builds. Instead, the build system is smart enough to automatically clean the ports dir as needed (such as when a base ABI change is detected).
-* "Base" Package Files are located in "/usr/obj${WORKSPACE}/base/repo/${ABI}/latest"
+ * ISO Build artifacts (ISO, MANIFEST, various *.tgz) will be placed in a new "artifact-iso/" subdirectory relative to the location of the build-distro.sh script.
+* "Ports" Package Files will be linked to a new "artifact-pkg/" subdirectory relative to the location of the build-distro.sh script (symlink to the actual poudriere dir on disk).
+* "Base" Package Files will be linked to a new "artifact-pkg-base/" subdirectory relative to the location of the build-distro.sh script (symlink to the actual base-package dir on disk).
 
 ## General Notes about creating a TrueOS distribution
 
