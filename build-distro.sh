@@ -332,7 +332,7 @@ make_base_pkg(){
     rm "${PKG_RELEASE_BASE}"
   fi
   echo "[INFO] Linking base package dir: ${INTERNAL_RELEASE_REPODIR} -> ${PKG_RELEASE_BASE}"
-  ln -s "${INTERNAL_RELEASE_REPODIR}" "${PKG_RELEASE_BASE}"
+  ln -sf "${INTERNAL_RELEASE_REPODIR}" "${PKG_RELEASE_BASE}"
 }
 
 make_ports(){
@@ -362,7 +362,7 @@ make_ports(){
     rm "${PKG_RELEASE_PORTS}"
   fi
   echo "[INFO] Linking package dir: ${POUD_PKG_DIR} -> ${PKG_RELEASE_PORTS}"
-  ln -s "${POUD_PKG_DIR}" "${PKG_RELEASE_PORTS}"
+  ln -sf "${POUD_PKG_DIR}" "${PKG_RELEASE_PORTS}"
 }
 
 make_release(){
