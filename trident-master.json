@@ -302,7 +302,6 @@
 	"x11-fonts/noto-lite"
   ],
   "iso-install-packages":[
-	"emulators/virtualbox-ose-additions",
 	"sysutils/diskscrub",
 	"trident/trident-installer",
 	"www/lynx-current",
