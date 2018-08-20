@@ -214,7 +214,7 @@
 	"print_qpdfview_UNSET=QT4",
 	"print_qpdfview_SET=QT5 DJVU",
 	"print_xfce4-print_UNSET=LPR",
-	"security_ca_root_nss_SET=ETCSYMLINK",
+	"security_ca_root_nss_UNSET=ETCSYMLINK",
 	"security_gnupg_SET=GPGSM SCDAEMON",
 	"security_gpgme_SET=GPGSM",
 	"security_ike_SET=QTGUI NATT LDAP",
