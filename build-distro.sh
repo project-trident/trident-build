@@ -495,7 +495,8 @@ make_sign_artifacts(){
     echo "[INFO] Generating MD5: ${iso}"
     md5 "${iso}" | cut -d = -f 2 | tr -d '[:space:]' > "${iso}.md5"
     add_to_json_str "iso_md5" "${iso}.md5" "${manifest}"  
-
+    _tmp=`cat ${iso}.md5`
+    add_to_json_str "iso_md5_raw" "${_tmp}" "${manifest}"
   done
 
   #Make sure we delete any temporary private key file
