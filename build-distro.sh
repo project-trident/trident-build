@@ -431,35 +431,23 @@ make_pkg_manifest(){
     rm "${_pkgfile}"
   fi
   
-  for _line in `find "${_pkgdir}" -depth 1 -name "*.txz" | sort`
+  for _path in `find "${_pkgdir}" -depth 1 -name "*.txz" | sort`
   do
     #Cleanup the individual line (directory, suffix)
-    _line=$(echo ${_line} | rev | cut -d "/" -f 1| rev | sed "s|.txz||g")
+    _line=$(basename ${_path} | sed "s|.txz||g")
     #Make sure it is a valid package name - otherwise skip it
     case "${_line}" in
 	fbsd-distrib) continue ;;
 	*-*) ;;
 	*) continue ;;
     esac
-    #Grab the version tag (ignore the first word - name might start with a number)
-    _version=$(echo ${_line} | cut -d '-' -f 2-12 | rev | cut -d '-' -f 1-2 | rev)
-    #check that the version string starts with a number, otherwise only use the last "-" section
-    _tmp=$(echo ${_version} | egrep '^[0-9]+')
-    if [ -z "${_tmp}" ] ; then
-      _version=$(echo ${_line} | rev | cut -d '-' -f 1 | rev)
-    fi
-    _name=$(echo ${_line} | sed "s|-${_version}||g")
-    echo "${_name} : ${_version}" >> ${_pkgfile}
-    #echo "Name: ${_name}  : Version: ${_version}"
-    #echo "  -raw line: ${line}"
+    #Read off the name/version of the package file and put it into the manifest
+    pkg query -F "${_path}" "%n : %v" >> ${_pkgfile}
   done
   #cleanup the temporary variables
   unset _pkgdir
   unset _pkgfile
-  unset _line
-  unset _name
-  unset _version
-  unset _tmp
+  unset _path
 }
 
 make_sign_artifacts(){
