@@ -363,7 +363,7 @@
   "install-script" : "/usr/local/bin/start-trident-installer",
   "auto-install-script" : "",
   "pkg-repo": {
-	  "url":"https://pkg.project-trident.org/pkg/release/ports/${ABI}/latest",
+	  "url":"http://pkg.project-trident.org/pkg/release/ports/${ABI}/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
@@ -393,7 +393,7 @@
 	  ]
   },
   "base-pkg-repo": {
-	  "url":"https://pkg.project-trident.org/pkg/release/base/${ABI}/latest",
+	  "url":"http://pkg.project-trident.org/pkg/release/base/${ABI}/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
