@@ -53,6 +53,13 @@ pipeline {
         }
       }
     }
+    stage('Copy to stage') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} cp -R ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_STAGE} || true'
+        }
+      }
+    }
 
   }
 
