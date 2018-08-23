@@ -330,6 +330,7 @@
 	"shells/bash",
 	"shells/fish",
 	"shells/zsh",
+	"sysutils/devcpu-data",
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
