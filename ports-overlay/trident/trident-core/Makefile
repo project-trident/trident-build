@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201808241106
+PORTVERSION=	201808241135
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -28,12 +28,13 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		trident-icons>=0:trident/trident-icons \
 		cursor-chameleon-pearl>=0:x11-themes/cursor-chameleon-pearl \
 		xdpyinfo>=0:x11/xdpyinfo \
-		sysadm>=0:sysutils/sysadm
+		sysadm>=0:sysutils/sysadm \
+		alsa-sndio>=0:audio/alsa-sndio
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	d132197c0ebd812c3737c6a59887ee98573451f3
+GH_TAGNAME=	5e19e4adbe516539f700a9668d337619f0e49727
 
 NO_BUILD=	yes
 
