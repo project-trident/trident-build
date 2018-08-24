@@ -29,6 +29,7 @@ share/trident/scripts/remove-desktop-entry
 share/trident/scripts/reset-firewall
 share/trident/scripts/reset-firewall-tor
 share/trident/scripts/sys-init.sh
+share/trident/scripts/update-xorg-fonts.sh
 share/trident/scripts/validate-services.sh
 share/trident/xorg-templates/xorg.conf
 share/trident/xstartup-parallel/disable-beep.sh
