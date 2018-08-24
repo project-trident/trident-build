@@ -225,7 +225,7 @@ checkout(){
     GH_BASE_REPO=`jq -r '."ports-github-repo"' "${TRUEOS_MANIFEST}"`
     GH_BASE_TAG=`jq -r '."ports-github-tag"' "${TRUEOS_MANIFEST}"`
     SRCDIR="${PORTSDIR}"
-    if [ -z "${GH_BASE_ORG}" ] ; then
+    if [ -z "${GH_BASE_ORG}" ] || [ "null" = "${GH_BASE_ORG}" ] ; then
       #This is optional - just skip it if not set/used in the manifest
       return 0
     fi
