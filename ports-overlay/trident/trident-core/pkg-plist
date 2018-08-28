@@ -13,6 +13,7 @@ etc/init.d/trident_init
 etc/luminaDesktop.conf
 etc/openal/alsoft.conf
 etc/pcdm.conf.trident
+etc/pulse/default.pa.trident
 etc/sudoers.d/trident
 etc/trident/ipfw.tor.rules
 etc/trident/recommended-services
