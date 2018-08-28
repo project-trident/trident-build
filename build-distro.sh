@@ -272,6 +272,10 @@ checkout(){
   # =====
   if [ "$1" = "ports" ] ; then
     apply_ports_overlay
+    #symlink the distfiles dir into the temporary source tree if it exists
+    if [ -d "/usr/ports/distfiles" ] ; then
+      ln -s "/usr/ports/distfiles" "${SRCDIR}/distfiles"
+    fi
   fi
 }
 
