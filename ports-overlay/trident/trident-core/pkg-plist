@@ -1,4 +1,5 @@
 /boot/loader.conf.local
+/etc/devfs.rules.trident
 /etc/rc.conf.d/trident.conf
 /etc/sysctl.d/trident-core.conf
 bin/check-tor-mode
