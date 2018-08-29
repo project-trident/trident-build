@@ -5,7 +5,7 @@
 #     ** You will need to setup that manually **
 # ===============================
 
-if [ `id -u`-ne 0 ] ; then
+if [ `id -u` -ne 0 ] ; then
   echo "[ERROR] This script needs to run with root permissions"
   return 1
 fi
@@ -34,6 +34,7 @@ do
   grep -q '${_tune}' /boot/loader.conf
   if [ $? -ne 0 ] ; then
     echo ${_tune} >> /boot/loader.conf
+  fi
 done
 
 # NGINX Service for viewing poudriere build logs
