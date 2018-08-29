@@ -112,7 +112,7 @@
 	"audio_pavucontrol_UNSET=GTK2",
 	"audio_pavucontrol_SET=GTK3",
 	"audio_portaudio_SET=SNDIO",
-	"audio/pulseaudio_UNSET=AVAHI"
+	"audio/pulseaudio_UNSET=AVAHI",
 	"audio_xmms2_SET=MODPLUG MUSEPACK MMS SAMBA FAM ICES",
 	"comms_fldigi_SET=FLARQ HAMLIB OSS",
 	"comms_morse_UNSET=OSS",

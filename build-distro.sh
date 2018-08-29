@@ -254,7 +254,7 @@ checkout(){
 
   # Now that we have the tarball, lets extract it to the base dir
   if [ -d "${SRCDIR}" ] ; then
-   rm -rf "${SRCDIR}"
+    rm -rf "${SRCDIR}"
   fi
   mkdir -p "${SRCDIR}"
   #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
