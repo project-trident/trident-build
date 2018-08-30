@@ -490,7 +490,10 @@ make_sign_artifacts(){
     _tmp=`cat ${iso}.md5`
     add_to_json_str "iso_md5_raw" "${_tmp}" "${manifest}"
   done
-
+  _date=`date -ju "+%Y_%m_%d, %H:%M %Z"`
+  _date_secs=`date -j +%s`
+  add_to_json_str "build_date" "${_date}" "${manifest}"
+  add_to_json_str "build_date_time_t" "${_date_secs}" "${manifest}"  
   #Make sure we delete any temporary private key file
   if [ "${keyfile}" = "priv.key" ] ; then
     rm "${keyfile}"
