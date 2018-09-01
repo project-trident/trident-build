@@ -93,7 +93,7 @@ add_to_json_str(){
     echo "{}" >> "${3}"
   fi
   val=$(echo $2 | sed 's|"||g'| xargs echo -n)
-  jq '. += {"'${1}'": "'${val}'"}' "${3}" > "${3}.new"
+  jq '. += {"'${1}'": "'"${val}"'"}' "${3}" > "${3}.new"
   mv "${3}.new" "${3}"
 }
 
@@ -490,7 +490,7 @@ make_sign_artifacts(){
     _tmp=`cat ${iso}.md5`
     add_to_json_str "iso_md5_raw" "${_tmp}" "${manifest}"
   done
-  _date=`date -ju "+%Y_%m_%d, %H:%M %Z"`
+  _date=`date -ju "+%Y_%m_%d %H:%M %Z"`
   _date_secs=`date -j +%s`
   add_to_json_str "build_date" "${_date}" "${manifest}"
   add_to_json_str "build_date_time_t" "${_date_secs}" "${manifest}"  
