@@ -67,6 +67,11 @@
       "type" : "port",
       "name" : "deskutils/lumina-textedit",
       "local_path" : "ports-overlay/deskutils/lumina-textedit"
+    },
+    {
+      "type" : "port",
+      "name" : "sysutils/sysadm",
+      "local_path" : "ports-overlay/sysutils/sysadm"
     }
   ],
   "ports" : {
