@@ -234,7 +234,7 @@ checkout(){
 
   BASE_CACHE_DIR="/tmp/trueos-repo-cache"
   BASE_TAR="${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_${GH_BASE_TAG}.tgz"
-  if [ ! -f "${BASE_TAR}" ] ; then
+  #if [ ! -f "${BASE_TAR}" ] ; then
     if [ -d "${BASE_CACHE_DIR}" ] ; then
       #Got a different tag - clear the old files from the cache
       rm -f ${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_*.tgz
@@ -250,7 +250,7 @@ checkout(){
       echo "[ERROR] Could not download repository: ${BASE_URL}"
       return 1
     fi
-  fi
+  #fi
 
   # Now that we have the tarball, lets extract it to the base dir
   if [ -d "${SRCDIR}" ] ; then
