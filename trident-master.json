@@ -299,6 +299,7 @@
 	"www/chromium",
 	"www/falkon",
 	"www/firefox",
+	"www/w3m",
 	"x11/nvidia-driver",
 	"x11/nvidia-driver-304",
 	"x11/nvidia-driver-340",
@@ -310,7 +311,7 @@
   "iso-install-packages":[
 	"sysutils/diskscrub",
 	"trident/trident-installer",
-	"www/lynx-current",
+	"www/w3m",
 	"x11-drivers/xf86-input-evdev",
 	"x11-drivers/xf86-input-wacom",
 	"x11-fonts/noto-lite"
@@ -345,7 +346,7 @@
 	"sysutils/sysadm-client",
 	"trident/trident-core",
 	"www/falkon",
-	"www/lynx-current",
+	"www/w3m",
 	"x11/nvidia-driver",
 	"x11/nvidia-driver-304",
 	"x11/nvidia-driver-340",
