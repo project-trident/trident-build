@@ -39,7 +39,7 @@ pipeline {
     }
     stage('Generate Stats') {
       steps {
-          sh 'bunzip2 ${TMP_LOG_COMPRESSED}'
+          sh 'bunzip2 -c ${TMP_LOG_COMPRESSED} | grep -v newsyslog > ${TMP_LOG}'
           sh 'visitors -WUMRDB -m 500 -o html -f report.html ${TMP_LOG}'
           sh 'visitors -WUMRDB -m 500 -o text -f report.text ${TMP_LOG}'
       }
