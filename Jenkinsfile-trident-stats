@@ -52,8 +52,10 @@ pipeline {
 
   }
   post {
-    script {
-      cleanWs notFailBuild: true
+    always {
+      script {
+        cleanWs notFailBuild: true
+      }
     }
   }
 }
