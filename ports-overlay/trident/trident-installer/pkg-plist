@@ -1,3 +1,4 @@
+bin/activateNewBE
 bin/trident-installer
 bin/start-trident-installer
 share/icons/default/index.theme
