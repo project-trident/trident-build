@@ -17,6 +17,9 @@
 #    This is automatically set to the current number of CPU's (sysctl hw.ncpu) - 1 
 #==========================
 
+#NOTE: the "${WORKSPACE}" variable is set by jenkins as the prefix for the repo checkout
+#  The "CURDIR" method below should automatically catch/include the workspace in the path
+CURDIR=$(dirname $0)
 
 #Determine JSON Build Configuration File
 if [ -z "${TRUEOS_MANIFEST}" ] ; then
@@ -31,8 +34,17 @@ fi
 # - (since later stages of the build will be in different dirs)
 if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   echo "[ERROR] Specified manifest cannot be found: ${TRUEOS_MANIFEST}"
+  return 1
 fi
 TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
+
+#Perform any directory replacements in the manifest as needed
+grep -q "%%PWD%%" "${TRUEOS_MANIFEST}"
+if [ $? -eq 0 ] ; then
+  echo "Replacing PWD paths in TrueOS Manifest..."
+  cp "${TRUEOS_MANIFEST}" "${TRUEOS_MANIFEST}.orig"
+  sed -i '' "s|%%PWD%%|${CURDIR}|g" "${TRUEOS_MANIFEST}"
+fi
 
 #Build Server Settings (automatically determined: overwrite as needed)
 if [ -z "${MAX_THREADS}" ] ; then
@@ -48,10 +60,6 @@ fi
 
 export POUDRIERE_BASE=`basename -s ".json" "${TRUEOS_MANIFEST}"`
 export POUDRIERE_PORTS="current"
-
-#NOTE: the "${WORKSPACE}" variable is set by jenkins as the prefix for the repo checkout
-#  The "CURDIR" method below should automatically catch/include the workspace in the path
-CURDIR=$(dirname $0)
 
 #Other Paths (generally static)
 BASEDIR="/usr/src_tmp"
@@ -599,3 +607,8 @@ case $1 in
 		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest, sign_artifacts"
 		;;
 esac
+
+if [ -e "${TRUEOS_MANIFEST}.orig" ] ; then
+  #Put the original manifest file back in place
+  mv "${TRUEOS_MANIFEST}.orig" "${TRUEOS_MANIFEST}"
+fi

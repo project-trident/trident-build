@@ -364,9 +364,8 @@
   ],
   "auto-install-packages":[],
   "iso-overlay" : {
-    "type" : "",
-    "url" : "",
-    "branch" : ""
+    "type" : "local",
+    "url" : "%%PWD%%/iso-overlay"
   },
   "install-script" : "/usr/local/bin/start-trident-installer",
   "auto-install-script" : "",
