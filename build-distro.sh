@@ -607,8 +607,13 @@ case $1 in
 		echo "Valid options: all, clean, checkout, world, kernel, base, ports, release, manifest, sign_artifacts"
 		;;
 esac
-
+#Save the return code for a moment
+ret=$?
+#Do any post-process cleanup
 if [ -e "${TRUEOS_MANIFEST}.orig" ] ; then
   #Put the original manifest file back in place
   mv "${TRUEOS_MANIFEST}.orig" "${TRUEOS_MANIFEST}"
 fi
+
+#Now return the proper error/success code
+return ${ret}
