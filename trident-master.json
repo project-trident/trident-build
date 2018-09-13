@@ -72,6 +72,11 @@
       "type" : "port",
       "name" : "sysutils/sysadm",
       "local_path" : "ports-overlay/sysutils/sysadm"
+    },
+    {
+      "type" : "port",
+      "name" : "www/falkon",
+      "local_path" : "ports-overlay/www/falkon"
     }
   ],
   "ports" : {
