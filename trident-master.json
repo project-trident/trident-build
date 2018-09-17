@@ -4,7 +4,7 @@
   "base-github-tag" : "trueos-stable-18.06",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "8df876bbe2185fb4a72dcef309b05c7547bc26a0",
+  "ports-github-tag" : "82b8e0d1ab77ab03e532a7ec073b0bd8b7f68732",
   "iso-name" : "Trident-BETA3-x64",
   "iso-file-name" : "Trident-BETA3-x64-%%DATE%%",
   "ports-overlay" : [
@@ -72,11 +72,6 @@
       "type" : "port",
       "name" : "sysutils/sysadm",
       "local_path" : "ports-overlay/sysutils/sysadm"
-    },
-    {
-      "type" : "port",
-      "name" : "www/falkon",
-      "local_path" : "ports-overlay/www/falkon"
     }
   ],
   "ports" : {
