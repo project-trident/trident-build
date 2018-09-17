@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-textedit
 PORTVERSION=	1.4.2
-PORTREVISION=	201809070927
+PORTREVISION=	201809171026
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -27,7 +27,7 @@ USE_QT=		core gui widgets network svg printsupport \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	lumina
-GH_TAGNAME=	f1fce23e23d0a61ce588c5c089792a1e71dc0500
+GH_TAGNAME=	3c8c8f7f30106de17cd8f866272bde8e193caf36
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
