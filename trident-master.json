@@ -4,7 +4,7 @@
   "base-github-tag" : "trueos-stable-18.06",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "f50946b3f5757cb4c3228d005508df89dca265a3",
+  "ports-github-tag" : "5d44b6728807076ed9506a138c3da9a73ecf79bd",
   "iso-name" : "Trident-BETA3-x64",
   "iso-file-name" : "Trident-BETA3-x64-%%DATE%%",
   "ports-overlay" : [
