@@ -341,6 +341,7 @@
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
+	"sysutils/personacrypt",
 	"sysutils/powerdxx",
 	"sysutils/sysadm",
 	"sysutils/sysadm-client",
