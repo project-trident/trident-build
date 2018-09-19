@@ -30,8 +30,9 @@ Syntax:
 **Note:** The JSON manifest file can also be supplied via the "TRUEOS_MANIFEST" environment variable. That manifest **must** be provided in order to perform the build.
 
 #### Commands:
-   * **all** : Perform the following stages (in-order): clean, checkout, world, kernel, base, ports, release
-   * **clean** : Cleanup any temporary working directories and output dirs/files
+   * **all** : Perform the following stages (in-order): checkout, world, kernel, base, ports, release, manifest, sign_artifacts
+   * **clean** : Cleanup any temporary working directories and output dirs/files 
+      * *OPTIONAL* : The checkout phase will automatically clean source directories as needed based upon changes to the source/ports commit tags. This can be run manually to forcibly re-build the world/kernel as desired.
    * **checkout** : Fetch/extract the base/ports repositories (cached by tag - will only re-download if the tag changes)
    * **world** : Build FreeBSD world. Corresponds to "make buildworld"
    * **kernel** : Build FreeBSD kernel. Corresponds to "make buildkernel"
@@ -39,8 +40,12 @@ Syntax:
    * **ports** : Build/sign ports packages. Corresponds to "cd release && make poudriere". The "PKGSIGNKEY" or "PKG_REPO_SIGNING_KEY" environment variable must be set for this stage in order to sign the packages.
    * **release** : Build ISO files and artifacts. Corresponds to "cd release && make release".
    * **manifest** : Generate a manifest of all non-base packages ("artifacts/pkg.list")
+   * **sign_artifacts** : Sign all the ISO files (if a key is provided), generate makesums, and generate a manifest.json file containing links/information about all the ISO artifact files.
    
 #### Extra supported/required fields in the TrueOS JSON manifest:
+**NOTE:** The macro "%%PWD%%" can be used anywhere in the JSON manifest to insert the path to the directory which contains the JSON manifest file. This is useful if an option in the manifest requires a full path (such as a "local" iso-overlay setting), but the location of the build repository might be programmatically generated via automation procedures.
+
+**Additional JSON manifest fields**
    * "base-github-org" : [Required] (string) Name of the organization on GitHub (example: "trueos")
    * "base-github-repo" : [Required] (string) Name of the repository on GitHub (example: "trueos")
    * "base-github-tag" : [Required] (string) Tag name or commit ID to fetch from the GitHub org/repo

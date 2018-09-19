@@ -214,9 +214,52 @@ apply_ports_overlay(){
   return 0
 }
 
+check_github_tag(){
+  #Inputs: 1: github tag to check
+  LC_ALL="C" #Need C locale to get the right lower-case matching
+  local _tag="${1}"
+  #First do a quick check for non-valid characters in the tag name
+  echo "${_tag}" | grep -qE '^[0-9a-z]+$'
+  if [ $? -ne 0 ] ; then return 1; fi
+  #Now check the length of the tag
+  local _length=`echo "${_tag}" | wc -m | tr -d '[:space:]'`
+  #echo "[INFO] Checking Github Tag Length: ${_tag} ${_length}"
+  if [ ${_length} -eq 41 ] ; then
+    #right length for a GitHub commit tag (40 characters + null)
+    return 0
+  fi
+  return 1
+}
+
+compare_tar_files(){
+  #INPUTS:
+  # 1: path to file 1
+  # 2: path to file 2
+  local oldsha=`sha512 -q "${1}"`
+  local newsha=`sha512 -q "${2}"`
+  if [ "$oldsha" = "$newsha" ] ; then
+    return 0
+  fi
+  return 1
+}
+
 # ======
 #  STAGES
 # ======
+clean_base(){
+  echo "[INFO] Cleaning..."
+  if [ -d "${BASEDIR}" ] ; then
+    #Just remove the dir - running "make clean" in the source tree takes *forever*
+    # - faster to just remove and re-create (checkout)
+    rm -rf "${BASEDIR}"
+  fi
+  if [ -d "${INTERNAL_RELEASE_BASEDIR}" ] ; then
+    rm -rf "${INTERNAL_RELEASE_BASEDIR}"
+  fi
+  #always return 0 for cleaning
+  return 0
+}
+
 checkout(){
   if [ "$1" = "base" ] ; then
     GH_BASE_ORG=`jq -r '."base-github-org"' "${TRUEOS_MANIFEST}"`
@@ -242,15 +285,30 @@ checkout(){
 
   BASE_CACHE_DIR="/tmp/trueos-repo-cache"
   BASE_TAR="${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_${GH_BASE_TAG}.tgz"
-  #if [ ! -f "${BASE_TAR}" ] ; then
-    if [ -d "${BASE_CACHE_DIR}" ] ; then
+  local _skip=1
+  if [ -d "${BASE_CACHE_DIR}" ] ; then
+    if [ -e "${BASE_TAR}" ] ; then
+      # This tag was previously fetched
+      # If a commit tag - just re-use it (nothing changed)
+      #  if is it a branch name, need to re-download and check for differences
+      check_github_tag "${GH_BASE_TAG}"
+      if [ $? -ne 0 ] ; then
+        #Got a branch name - need to re-download the tarball to check
+        mv "${BASE_TAR}" "${BASE_TAR}.prev"
+      else
+        #Got a commit tag - skip re-downloading/extracting it
+        _skip=0
+      fi
+    else
       #Got a different tag - clear the old files from the cache
       rm -f ${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_*.tgz
-    else
-      mkdir -p "${BASE_CACHE_DIR}"
     fi
-    BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_TAG}"
-    #NOTE: Fetch works, but seems slower than using curl
+  else
+    mkdir -p "${BASE_CACHE_DIR}"
+  fi
+  BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_TAG}"
+  #NOTE: Fetch works, but seems slower than using curl
+  if [ ${_skip} -ne 0 ] ; then
     echo "[INFO] Downloading Repo..."
     fetch --retry -o "${BASE_TAR}" "${BASE_URL}"
     #curl -L "${base_url}" -o "${BASE_TAR}"
@@ -258,22 +316,33 @@ checkout(){
       echo "[ERROR] Could not download repository: ${BASE_URL}"
       return 1
     fi
-  #fi
-
+  fi
   # Now that we have the tarball, lets extract it to the base dir
-  if [ -d "${SRCDIR}" ] ; then
+  if [ -e "${BASE_TAR}.prev" ] ; then
+    compare_tar_files "${BASE_TAR}" "${BASE_TAR}.prev"
+    if [ $? -eq 0 ] ; then
+      _skip=0
+    fi
+    rm "${BASE_TAR}.prev"
+  fi
+  if [ -d "${SRCDIR}" ] && [ 0 -ne "${_skip}" ] ; then
+    if [ "$1" = "base" ] ; then clean_base ; fi
     rm -rf "${SRCDIR}"
   fi
-  mkdir -p "${SRCDIR}"
-  #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
-  #  - need to ignore that dir path when extracting
-  if [ -e "${BASE_TAR}" ] ; then
-    echo "[INFO] Extracting ${1} repo..."
-    tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
-    echo "[INFO] Done: ${SRCDIR}"
+  if [ ! -d "${SRCDIR}" ] ; then
+    mkdir -p "${SRCDIR}"
+    #Note: GitHub archives always have things inside a single subdirectory in the archive (org-repo-tag)
+    #  - need to ignore that dir path when extracting
+    if [ -e "${BASE_TAR}" ] ; then
+      echo "[INFO] Extracting ${1} repo..."
+      tar -xf "${BASE_TAR}" -C "${SRCDIR}" --strip-components 1
+      echo "[INFO] Done: ${SRCDIR}"
+    else
+      echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
+      return 1
+    fi
   else
-    echo "[ERROR] Could not find source repo tarfile: ${BASE_TAR}"
-    return 1
+    echo "[INFO] Re-using existing source tree: ${SRCDIR}"
   fi
   # =====
   # Ports Tree Overlay
@@ -285,20 +354,6 @@ checkout(){
       ln -s "/usr/ports/distfiles" "${SRCDIR}/distfiles"
     fi
   fi
-}
-
-clean_base(){
-  echo "[INFO] Cleaning..."
-  if [ -d "${BASEDIR}" ] ; then
-    #Just remove the dir - running "make clean" in the source tree takes *forever*
-    # - faster to just remove and re-create (checkout)
-    rm -rf "${BASEDIR}"
-  fi
-  if [ -d "${INTERNAL_RELEASE_BASEDIR}" ] ; then
-    rm -rf "${INTERNAL_RELEASE_BASEDIR}"
-  fi
-  #always return 0 for cleaning
-  return 0
 }
 
 make_world(){
@@ -510,12 +565,7 @@ make_sign_artifacts(){
 }
 
 make_all(){
-  clean_base
-  if [ $? -eq 0 ] ; then
-    checkout base
-  else
-    return 1
-  fi
+  checkout base
   if [ $? -eq 0 ] ; then
     checkout ports
   else
