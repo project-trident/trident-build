@@ -351,7 +351,12 @@ checkout(){
     apply_ports_overlay
     #symlink the distfiles dir into the temporary source tree if it exists
     if [ -d "/usr/ports/distfiles" ] ; then
-      ln -s "/usr/ports/distfiles" "${SRCDIR}/distfiles"
+      if [ ! -h "${SRCDIR}/distfiles" ] ; then
+        if [ -e "${SRCDIR}/distfiles" ] ; then
+          rm  -r "${SRCDIR}/distfiles"
+        fi
+        ln -s "/usr/ports/distfiles" "${SRCDIR}/distfiles"
+      fi
     fi
   fi
 }
