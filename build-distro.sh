@@ -76,7 +76,7 @@ if [ -n "${WORKSPACE}" ] ; then
   PKG_RELEASE_BASE="${WORKSPACE}/artifact-pkg-base"
 else
   #Create/use an artifacts dir in the current dir
-  ARTIFACTS_DIR="${CURDIR}/artifacts"
+  ARTIFACTS_DIR="${CURDIR}/artifact-iso"
   PKG_RELEASE_PORTS="${CURDIR}/artifact-pkg"
   PKG_RELEASE_BASE="${CURDIR}/artifact-pkg-base"
 fi
@@ -256,6 +256,13 @@ clean_base(){
   if [ -d "${INTERNAL_RELEASE_BASEDIR}" ] ; then
     rm -rf "${INTERNAL_RELEASE_BASEDIR}"
   fi
+  if [ -d "${ARTIFACTS_DIR}" ] ; then
+    rm -rf "${ARTIFACTS_DIR}"
+  fi
+  #Remove any old package repo dir
+  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+    rm -rf "${INTERNAL_RELEASE_REPODIR}"
+  fi
   #always return 0 for cleaning
   return 0
 }
@@ -362,35 +369,43 @@ checkout(){
 }
 
 make_world(){
-  echo "[INFO] Building world..."
-  cd "${BASEDIR}"
-  make -j${MAX_THREADS} buildworld
-  if [ $? -ne 0 ] ; then
-    echo "[ERROR] Could not build TrueOS world"
-    return 1
+  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+    echo "[INFO] Base World Unchanged: Re-using base packages"
+  else
+    echo "[INFO] Building world..."
+    cd "${BASEDIR}"
+    make -j${MAX_THREADS} buildworld
+    if [ $? -ne 0 ] ; then
+      echo "[ERROR] Could not build TrueOS world"
+      return 1
+    fi
   fi
 }
 
 make_kernel(){
-  echo "[INFO] Building kernel..."
-  cd "${BASEDIR}"
-  make -j${MAX_THREADS} buildkernel
-  if [ $? -ne 0 ] ; then
-    echo "[ERROR] Could not build TrueOS kernel"
-    return 1
+  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+    echo "[INFO] Base Kernel Unchanged: Re-using base packages"
+  else
+    echo "[INFO] Building kernel..."
+    cd "${BASEDIR}"
+    make -j${MAX_THREADS} buildkernel
+    if [ $? -ne 0 ] ; then
+      echo "[ERROR] Could not build TrueOS kernel"
+      return 1
+    fi
   fi
 }
 
 make_base_pkg(){
+  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+    echo "[INFO] Re-using base packages"
+    return 0
+  fi
   #NOTE: This will use the PKGSIGNKEY environment variable to sign base packages
   echo "[INFO] Building base packages..."
   #Quick check for the *other* signing key variable
   if [ -z "${PKGSIGNKEY}" ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
     PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
-  fi
-  #Remove any old package repo dir
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
-    rm -rf "${INTERNAL_RELEASE_REPODIR}"
   fi
   cd "${BASEDIR}"
   make -j${MAX_THREADS} packages
