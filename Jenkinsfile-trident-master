@@ -18,18 +18,9 @@ pipeline {
   }
 
   stages {
-    stage('Queued') {
-      agent {
-        label 'JenkinsMaster'
-      }
-      steps {
-        echo "Build queued"
-      }
-    }
     stage('Prepare') {
       steps {
         checkout scm
-        sh '${WORKSPACE}/build-distro.sh clean'
 	sh '${WORKSPACE}/build-distro.sh checkout'
       }
     }
