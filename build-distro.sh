@@ -289,7 +289,13 @@ checkout(){
     fi
     echo "[INFO] Check out ports repository"
   fi
-
+  #If a branch name was specified
+  GH_BASE_BRANCH="${GH_BASE_TAG}"
+  check_github_tag "${GH_BASE_TAG}"
+  if [ $? -ne 0 ] && [ -e "/usr/local/bin/git" ] ; then
+    # Get the latest commit on this branch and use that as the commit tag (prevents constantly downloading a branch to check checksums)  
+    GH_BASE_TAG=`git ls-remote "https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}" "${GH_BASE_TAG}" | cut -w -f 1`
+  fi
   BASE_CACHE_DIR="/tmp/trueos-repo-cache"
   BASE_TAR="${BASE_CACHE_DIR}/${GH_BASE_ORG}_${GH_BASE_REPO}_${GH_BASE_TAG}.tgz"
   local _skip=1
@@ -301,6 +307,8 @@ checkout(){
       check_github_tag "${GH_BASE_TAG}"
       if [ $? -ne 0 ] ; then
         #Got a branch name - need to re-download the tarball to check
+        # Note: This is only a fallback for when "git" is not installed on the build server
+        #   if git is installed the branch names were turned into tags earlier
         mv "${BASE_TAR}" "${BASE_TAR}.prev"
       else
         #Got a commit tag - skip re-downloading/extracting it
@@ -313,7 +321,7 @@ checkout(){
   else
     mkdir -p "${BASE_CACHE_DIR}"
   fi
-  BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_TAG}"
+  BASE_URL="https://github.com/${GH_BASE_ORG}/${GH_BASE_REPO}/tarball/${GH_BASE_BRANCH}"
   #NOTE: Fetch works, but seems slower than using curl
   if [ ${_skip} -ne 0 ] ; then
     echo "[INFO] Downloading Repo..."
