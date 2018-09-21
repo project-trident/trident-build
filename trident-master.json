@@ -78,7 +78,7 @@
     "type" : "local",
     "url" : "/usr/ports_tmp",
     "make.conf":[
-	"MAKE_JOBS_NUMBER_LIMIT=3",
+	"MAKE_JOBS_NUMBER_LIMIT=4",
 	"WITH_DVD_DEVICE=/dev/cd0",
 	"WITH_CDROM_DEVICE=/dev/cd0",
 	"# Accept Licenses automatically to build all packages",
@@ -265,7 +265,7 @@
     ]
   },
   "poudriere-conf": [
-	"PARALLEL_JOBS=26",
+	"PARALLEL_JOBS=19",
 	"PREPARE_PARALLEL_JOBS=78",
 	"USE_TMPFS='yes'",
 	"ALLOW_MAKE_JOBS=yes",
