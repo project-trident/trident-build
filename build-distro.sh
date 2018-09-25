@@ -464,7 +464,7 @@ make_ports(){
 make_release(){
   echo "[INFO] Building ISO..."
   #Determine the ISO name based on the JSON manifest
-  local CURDATE. ISOBASE, ISONAME
+  local CURDATE, ISOBASE, ISONAME
   CURDATE=`date -j "+%Y%m%d_%H_%M"`
   if [ "$(jq -r '."iso-name" | length' ${TRUEOS_MANIFEST})" != "0" ] ; then
     ISOBASE=`jq -r '."iso-name"' ${TRUEOS_MANIFEST}`
