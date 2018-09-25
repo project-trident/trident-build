@@ -60,7 +60,7 @@
     },
     {
       "type" : "port",
-      "name" : "deskutils/lumina-screeshot",
+      "name" : "deskutils/lumina-screenshot",
       "local_path" : "ports-overlay/deskutils/lumina-screenshot"
     },
     {
