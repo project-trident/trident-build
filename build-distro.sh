@@ -439,7 +439,11 @@ make_ports(){
   echo "[INFO] Building ports..."
   cd "${BASEDIR}/release"
   make poudriere
-  if [ $? -eq 0 ] && [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
+  if [ $? -ne 0 ] ; then
+    echo "[ERROR] Could not build TrueOS ports"
+    return 1
+  fi
+  if [ -n "${PKG_REPO_SIGNING_KEY}" ] ; then
     cd "${POUD_PKG_DIR}"
     echo "[INFO] Signing Packages..."
     pkg-static repo . "${PKG_REPO_SIGNING_KEY}"
@@ -447,9 +451,6 @@ make_ports(){
       echo "[ERROR] Could not sign TrueOS packages"
       return 1
     fi
-  else
-    echo "[ERROR] Could not build TrueOS ports"
-    return 1
   fi
   #Now make a symlink to the final package directories
   # Do not copy them! This dir is massive!
@@ -463,7 +464,7 @@ make_ports(){
 make_release(){
   echo "[INFO] Building ISO..."
   #Determine the ISO name based on the JSON manifest
-  local CURDATE, ISOBASE, ISONAME
+  local CURDATE. ISOBASE, ISONAME
   CURDATE=`date -j "+%Y%m%d_%H_%M"`
   if [ "$(jq -r '."iso-name" | length' ${TRUEOS_MANIFEST})" != "0" ] ; then
     ISOBASE=`jq -r '."iso-name"' ${TRUEOS_MANIFEST}`
