@@ -95,12 +95,4 @@ pipeline {
       }
     }
   }
-  post {
-    success {
-      sh '${WORKSPACE}/build-distro.sh clean'
-      script {
-        cleanWs notFailBuild: true
-      }
-    }
-  }
 }
