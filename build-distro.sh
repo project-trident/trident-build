@@ -478,6 +478,11 @@ make_release(){
     rm -rf "${ARTIFACTS_DIR}"
   fi
   mkdir -p "${ARTIFACTS_DIR}/tar"
+  #Remove any ISOs from previous builds
+  if [ -e "${INTERNAL_RELEASE_DIR}" ] ; then
+    cd "${INTERNAL_RELEASE_DIR}"
+    rm *.iso
+  fi
   cd "${BASEDIR}/release"
   make release
   if [ $? -eq 0 ] ; then
