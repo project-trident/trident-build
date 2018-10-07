@@ -6,6 +6,7 @@ bin/check-tor-mode
 bin/disable-tor-mode
 bin/enable-tor-mode
 bin/mk_zfs_homedir
+bin/setup-xorg-session
 etc/asound.conf
 etc/devd/trident-media.conf
 etc/fonts/local.conf.trident
