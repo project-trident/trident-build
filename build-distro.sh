@@ -76,7 +76,13 @@ if [ -n "${WORKSPACE}" ] ; then
   PKG_RELEASE_BASE="${WORKSPACE}/artifact-pkg-base"
 else
   #Create/use an artifacts dir in the current dir
-  ARTIFACTS_DIR="${CURDIR}/artifact-iso"
+  if [ $CURDIR == "." ] ; then
+      artifactDir=`readlink -f $CURDIR`
+  else
+      artifactDir="$CURDIR"	  
+  fi 	  
+  ARTIFACTS_DIR="${artifactDir}/artifact-iso"
+
   PKG_RELEASE_PORTS="${CURDIR}/artifact-pkg"
   PKG_RELEASE_BASE="${CURDIR}/artifact-pkg-base"
 fi
@@ -471,6 +477,7 @@ make_release(){
   else
     ISOBASE=`basename -s ".json" "${TRUEOS_MANIFEST}"`
   fi
+
   local ISONAME="${ISOBASE}-${CURDATE}"
 
   #Remove old artifacts (if any)
@@ -488,6 +495,7 @@ make_release(){
     rm *.iso
   fi
   cd "${BASEDIR}/release"
+
   make release
   if [ $? -eq 0 ] ; then
     cd "${INTERNAL_RELEASE_DIR}"
