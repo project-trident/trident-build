@@ -495,7 +495,7 @@ make_release(){
     rm *.iso
   fi
   cd "${BASEDIR}/release"
-
+  make clean
   make release
   if [ $? -eq 0 ] ; then
     cd "${INTERNAL_RELEASE_DIR}"
