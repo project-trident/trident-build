@@ -36,7 +36,7 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   echo "[ERROR] Specified manifest cannot be found: ${TRUEOS_MANIFEST}"
   return 1
 fi
-TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
+export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
 
 #Perform any directory replacements in the manifest as needed
 grep -q "%%PWD%%" "${TRUEOS_MANIFEST}"
