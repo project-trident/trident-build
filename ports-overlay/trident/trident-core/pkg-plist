@@ -38,12 +38,13 @@ share/trident/scripts/validate-services.sh
 share/trident/xorg-templates/xorg.conf
 share/trident/xstartup-parallel/disable-beep.sh
 share/trident/xstartup-parallel/load-xresources.sh
-share/trident/xstartup-parallel/start-pulseaudio-x11.sh
+share/trident/xstartup-parallel/vbox-xinput-fix.sh
 share/trident/xstartup/01_xdg-user-dirs.sh
 share/trident/xstartup/02_fix-gtk-environ.sh
 share/trident/xstartup/enable-inputmethod.sh
 share/trident/xstartup/gpg-agent.sh
 share/trident/xstartup/ssh-agent.sh
+share/trident/xstartup/start-pulseaudio-x11.sh
 share/wallpapers/trident/Trident-wallpaper-corner-darkgrey.png
 share/wallpapers/trident/Trident-wallpaper-corner-lightgrey.png
 share/wallpapers/trident/Trident-wallpaper-darkgrey.png
