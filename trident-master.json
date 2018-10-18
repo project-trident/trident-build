@@ -4,7 +4,7 @@
   "base-github-tag" : "trueos-stable-18.06",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "4541430f2e5374e9160783286bd51a2aa5097a0b",
+  "ports-github-tag" : "170b1cea5cf37db0c5ec9c4fe5fbf25449ba18c9",
   "iso-name" : "Trident-RC2-x64",
   "iso-file-name" : "Trident-RC2-x64-%%DATE%%",
   "ports-overlay" : [
