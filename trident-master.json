@@ -335,6 +335,7 @@
 	"print/cups-filters",
 	"print/foomatic-db",
 	"print/gutenprint",
+	"print/hplip",
 	"security/openvpn",
 	"shells/bash",
 	"shells/fish",
