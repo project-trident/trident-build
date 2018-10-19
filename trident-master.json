@@ -15,6 +15,11 @@
     },
     {
       "type" : "port",
+      "name" : "x11/pcdm",
+      "local_path" : "ports-overlay/x11/pcdm"
+    },
+    {
+      "type" : "port",
       "name" : "x11/lumina",
       "local_path" : "ports-overlay/x11/lumina"
     },
