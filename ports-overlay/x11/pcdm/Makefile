@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	pcdm
-PORTVERSION=	201810190925
+PORTVERSION=	201810191722
 CATEGORIES=	x11
 
 MAINTAINER=	jmaloney@ixsystems.com
@@ -20,13 +20,13 @@ MAKE_ARGS=      PREFIX=${STAGEDIR}${PREFIX}
 
 CONFLICTS=      pcbsd-utils-qt*
 
-USES=           qmake
-USE_QT5=        core gui network svg multimedia imageformats \
+USES=           qmake qt:5
+USE_QT=        core gui network svg multimedia imageformats \
 		buildtools_build linguist_build x11extras concurrent
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	pcdm
-GH_TAGNAME=	850287a2269636611a8f0f5e34b916ba4ce5e9de
+GH_TAGNAME=	0acca3f17df581608fa77a62634a4acd1142b481
 
 .include <bsd.port.mk>
