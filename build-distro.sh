@@ -66,6 +66,7 @@ BASEDIR="/usr/src_tmp"
 PORTSDIR="/usr/ports_tmp"
 POUD_PKG_DIR="/usr/local/poudriere/data/packages/${POUDRIERE_BASE}-${POUDRIERE_PORTS}"
 INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
+INTERNAL_RELEASE_PKGDIR="${INTERNAL_RELEASE_BASEDIR}/pkgset"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
 INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/repo"
 
@@ -411,10 +412,10 @@ make_kernel(){
 }
 
 make_base_pkg(){
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
-    echo "[INFO] Re-using base packages"
-    return 0
-  fi
+  #if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+    #echo "[INFO] Re-using base packages"
+    #return 0
+  #fi
   #NOTE: This will use the PKGSIGNKEY environment variable to sign base packages
   echo "[INFO] Building base packages..."
   #Quick check for the *other* signing key variable
@@ -422,7 +423,7 @@ make_base_pkg(){
     PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
   fi
   cd "${BASEDIR}"
-  make -j${MAX_THREADS} packages
+  make packages
   if [ $? -ne 0 ] ; then
     echo "[ERROR] Could not build TrueOS base packages"
     return 1
@@ -432,8 +433,13 @@ make_base_pkg(){
   if [ -e "${PKG_RELEASE_BASE}" ] ; then
     rm "${PKG_RELEASE_BASE}"
   fi
-  echo "[INFO] Linking base package dir: ${INTERNAL_RELEASE_REPODIR} -> ${PKG_RELEASE_BASE}"
-  ln -sf "${INTERNAL_RELEASE_REPODIR}" "${PKG_RELEASE_BASE}"
+  if [ -e "${INTERNAL_RELEASE_PKGDIR}" ] ; then
+    echo "[INFO] Linking base package dir: ${INTERNAL_RELEASE_PKGDIR} -> ${PKG_RELEASE_BASE}"
+    ln -sf "${INTERNAL_RELEASE_PKGDIR}" "${PKG_RELEASE_BASE}"
+  else
+    echo "[INFO] Linking base package dir: ${INTERNAL_RELEASE_REPODIR} -> ${PKG_RELEASE_BASE}"
+    ln -sf "${INTERNAL_RELEASE_REPODIR}" "${PKG_RELEASE_BASE}"
+  fi
 }
 
 make_ports(){
@@ -536,7 +542,11 @@ make_release(){
 make_pkg_manifest(){
   echo "[INFO] Creating package manifest..."
   #Note: This will **replace** the manifest info in the file!!
-  _pkgdir="${POUD_PKG_DIR}/All"
+  if [ -e "${INTERNAL_RELEASE_PKGDIR}" ] ; then
+    _pkgdir="${INTERNAL_RELEASE_PKGDIR}/All"
+  else
+    _pkgdir="${POUD_PKG_DIR}/All"
+  fi
   _pkgfile="${ARTIFACTS_DIR}/pkg.list"
 
   #Remove the old file if it exists

@@ -1,12 +1,30 @@
 {
+  "version" : "RC3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "trueos-stable-18.06",
+  "base-github-tag" : "1533238122b4612305cb697de97edee5479f52ac",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "170b1cea5cf37db0c5ec9c4fe5fbf25449ba18c9",
-  "iso-name" : "Trident-RC2-x64",
-  "iso-file-name" : "Trident-RC2-x64-%%DATE%%",
+  "ports-github-tag" : "2817288c6ed412be6da96ae51c2780fedc2cd14d",
+  "base-packages" : {
+    "name-prefix" : "OS",
+    "depends" : {
+      "runtime" : {
+        "trident-core" : {
+          "origin" : "trident/trident-core",
+          "version" : ">0"
+        }
+      }
+    },
+    "kernel-flags" : {
+      "default" : [
+        "EVDEV=1"
+      ]
+    },
+    "world-flags" : {
+      "default" : []
+    }
+  },
   "ports-overlay" : [
     {
       "type" : "category",
@@ -82,7 +100,47 @@
   "ports" : {
     "type" : "local",
     "url" : "/usr/ports_tmp",
-    "make.conf":[
+    "build-all" : true,
+    "local_source" : "/usr/ports_tmp",
+    "build" :  {
+      "default" : [
+	"audio/virtual_oss",
+	"audio/virtual_oss_ctl",
+	"devel/qt5",
+	"editors/libreoffice",
+	"emulators/i386-wine",
+	"emulators/open-vm-tools",
+	"emulators/virtualbox-ose",
+	"emulators/virtualbox-ose-additions",
+	"graphics/inkscape",
+	"graphics/phototonic",
+	"mail/thunderbird",
+	"multimedia/obs-studio",
+	"multimedia/openh264",
+	"multimedia/webcamd",
+	"multimedia/vlc",
+	"sysutils/fusefs-ntfs",
+	"sysutils/synergy",
+	"sysutils/sysadm",
+	"sysutils/sysadm-client",
+	"sysutils/tmux",
+	"trident/trident-core",
+	"trident/trident-installer",
+	"www/chromium",
+	"www/falkon",
+	"www/firefox",
+	"www/w3m",
+	"x11/nvidia-driver",
+	"x11/nvidia-driver-304",
+	"x11/nvidia-driver-340",
+	"x11/qterminal",
+	"x11/xrdb",
+	"x11-fonts/noto",
+	"x11-fonts/noto-lite"
+      ]
+    },
+    "make.conf":{
+      "default" : [
 	"MAKE_JOBS_NUMBER_LIMIT=4",
 	"WITH_DVD_DEVICE=/dev/cd0",
 	"WITH_CDROM_DEVICE=/dev/cd0",
@@ -97,7 +155,7 @@
 	"# Set the default SAMBA port",
 	"DEFAULT_VERSIONS+=samba=4.6",
 	"# Set the default SSL",
-	"DEFAULT_VERSIONS+=ssl=libressl",
+	"DEFAULT_VERSIONS+=ssl=base",
 	"#Openoffice Language Options",
 	"ALL_LOCALIZED_LANGS=YES",
 	"# Use texlive as the default TEX impl",
@@ -268,7 +326,8 @@
 	"x11-drivers_xf86-input-evdev_SET=MULTITOUCH",
 	"x11-fonts_webfonts_SET=MSWINDOWS_LICENSE",
 	"x11-toolkits_gnustep-gui_UNSET=DOCS"
-    ]
+	]
+    }
   },
   "poudriere-conf": [
 	"PARALLEL_JOBS=19",
@@ -277,52 +336,29 @@
 	"ALLOW_MAKE_JOBS=yes",
 	"NOHANG_TIME=14400"
   ],
-  "package-all":true,
-  "packages":[],
-  "essential-packages":[
-	"audio/virtual_oss",
-	"audio/virtual_oss_ctl",
-	"devel/qt5",
-	"editors/libreoffice",
-	"emulators/i386-wine",
-	"emulators/open-vm-tools",
-	"emulators/virtualbox-ose",
-	"emulators/virtualbox-ose-additions",
-	"graphics/inkscape",
-	"graphics/phototonic",
-	"mail/thunderbird",
-	"multimedia/obs-studio",
-	"multimedia/openh264",
-	"multimedia/webcamd",
-	"multimedia/vlc",
-	"sysutils/fusefs-ntfs",
-	"sysutils/synergy",
-	"sysutils/sysadm",
-	"sysutils/sysadm-client",
-	"sysutils/tmux",
-	"trident/trident-core",
-	"trident/trident-installer",
-	"www/chromium",
-	"www/falkon",
-	"www/firefox",
-	"www/w3m",
-	"x11/nvidia-driver",
-	"x11/nvidia-driver-304",
-	"x11/nvidia-driver-340",
-	"x11/qterminal",
-	"x11/xrdb",
-	"x11-fonts/noto",
-	"x11-fonts/noto-lite"
-  ],
-  "iso-install-packages":[
+  "iso" : {
+    "filename": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
+    "install-script" : "/usr/local/bin/start-trident-installer",
+    "auto-install-script" : "",
+    "auto-install-packages":{
+      "default" : []
+    },
+    "overlay" : {
+      "type" : "local",
+      "url" : "./iso-overlay"
+    },
+    "iso-packages": {
+      "default" : [
 	"sysutils/diskscrub",
 	"trident/trident-installer",
 	"www/w3m",
 	"x11-drivers/xf86-input-evdev",
 	"x11-drivers/xf86-input-wacom",
 	"x11-fonts/noto-lite"
-  ],
-  "dist-packages":[
+	]
+    },
+    "dist-packages": {
+      "default" : [
 	"audio/pianobar",
 	"devel/git",
 	"emulators/open-vm-tools",
@@ -370,46 +406,11 @@
 	"x11-drivers/xf86-video-vmware",
 	"x11-fonts/noto-lite",
 	"x11-themes/lumina-themes"
-  ],
-  "auto-install-packages":[],
-  "iso-overlay" : {
-    "type" : "local",
-    "url" : "%%PWD%%/iso-overlay"
+	]
+    }
   },
-  "install-script" : "/usr/local/bin/start-trident-installer",
-  "auto-install-script" : "",
   "pkg-repo": {
-	  "url":"http://pkg.project-trident.org/pkg/release/ports/${ABI}/latest",
-	  "pubKey": [
-		"-----BEGIN PUBLIC KEY-----",
-		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
-		"2mbnOQSl7SICkzgmBNZOkbP/bVvcNcKDssEqyyHtFbiGyDjC0m3H+0batfxT3fds",
-		"GmhuvdYGgrXI1ymg7nRkzo3E/wNe9Z2Evv3qjEydIBvQVIZj548wRv34ZmzF0Nr3",
-		"5EwWcIiGeFsTkt71pfbgUIz5hXqaClvR+gNKeIGRtaG1vjVo2+mLTDXg/ZghnmG2",
-		"xuMN+lb9wUFsDq22dWbgP5gg8Mp48JzJTpA5dtnSDpBHCQsgUSt9xV1119YR4J9E",
-		"2uK0vkxH4VcGFz9+WgyHziEbKaz82cQYHhMm8NpDshPwQqc99iPwPIjvmYAqG/gH",
-		"QAI9E/GUr5fuKPkpVx9hwliXA6gmEjN3Cq9fKAW6FBSteZ3BLFtSjCnj+mn7qESR",
-		"Vi+HQbPPgCzFgD0Jv8a1NhJAVQdqtGYoeY8KmoHVYI5L4erYVtBVVIoedJvFC+13",
-		"A6nD090qYD6eROzIMJ9Bb+oviVNZMdBTtYUZB1Tj0O/ZgHsnd+NlzmUsF1SCnqhb",
-		"fCmN7JaXM0X5J9e9fT9itQnXl24vxqRMBvcCSCGuq9RLCnYkzAgI/jTzEe8M+xuo",
-		"+I3GGlEI73v1Iq1a4b9SjhodRgZxdltlxkxzKoqKlRYY9kmJ9OfHKvXSYfSkfYQK",
-		"yPquXCF/xiUdOU3rQdu44KplmKfHvrZA55kP4sehxfs/cDYIYsqXu9XIBOiMQ0cn",
-		"14luT3+vJfwXnHD/r76RK6tMJgGp+b59lnAIsDpMIZyqIjFNsOUBtzb5i2vHH3cB",
-		"IejITAxkWiIGpAGJPb3r8LH/qyJAqR41Nqhq3gG0YjLPOMfzoeG0LbRREpGxTid8",
-		"Oe81a8Ex2XA4z/ss0CwwNYkIrV7NJ4eY2wWy21Gu/aD1FnL6vgqnt4i0MeoLf5/M",
-		"jyLwXDryGzJgGcAGPBrNBagowozEN+1SYsWVkKKbBibzuL4X25IYicDwmCLbuC6T",
-		"c8qyl5BQTYdycJW+eo1v1ZzZS93tTWnM8OjiTWAeADXmVoQU07nirtanOd9W+uM8",
-		"ZRD51a8wgjFNplyQonZCXAkLvCYuyIsMRf/rXROMCCTQcvxVufdKYPLOqTYroEfh",
-		"w5D7UB0lpu+lNPByA9+LayqdVvi3FAgr1tISrJ/NuL5oDqtRwi7XstU5PaXHK14N",
-		"T4SLw27ekJamhuV+d32SBoBUme4d+84m5k9CpZxRH8NKARLNgrSJTWi4KODQgJY3",
-		"66gck1lrcXNLELNL0OoYOa9sjedXruB+Aw4b5onWq3tC32a39m57MRJZbXQVimck",
-		"rN99zMBxtgpV7MOQRnwrQ2v994mk3oZ4Cq1uJp0jlZeYEA6AyEzCm1XT6TvmBPjt",
-		"hQIDAQAB",
-		"-----END PUBLIC KEY-----"
-	  ]
-  },
-  "base-pkg-repo": {
-	  "url":"http://pkg.project-trident.org/pkg/release/base/${ABI}/latest",
+	  "url":"http://pkg.project-trident.org/pkg/release/${ABI}/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
@@ -438,4 +439,5 @@
 		"-----END PUBLIC KEY-----"
 	  ]
   }
+
 }
