@@ -1,5 +1,4 @@
 {
-  "version" : "RC3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "1533238122b4612305cb697de97edee5479f52ac",
@@ -438,6 +437,6 @@
 		"hQIDAQAB",
 		"-----END PUBLIC KEY-----"
 	  ]
-  }
-
+  },
+  "version" : "1.0"
 }
