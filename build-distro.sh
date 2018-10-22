@@ -37,6 +37,10 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   return 1
 fi
 export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
+#Also set the TRUEOS_VERSION environment variable as needed
+if [ "$(jq -r '."os_version" | length' ${TRUEOS_MANIFEST})" != "0" ] ; then
+  export TRUEOS_VERSION=`jq -r '."os_version"' ${TRUEOS_MANIFEST}`
+fi
 
 #Perform any directory replacements in the manifest as needed
 grep -q "%%PWD%%" "${TRUEOS_MANIFEST}"
