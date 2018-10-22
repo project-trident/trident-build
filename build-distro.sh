@@ -260,19 +260,22 @@ compare_tar_files(){
 clean_base(){
   echo "[INFO] Cleaning..."
   if [ -d "${BASEDIR}" ] ; then
-    #Just remove the dir - running "make clean" in the source tree takes *forever*
-    # - faster to just remove and re-create (checkout)
+    #Clean the source tree
+    (cd "${BASEDIR}" && make -j${MAX_THREADS} clean)
+    #Now remove the source dir as well
     rm -rf "${BASEDIR}"
   fi
   if [ -d "${INTERNAL_RELEASE_BASEDIR}" ] ; then
+    #Make sure we unmount any mountpoints still in the release dir (nullfs mountpoints tend to get left behind there)
+    for mntpnt in `mount | grep "${INTERNAL_RELEASE_BASEDIR}" | cut -w -f 3`
+    do
+      umount "${mntpnt}"
+    done
+    #Now delete them
     rm -rf "${INTERNAL_RELEASE_BASEDIR}"
   fi
   if [ -d "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
-  fi
-  #Remove any old package repo dir
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
-    rm -rf "${INTERNAL_RELEASE_REPODIR}"
   fi
   #always return 0 for cleaning
   return 0
