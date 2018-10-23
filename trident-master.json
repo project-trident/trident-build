@@ -17,9 +17,7 @@
       }
     },
     "kernel-flags" : {
-      "default" : [
-        "EVDEV=1"
-      ]
+      "default" : []
     },
     "world-flags" : {
       "default" : []
