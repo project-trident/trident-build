@@ -11,7 +11,7 @@ if [ `id -u` -ne 0 ] ; then
 fi
 
 # PACKAGES
-req_pkg="jenkins rsync git nginx visitors"
+req_pkg="jenkins rsync git nginx visitors poudriere uclcmd llvm60 jq"
 for _pkg in ${req_pkg}
 do
   pkg info -e ${_pkg}
