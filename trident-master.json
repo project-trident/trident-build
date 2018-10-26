@@ -154,6 +154,8 @@
 	"DEFAULT_VERSIONS+=samba=4.6",
 	"# Set the default SSL",
 	"DEFAULT_VERSIONS+=ssl=base",
+	"# Set the default GCC version",
+	"DEFAULT_VERSIONS+=gcc=8",
 	"#Openoffice Language Options",
 	"ALL_LOCALIZED_LANGS=YES",
 	"# Use texlive as the default TEX impl",
