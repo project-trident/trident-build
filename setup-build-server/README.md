@@ -15,7 +15,7 @@ First follow the instructions for the "stable" branch above, then follow these s
    2. Add the following entry to the config file:
 ```
 TrueOS-snapshots: {
-  url: "https://pkg.trueos.org/pkg/snapshot/${ABI}/latest",
+  url: "https://pkg.trueos.org/pkg/unstable/${ABI}/latest",
   signature_type: "pubkey",
   pubkey: "/usr/share/keys/pkg/trueos.pub",
   enabled: yes
