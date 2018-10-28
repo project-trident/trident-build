@@ -2,10 +2,10 @@
   "os_version" : "RC3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "2174734a0bc6c4828d94d4f5d6d61e522a73f4f5",
+  "base-github-tag" : "1be752a6605e0db639830342a6806d9acc86518f",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "e7d0fe89fa0a7155fbf79fa5251893c55c2b5e36",
+  "ports-github-tag" : "91d414bed2d437573711ee11745aaec661a07d05",
   "base-packages" : {
     "name-prefix" : "OS",
     "depends" : {
