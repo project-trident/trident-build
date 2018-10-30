@@ -2,25 +2,25 @@
   "os_version" : "RC3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "1be752a6605e0db639830342a6806d9acc86518f",
+  "base-github-tag" : "76e0fbda496ebd416331ed4c131971d3b93ac8a2",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
   "ports-github-tag" : "91d414bed2d437573711ee11745aaec661a07d05",
   "base-packages" : {
     "name-prefix" : "OS",
-    "depends" : {
-      "runtime" : {
-        "trident-core" : {
-          "origin" : "trident/trident-core",
-          "version" : ">0"
-        }
-      }
-    },
     "kernel-flags" : {
       "default" : []
     },
     "world-flags" : {
-      "default" : []
+      "default" : [
+        "WITHOUT_FREEBSD_UPDATE=1",
+        "WITHOUT_GAMES=1",
+        "WITHOUT_SENDMAIL=1",
+        "WITHOUT_PF=1",
+        "WITHOUT_PORTSNAP=1",
+        "WITHOUT_SVNLITE=1",
+        "WITHOUT_TESTS=1"
+      ]
     }
   },
   "ports-overlay" : [
