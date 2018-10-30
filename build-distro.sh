@@ -73,6 +73,7 @@ INTERNAL_RELEASE_BASEDIR="/usr/obj${BASEDIR}"
 INTERNAL_RELEASE_PKGDIR="${INTERNAL_RELEASE_BASEDIR}/pkgset"
 INTERNAL_RELEASE_DIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64/release"
 INTERNAL_RELEASE_REPODIR="${INTERNAL_RELEASE_BASEDIR}/repo"
+INTERNAL_RELEASE_OBJDIR="${INTERNAL_RELEASE_BASEDIR}/amd64.amd64"
 
 if [ -n "${WORKSPACE}" ] ; then
   #Special dir for Jenkins artifacts
@@ -265,14 +266,15 @@ clean_base(){
     #Now remove the source dir as well
     rm -rf "${BASEDIR}"
   fi
-  if [ -d "${INTERNAL_RELEASE_BASEDIR}" ] ; then
+  if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
     #Make sure we unmount any mountpoints still in the release dir (nullfs mountpoints tend to get left behind there)
-    for mntpnt in `mount | grep "${INTERNAL_RELEASE_BASEDIR}" | cut -w -f 3`
+    for mntpnt in `mount | grep "${IINTERNAL_RELEASE_OBJDIR}" | cut -w -f 3`
     do
       umount "${mntpnt}"
     done
     #Now delete them
-    rm -rf "${INTERNAL_RELEASE_BASEDIR}"
+    chflags -R noschg "${INTERNAL_RELEASE_OBJDIR}"
+    rm -rf "${INTERNAL_RELEASE_OBJDIR}"
   fi
   if [ -d "${ARTIFACTS_DIR}" ] ; then
     rm -rf "${ARTIFACTS_DIR}"
@@ -419,10 +421,10 @@ make_kernel(){
 }
 
 make_base_pkg(){
-  #if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
-    #echo "[INFO] Re-using base packages"
-    #return 0
-  #fi
+  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] && [ ! -d "${INTERNAL_RELEASE_PKGDIR}" ] ; then
+    echo "[INFO] Re-using base packages"
+    return 0
+  fi
   #NOTE: This will use the PKGSIGNKEY environment variable to sign base packages
   echo "[INFO] Building base packages..."
   #Quick check for the *other* signing key variable
