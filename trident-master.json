@@ -337,7 +337,7 @@
 	"NOHANG_TIME=14400"
   ],
   "iso" : {
-    "filename": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
+    "file-name": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
     "install-script" : "/usr/local/bin/start-trident-installer",
     "auto-install-script" : "",
     "auto-install-packages":{
