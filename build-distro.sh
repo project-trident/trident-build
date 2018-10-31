@@ -261,14 +261,12 @@ compare_tar_files(){
 clean_base(){
   echo "[INFO] Cleaning..."
   if [ -d "${BASEDIR}" ] ; then
-    #Clean the source tree
-    (cd "${BASEDIR}" && make -j${MAX_THREADS} clean)
-    #Now remove the source dir as well
+    #Now remove the source dir
     rm -rf "${BASEDIR}"
   fi
   if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
     #Make sure we unmount any mountpoints still in the release dir (nullfs mountpoints tend to get left behind there)
-    for mntpnt in `mount | grep "${IINTERNAL_RELEASE_OBJDIR}" | cut -w -f 3`
+    for mntpnt in `mount | grep "${INTERNAL_RELEASE_OBJDIR}" | cut -w -f 3`
     do
       umount "${mntpnt}"
     done
