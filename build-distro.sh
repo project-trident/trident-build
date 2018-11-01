@@ -391,7 +391,7 @@ checkout(){
 }
 
 make_world(){
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+  if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
     echo "[INFO] Base World Unchanged: Re-using base packages"
   else
     echo "[INFO] Building world..."
@@ -405,7 +405,7 @@ make_world(){
 }
 
 make_kernel(){
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] ; then
+  if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
     echo "[INFO] Base Kernel Unchanged: Re-using base packages"
   else
     echo "[INFO] Building kernel..."
