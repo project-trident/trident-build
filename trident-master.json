@@ -12,7 +12,8 @@
       "default" : []
     },
     "world-flags" : {
-      "default" : [
+      "default" : [],
+      "slim_base" : [
         "WITHOUT_FREEBSD_UPDATE=1",
         "WITHOUT_GAMES=1",
         "WITHOUT_SENDMAIL=1",
