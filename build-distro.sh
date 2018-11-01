@@ -392,6 +392,7 @@ checkout(){
 
 make_world(){
   if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
+    echo "[INFO] Directory exists: ${INTERNAL_RELEASE_OBJDIR}"
     echo "[INFO] Base World Unchanged: Re-using base packages"
   else
     echo "[INFO] Building world..."
