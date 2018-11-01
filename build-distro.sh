@@ -392,7 +392,6 @@ checkout(){
 
 make_world(){
   if [ -d "${INTERNAL_RELEASE_OBJDIR}/worldstage" ] ; then
-    echo "[INFO] Directory exists: ${INTERNAL_RELEASE_OBJDIR}"
     echo "[INFO] Base World Unchanged: Re-using base packages"
   else
     echo "[INFO] Building world..."
@@ -406,7 +405,7 @@ make_world(){
 }
 
 make_kernel(){
-  if [ -d "${INTERNAL_RELEASE_OBJDIR}/kernelstage" ] ; then
+  if [ -e "${INTERNAL_RELEASE_OBJDIR}/sys/GENERIC/kernel" ] ; then
     echo "[INFO] Base Kernel Unchanged: Re-using base packages"
   else
     echo "[INFO] Building kernel..."
