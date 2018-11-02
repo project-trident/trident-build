@@ -391,7 +391,7 @@ checkout(){
 }
 
 make_world(){
-  if [ -d "${INTERNAL_RELEASE_OBJDIR}/worldstage" ] ; then
+  if [ -d "${INTERNAL_RELEASE_OBJDIR}" ] ; then
     echo "[INFO] Base World Unchanged: Re-using base packages"
   else
     echo "[INFO] Building world..."
