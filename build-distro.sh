@@ -419,10 +419,6 @@ make_kernel(){
 }
 
 make_base_pkg(){
-  if [ -d "${INTERNAL_RELEASE_REPODIR}" ] && [ ! -d "${INTERNAL_RELEASE_PKGDIR}" ] ; then
-    echo "[INFO] Re-using base packages"
-    return 0
-  fi
   #NOTE: This will use the PKGSIGNKEY environment variable to sign base packages
   echo "[INFO] Building base packages..."
   #Quick check for the *other* signing key variable
