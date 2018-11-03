@@ -121,7 +121,7 @@
 	"www/firefox",
 	"www/w3m",
 	"x11/xrdb",
-	"x11-fonts/noto",
+	"x11-fonts/noto"
       ]
     },
     "make.conf":{
