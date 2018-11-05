@@ -2,7 +2,7 @@
   "os_version" : "RC3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "9e8bad84c9beaeda8922a0262d7f51bd38a923a9",
+  "base-github-tag" : "db75724423aab353153fdb9c72fff4fc846b7029",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
   "ports-github-tag" : "c353ca506a196945fb6ea832b4956128a6c77ca6",
