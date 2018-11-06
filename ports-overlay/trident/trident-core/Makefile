@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201810190922
+PORTVERSION=	201811060944
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -36,11 +36,15 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	ef250406a269187d6242c4bcd2be31b3f756c4d3
+GH_TAGNAME=	692b54e70dcbd9959d8c860dc9d8453441a366ae
 
 NO_BUILD=	yes
 
 do-install:
 	cd ${WRKSRC} && ${WRKSRC}/install-local.sh ${STAGEDIR} core
-
+	(cd ${STAGEDIR}/; ${FIND} . -type f \
+		| ${SED} -e 's,^\./,,g' \
+		| ${AWK} '{print length, $$0}' | ${SORT} -rn \
+		| cut -d " " -f 2- \
+		| ${AWK} '{print $$0 }' >> ${TMPPLIST})
 .include <bsd.port.mk>
