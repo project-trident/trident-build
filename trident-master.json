@@ -5,7 +5,7 @@
   "base-github-tag" : "db75724423aab353153fdb9c72fff4fc846b7029",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "c353ca506a196945fb6ea832b4956128a6c77ca6",
+  "ports-github-tag" : "12d60e8cb22435a1306d9a67d0cfd739531e6664",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-flags" : {
