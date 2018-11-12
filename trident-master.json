@@ -1,5 +1,5 @@
 {
-  "os_version" : "RC3",
+  "os_version" : "18.11-PRERELEASE",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "db75724423aab353153fdb9c72fff4fc846b7029",
@@ -333,7 +333,7 @@
     },
     "overlay" : {
       "type" : "local",
-      "url" : "./iso-overlay"
+      "url" : "%%PWD%%/iso-overlay"
     },
     "iso-packages": {
       "default" : [
