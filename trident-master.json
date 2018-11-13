@@ -404,7 +404,7 @@
       "default" : [
         "OS-*-profile-",
         "OS-*-development-",
-        "OS-*-debug-",
+        "OS-*-debug-"
       ]
     }
   },
