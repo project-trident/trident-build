@@ -2,10 +2,10 @@
   "os_version" : "18.11-PRERELEASE",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "db75724423aab353153fdb9c72fff4fc846b7029",
+  "base-github-tag" : "3f5ae9581697221cbe289632f37406efc23e351c",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "12d60e8cb22435a1306d9a67d0cfd739531e6664",
+  "ports-github-tag" : "6e344ab7721395d038cccb38cb6d7b866ac519bd",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-flags" : {
@@ -399,6 +399,13 @@
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs"
 	]
+    },
+    "prune-dist-packages": {
+      "default" : [
+        "OS-*-profile-",
+        "OS-*-development-",
+        "OS-*-debug-",
+      ]
     }
   },
   "pkg-repo-name": "Trident",
