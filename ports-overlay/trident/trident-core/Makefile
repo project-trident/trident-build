@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201811131136
+PORTVERSION=	201811151245
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -14,7 +14,6 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		${LOCALBASE}/bin/pc-wificonfig:sysutils/pc-networkmanager \
 		${LOCALBASE}/bin/pc-mixer:audio/pc-mixer \
 		${LOCALBASE}/bin/sysadm-client:sysutils/sysadm-client \
-		${LOCALBASE}/bin/personacrypt:sysutils/personacrypt \
 		${LOCALBASE}/bin/xdg-open:devel/xdg-utils \
 		cups-filters>=0:print/cups-filters \
 		lumina>=0:x11/lumina \
