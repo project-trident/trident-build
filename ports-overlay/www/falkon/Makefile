@@ -13,9 +13,9 @@ LICENSE=	GPLv3
 LICENSE_FILE=	${WRKSRC}/COPYING
 
 USES=		cmake:outsource desktop-file-utils qt:5 ssl tar:xz kde:5
-USE_QT=		core dbus gui location network printsupport qml quick \
-		sql webchannel webengine widgets x11extras linguist_build \
-		buildtools_build qmake_build
+USE_QT=		core dbus declarative gui location network printsupport \
+		sql webchannel webengine widgets x11extras \
+		buildtools_build qmake_build linguist_build
 USE_KDE=	ecm_build
 USE_XORG=	xcb
 
