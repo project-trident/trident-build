@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201811160858
+PORTVERSION=	201811161350
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -14,7 +14,6 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		${LOCALBASE}/bin/pc-wificonfig:sysutils/pc-networkmanager \
 		${LOCALBASE}/bin/pc-mixer:audio/pc-mixer \
 		${LOCALBASE}/bin/sysadm-client:sysutils/sysadm-client \
-		${LOCALBASE}/bin/personacrypt:sysutils/personacrypt \
 		${LOCALBASE}/bin/xdg-open:devel/xdg-utils \
 		cups-filters>=0:print/cups-filters \
 		lumina>=0:x11/lumina \
@@ -36,7 +35,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	a6b812f381cca76e1a8e4847a086d402b656e72b
+GH_TAGNAME=	632e0013b4a28407979cf4d73df631fe55e17980
 
 NO_BUILD=	yes
 
