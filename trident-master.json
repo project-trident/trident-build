@@ -361,7 +361,6 @@
 	"shells/fish",
 	"shells/zsh",
 	"sysutils/devcpu-data",
-	"sysutils/personacrypt",
 	"sysutils/powerdxx",
 	"sysutils/sysadm",
 	"sysutils/sysadm-client",
@@ -397,7 +396,8 @@
 	"print/hplip",
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
-	"sysutils/fusefs-simple-mtpfs"
+	"sysutils/fusefs-simple-mtpfs",
+	"sysutils/personacrypt"
 	]
     },
     "prune-dist-packages": {
