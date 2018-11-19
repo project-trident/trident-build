@@ -426,7 +426,7 @@ make_base_pkg(){
     PKGSIGNKEY="${PKG_REPO_SIGNING_KEY}"
   fi
   cd "${BASEDIR}"
-  make packages
+  make -j${MAX_THREADS} packages
   if [ $? -ne 0 ] ; then
     echo "[ERROR] Could not build TrueOS base packages"
     return 1
@@ -502,6 +502,7 @@ make_release(){
   if [ -e "${INTERNAL_RELEASE_DIR}" ] ; then
     cd "${INTERNAL_RELEASE_DIR}"
     rm *.iso
+    rm *.img
   fi
   cd "${BASEDIR}/release"
   make clean
@@ -512,6 +513,8 @@ make_release(){
     if [ $? -ne 0 ] ; then
       echo "[WARNING] ISO files not found in dir: ${INTERNAL_RELEASE_DIR}"
     fi
+    #Optional offline update image file (if it exists)
+    cp *.img "${ARTIFACTS_DIR}/" 2>/dev/null
     cp *.txz "${ARTIFACTS_DIR}/tar/"
     if [ $? -ne 0 ] ; then
       echo "[WARNING] TXZ files not found in dir: ${INTERNAL_RELEASE_DIR}"
