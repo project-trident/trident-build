@@ -406,7 +406,18 @@
         "OS-*-development-",
         "OS-*-debug-"
       ]
-    }
+    },
+    "ignore-base-packages": [
+      "-clang-",
+      "-lldb-",
+      "-sendmail-",
+      "-ssh-",
+      "-svn-",
+      "-tests",
+      "-development",
+      "-profile",
+      "-debug"
+    ]
   },
   "pkg-repo-name": "Trident",
   "pkg-repo": {
