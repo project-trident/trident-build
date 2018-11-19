@@ -2,7 +2,7 @@
   "os_version" : "18.11-PRERELEASE",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "2a658c448b24a393bf1b2e6a93748962c6b27095",
+  "base-github-tag" : "2686c034cc81661a647d41fdb2337579d6008307",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
   "ports-github-tag" : "ecb08ef2389b550a139526c3f47268ec3b236671",
