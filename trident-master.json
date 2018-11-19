@@ -404,16 +404,29 @@
       "default" : [
         "OS-*-profile-",
         "OS-*-development-",
-        "OS-*-debug-"
+        "OS-*-debug-",
+	"OS-svn-",
+	"OS-sendmail-",
+	"OS-ipf-",
+	"OS-pf-",
+	"OS-gdb-",
+	"OS-clang-",
+	"OS-lldb-",
+	"OS-tests-",
       ]
     },
     "ignore-base-packages": [
       "-clang-",
+      "-gdb-",
       "-lldb-",
+      "-ipf-",
+      "-pf-",
       "-sendmail-",
       "-ssh-",
       "-svn-",
+      "-unbound-",
       "-tests",
+      "-rescue",
       "-development",
       "-profile",
       "-debug"
