@@ -37,6 +37,11 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   return 1
 fi
 export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
+_manifest_version=`jq -r '."version"' ${TRUEOS_MANIFEST}`
+if [ -z "${_manifest_version}" ] ; then
+  echo "[ERROR] Could not read build manifest! ${TRUEOS_MANIFEST}"
+  return 1
+fi
 #Also set the TRUEOS_VERSION environment variable as needed
 if [ "$(jq -r '."os_version" | length' ${TRUEOS_MANIFEST})" != "0" ] ; then
   export TRUEOS_VERSION=`jq -r '."os_version"' ${TRUEOS_MANIFEST}`
