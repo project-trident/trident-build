@@ -412,7 +412,7 @@
 	"OS-gdb-",
 	"OS-clang-",
 	"OS-lldb-",
-	"OS-tests-",
+	"OS-tests-"
       ]
     },
     "ignore-base-packages": [
