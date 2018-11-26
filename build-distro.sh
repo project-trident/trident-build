@@ -37,8 +37,11 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   return 1
 fi
 export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
-kernelBuildType=`jq -r '."kernel_build_type"' ${TRUEOS_MANIFEST}`
-export KERNCONF=${kernelBuildType}
+KERNCONF=`jq -r '."base-packages"."kernel-config"' ${TRUEOS_MANIFEST}`
+if [ -z "${KERNCONF}" ] ; then
+  KERNCONF="GENERIC"
+fi
+export KERNCONF
 
 _manifest_version=`jq -r '."version"' ${TRUEOS_MANIFEST}`
 
@@ -414,7 +417,7 @@ make_world(){
 }
 
 make_kernel(){
-  if [ -e "${INTERNAL_RELEASE_OBJDIR}/sys/${kernelBuildType}/kernel" ] ; then
+  if [ -e "${INTERNAL_RELEASE_OBJDIR}/sys/${KERNCONF}/kernel" ] ; then
     echo "[INFO] Base Kernel Unchanged: Re-using base packages"
   else
     echo "[INFO] Building kernel..."
