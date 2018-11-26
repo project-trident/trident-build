@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	sysadm-client
-PORTVERSION=	201811260805
+PORTVERSION=	201811261058
 CATEGORIES=	sysutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -10,15 +10,17 @@ COMMENT=	SysAdm Qt5 Client
 LICENSE=	BSD3CLAUSE
 
 WRKSRC_SUBDIR=	src-qt5
-USE_QT5=	core buildtools_build gui network qmake websockets widgets svg concurrent
-USES=		pkgconfig tar:xz qmake ssl
+USES=		pkgconfig tar:xz qmake ssl qt:5
+USE_QT=	core gui network websockets widgets svg concurrent \
+    buildtools_build linguist_build
+
 USE_GL+=	gl
 MAKE_ARGS=	PREFIX=${STAGEDIR}${PREFIX}
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	sysadm-ui-qt
-GH_TAGNAME=	b156647802649ff0ad78ee007a75407a324efe40
+GH_TAGNAME=	fcc034fb6074d4bcc6c69ae48189f5037cfd5492
 
 .include <bsd.port.pre.mk>
 
