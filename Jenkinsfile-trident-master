@@ -9,7 +9,7 @@ pipeline {
   agent { label 'Trident-Master' }
   
   triggers {
-    cron('01 17 * * 5')
+    pollCSM('H 20 * * 5')
   }
 
   environment {
