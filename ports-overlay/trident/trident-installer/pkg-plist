@@ -1,4 +1,6 @@
 bin/activateNewBE
+bin/detect-best-driver.sh
+bin/generate-xorg-conf.sh
 bin/trident-installer
 bin/start-trident-installer
 share/icons/default/index.theme
