@@ -37,7 +37,11 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
   return 1
 fi
 export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
+kernelBuildType=`jq -r '."kernel_build_type"' ${TRUEOS_MANIFEST}`
+export KERNCONF=${kernelBuildType}
+
 _manifest_version=`jq -r '."version"' ${TRUEOS_MANIFEST}`
+
 if [ -z "${_manifest_version}" ] ; then
   echo "[ERROR] Could not read build manifest! ${TRUEOS_MANIFEST}"
   return 1
@@ -410,7 +414,7 @@ make_world(){
 }
 
 make_kernel(){
-  if [ -e "${INTERNAL_RELEASE_OBJDIR}/sys/GENERIC/kernel" ] ; then
+  if [ -e "${INTERNAL_RELEASE_OBJDIR}/sys/${kernelBuildType}/kernel" ] ; then
     echo "[INFO] Base Kernel Unchanged: Re-using base packages"
   else
     echo "[INFO] Building kernel..."
