@@ -6,10 +6,11 @@
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
   "ports-github-tag" : "ecb08ef2389b550a139526c3f47268ec3b236671",
+  "kernel_build_type": "GENERIC-NODEBUG",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-flags" : {
-      "default" : []
+      "default" : []  
     },
     "world-flags" : {
       "default" : [],
