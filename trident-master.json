@@ -2,13 +2,13 @@
   "os_version" : "18.11-PRERELEASE",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "7251eb846f8368be070877e7803cb2e4d2c344d8",
+  "base-github-tag" : "e9d893997f47e494cf58ea42a403b004499ddd39",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "ecb08ef2389b550a139526c3f47268ec3b236671",
-  "kernel_build_type": "GENERIC-NODEBUG",
+  "ports-github-tag" : "ce8771a042dad00e7bbe62ca5c710b5d63813f57",
   "base-packages" : {
     "name-prefix" : "OS",
+    "kernel-config": "GENERIC-NODEBUG",
     "kernel-flags" : {
       "default" : []  
     },
