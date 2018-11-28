@@ -2,7 +2,7 @@
   "os_version" : "18.11-PRERELEASE_2",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
-  "base-github-tag" : "e9d893997f47e494cf58ea42a403b004499ddd39",
+  "base-github-tag" : "d4817554001ef23200da49d28756e36f498c17cb",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
   "ports-github-tag" : "ce8771a042dad00e7bbe62ca5c710b5d63813f57",
@@ -413,17 +413,17 @@
     },
     "prune-dist-packages": {
       "default" : [
-        "OS-*-profile-",
-        "OS-*-development-",
-        "OS-*-debug-",
-	"OS-svn-",
-	"OS-sendmail-",
-	"OS-ipf-",
-	"OS-pf-",
-	"OS-gdb-",
-	"OS-clang-",
-	"OS-lldb-",
-	"OS-tests-"
+        "(OS-).+(-profile-)",
+        "(OS-).+(-development-)",
+        "(OS-).+(-debug-)",
+	"(OS-svn-)",
+	"(OS-sendmail-)",
+	"(OS-ipf-)",
+	"(OS-pf-)",
+	"(OS-gdb-)",
+	"(OS-clang-)",
+	"(OS-lldb-)",
+	"(OS-tests-)"
       ]
     },
     "ignore-base-packages": [
