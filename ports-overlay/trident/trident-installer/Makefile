@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-installer
-PORTVERSION=	201811281024
+PORTVERSION=	201811281609
 CATEGORIES=	trident
 
 MAINTAINER=	ken@ixsystems.com
@@ -24,7 +24,7 @@ USE_QT=	core gui widgets svg concurrent \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-installer
-GH_TAGNAME=	1a6e3c52a06a3378a9bc369281437098d83d6f3d
+GH_TAGNAME=	1a28a5dee70e60d0c6be8a04360b07621593a28a
 WRKSRC_SUBDIR=	src-qt5
 
 .include <bsd.port.mk>
