@@ -9,7 +9,7 @@ pipeline {
   agent { label 'Trident-Master' }
   
   triggers {
-    pollSCM('H 20 * * 5')
+    pollSCM('H 20 * * 3')
   }
 
   environment {
