@@ -5,7 +5,7 @@
   "base-github-tag" : "546305a23bccd6aac4db04c9acb482b24cda25fa",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "48fdc226ab518321fc666cca01fee2df469b1bd3",
+  "ports-github-tag" : "60c3f94d81e0ea0ce18ec7d7fd57166c73d951a5",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-config": "GENERIC-NODEBUG",
