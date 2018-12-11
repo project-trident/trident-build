@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201811281209
+PORTVERSION=	201812111020
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -23,20 +23,19 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		xorg-minimal>=0:x11/xorg-minimal \
 		cuse4bsd-kmod>=0:multimedia/cuse4bsd-kmod \
 		webcamd>=0:multimedia/webcamd \
-		/boot/modules/drm.ko:graphics/drm-next-kmod \
+		/boot/modules/drm.ko:graphics/drm-current-kmod \
 		xdg-user-dirs>=0:devel/xdg-user-dirs \
 		trident-icons>=0:trident/trident-icons \
 		cursor-chameleon-pearl>=0:x11-themes/cursor-chameleon-pearl \
 		xdpyinfo>=0:x11/xdpyinfo \
 		xinput>=0:x11/xinput \
 		sysadm>=0:sysutils/sysadm \
-		alsa-sndio>=0:audio/alsa-sndio \
-		pulseaudio-module-sndio>=0:audio/pulseaudio-module-sndio
+		alsa-sndio>=0:audio/alsa-sndio
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	4250e456c585e2c2739c1a453f57efb17400f5eb
+GH_TAGNAME=	640ad160ef4edef453efc26e4f836841458af071
 
 NO_BUILD=	yes
 
