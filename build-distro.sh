@@ -184,6 +184,24 @@ validate_port_makefile(){
   cd "${origdir}"
 }
 
+register_ports_categories(){
+  # This registers new categories as "valid" within bsd.port.mk
+  # Inputs:
+  # $1 : List of categories separated by spaces ("cat1 cat2 cat3")
+  local _conf="${PORTSDIR}/Mk/bsd.port.mk"
+  if [ ! -e "${_conf}" ] ; then
+    echo "[ERROR] Cannot find ${_conf}!!"
+    return 1
+  fi
+  if [ -e "${_conf}.orig" ] ; then
+    #Ports tree not re-extracted between builds - replace the original file and re-register (in case overlay changed)
+    mv "${_conf}.orig" "${_conf}"
+  fi
+  cp "${_conf}" "${_conf}.orig" #save a copy of the original for later builds as needed
+  sed -i '' "s|VALID_CATEGORIES+= |VALID_CATEGORIES+= ${1} |g" "${_conf}"
+  return $?
+}
+
 add_cat_to_ports(){
   #Inputs:
   # $1 : category name
@@ -221,6 +239,7 @@ apply_ports_overlay(){
     return 0
   fi
   i=0
+  local _reg_cats=""
   while [ ${i} -lt ${num} ]
   do
     _type=`jq -r '."ports-overlay"['${i}'].type' "${TRUEOS_MANIFEST}"`
@@ -228,6 +247,7 @@ apply_ports_overlay(){
     _path=`jq -r '."ports-overlay"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
     if [ "${_type}" = "category" ] ; then
       add_cat_to_ports "${_name}" "${_path}"
+      _reg_cats="${_reg_cats} ${_name}"
     elif [ "${_type}" = "port" ] ; then
       add_port_to_ports "${_name}" "${_path}"
     else
@@ -235,6 +255,9 @@ apply_ports_overlay(){
     fi
     i=`expr ${i} + 1`
   done
+  if [ -n "${_reg_cats}" ] ; then
+    register_ports_categories "${_reg_cats}"
+  fi
   return 0
 }
 
