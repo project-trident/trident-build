@@ -38,7 +38,7 @@ if [ ! -f "${TRUEOS_MANIFEST}" ] ; then
 fi
 export TRUEOS_MANIFEST=`realpath -q "${TRUEOS_MANIFEST}"`
 KERNCONF=`jq -r '."base-packages"."kernel-config"' ${TRUEOS_MANIFEST}`
-if [ -z "${KERNCONF}" ] ; then
+if [ -z "${KERNCONF}" ] || [ "${KERNCONF}" = "null" ] ; then
   KERNCONF="GENERIC"
 fi
 export KERNCONF
@@ -132,6 +132,7 @@ add_to_json_str(){
 validate_portcat_makefile(){
   #Inputs:
   # $1 : makefile directory
+  # $2 : 
   origdir=`pwd`
   cd "$1"
   comment="`cat Makefile | grep 'COMMENT ='`"
