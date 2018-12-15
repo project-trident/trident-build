@@ -160,24 +160,23 @@ $comment
 validate_port_makefile(){
   #Inputs:
   # $1 : makefile directory
-  # $2 : Name of new port category
   origdir=`pwd`
   cd "${PORTSDIR}"
-  for d in `ls`
+  for d in $1
   do
     if [ "$d" = ".." ]; then continue ; fi
     if [ "$d" = "." ]; then continue ; fi
     if [ ! -f "$d/Makefile" ]; then continue ; fi
     grep -q "SUBDIR += ${d}" Makefile
-    if [ $? -ne 0 ] && [ "${d}" != "${2}" ] ; then continue ; fi
+    if [ $? -eq 0 ] ; then continue ; fi
     echo "SUBDIR += $d" >> Makefile.tmp
   done
-  echo "" >> Makefile.tmp
+  #Verify there is actually something to do
+  if [ ! -e "Makefile.tmp" ] ; then return 0 ; fi
   #Now strip out the subdir info from the original Makefile
   cp Makefile Makefile.skel
   sed -i '' "s|SUBDIR += lang|%%TMP%%|g" Makefile.skel
-  cat Makefile.skel | grep -v "SUBDIR +=" > Makefile.skel.2
-  mv Makefile.skel.2 Makefile.skel
+  echo "SUBDIR += lang" >> Makefile.tmp #make sure we don't remove this cat
   #Insert the new subdir list into the skeleton file and replace the original
   awk '/%%TMP%%/{system("cat Makefile.tmp");next}1' Makefile.skel > Makefile
   #Now cleanup the temporary files
