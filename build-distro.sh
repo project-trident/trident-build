@@ -20,6 +20,7 @@
 #NOTE: the "${WORKSPACE}" variable is set by jenkins as the prefix for the repo checkout
 #  The "CURDIR" method below should automatically catch/include the workspace in the path
 CURDIR=$(dirname $0)
+CURDIR=$(realpath ${CURDIR})
 
 #Determine JSON Build Configuration File
 if [ -z "${TRUEOS_MANIFEST}" ] ; then
@@ -245,6 +246,10 @@ apply_ports_overlay(){
     _type=`jq -r '."ports-overlay"['${i}'].type' "${TRUEOS_MANIFEST}"`
     _name=`jq -r '."ports-overlay"['${i}'].name' "${TRUEOS_MANIFEST}"`
     _path=`jq -r '."ports-overlay"['${i}'].local_path' "${TRUEOS_MANIFEST}"`
+    if [ ! -e "${_path}" ] ; then
+      
+      _path="${CURDIR}/${_path}" #try to make it an absolute path
+    fi
     if [ "${_type}" = "category" ] ; then
       add_cat_to_ports "${_name}" "${_path}"
       _reg_cats="${_reg_cats} ${_name}"
