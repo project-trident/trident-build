@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201812111020
+PORTVERSION=	201812180709
 CATEGORIES=	trident
 
 MAINTAINER=	jt@ixsystems.com
@@ -35,7 +35,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	640ad160ef4edef453efc26e4f836841458af071
+GH_TAGNAME=	9c6a716f929cdcb0aa5d07a382fd98f178a5bfdc
 
 NO_BUILD=	yes
 
