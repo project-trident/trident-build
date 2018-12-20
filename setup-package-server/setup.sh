@@ -5,7 +5,7 @@
 #     ** You will need to setup that manually beforehand**
 # ==================================
 
-if [ `id -u`-ne 0 ] ; then
+if [ `id -u` -ne 0 ] ; then
   echo "[ERROR] This script needs to run with root permissions"
   return 1
 fi
