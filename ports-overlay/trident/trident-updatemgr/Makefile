@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-updatemgr
-PORTVERSION=	201812252238
+PORTVERSION=	201812260921
 CATEGORIES=	trident
 
 MAINTAINER=	ken@ixsystems.com
@@ -18,7 +18,7 @@ USE_QT=	core gui widgets svg network x11extras \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-updatemgr
-GH_TAGNAME=	6fd1cd5989d6bb95a624c4928dea4960aa2eab53
+GH_TAGNAME=	5734221da26356a3f1b97b158bb75983ed1800b4
 WRKSRC_SUBDIR=	src-qt5
 
 .include <bsd.port.mk>
