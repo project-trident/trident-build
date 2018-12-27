@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	sysadm-client
-PORTVERSION=	201812260924
+PORTVERSION=	201812270649
 CATEGORIES=	sysutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -20,7 +20,7 @@ MAKE_ARGS=	PREFIX=${STAGEDIR}${PREFIX}
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	sysadm-ui-qt
-GH_TAGNAME=	ba8f1a32183c636a31004f145ef7359b4d0c47ed
+GH_TAGNAME=	6913008cbe06b3d6f1c6de72d03a1455fa9348af
 
 .include <bsd.port.pre.mk>
 

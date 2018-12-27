@@ -9,7 +9,6 @@ share/applications/sysadm-usermanager.desktop
 share/applications/sysadm-updatemanager.desktop
 share/applications/pccontrol.desktop
 share/applications/appcafe.desktop
-etc/xdg/autostart/sysadm-client-auto.desktop
 share/pixmaps/sysadm.svg
 share/pixmaps/appcafe.png
 share/pixmaps/trueos.png
