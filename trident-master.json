@@ -1,5 +1,5 @@
 {
-  "os_version" : "18.12-PRERELEASE2",
+  "os_version" : "18.12-RELEASE",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "trueos-stable-18.12",
