@@ -13,7 +13,9 @@
       "default" : []
     },
     "world-flags" : {
-      "default" : [],
+      "default" : [
+	"MK_LLD_IS_LD=no"
+      ],
       "slim_base" : [
         "WITHOUT_FREEBSD_UPDATE=1",
         "WITHOUT_GAMES=1",
