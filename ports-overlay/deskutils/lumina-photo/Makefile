@@ -1,12 +1,12 @@
 # $FreeBSD$
 
-PORTNAME=	lumina-archiver
+PORTNAME=	lumina-photo
 PORTVERSION=	1.4.2
 PORTREVISION=	201901101127
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
-COMMENT=	Archive manager from the Lumina Desktop
+COMMENT=	Image viewer utility from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
 

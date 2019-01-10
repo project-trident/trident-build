@@ -84,6 +84,11 @@
     },
     {
       "type" : "port",
+      "name" : "deskutils/lumina-photo",
+      "local_path" : "ports-overlay/deskutils/lumina-photo"
+    },
+    {
+      "type" : "port",
       "name" : "deskutils/lumina-screenshot",
       "local_path" : "ports-overlay/deskutils/lumina-screenshot"
     },
