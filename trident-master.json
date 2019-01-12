@@ -455,7 +455,7 @@
   },
   "pkg-repo-name": "Trident",
   "pkg-repo": {
-	  "url":"http://pkg.project-trident.org/pkg/release/${ABI}/latest",
+	  "url":"https://pkg.project-trident.org/pkg/release/${ABI}/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
