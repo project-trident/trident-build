@@ -8,9 +8,9 @@ full weekly build images.
 pipeline {
   agent { label 'Trident-Master' }
   
-  triggers {
-    pollSCM('H 20 * * 3')
-  }
+  //triggers {
+    //pollSCM('H 20 * * 3')
+  //}
 
   environment {
     // Set the MANIFEST we want to use for this build
