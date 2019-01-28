@@ -184,7 +184,7 @@
 	"audio/pulseaudio_UNSET=AVAHI",
 	"audio_xmms2_SET=MODPLUG MUSEPACK MMS SAMBA FAM ICES",
 	"comms_fldigi_SET=FLARQ HAMLIB OSS",
-	"comms_morse_UNSET=OSS",
+	"comms_morse_SET=OSS",
 	"deskutils_spice-gtk_UNSET=GSTREAMER",
 	"devel_gdb_SET=PYTHON",
 	"devel_git_SET=SVN",
