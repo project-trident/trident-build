@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-screenshot
 PORTVERSION=	1.4.2
-PORTREVISION=	201901210847
+PORTREVISION=	201901272028
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -27,7 +27,7 @@ USE_QT=		core gui widgets network svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina
-GH_TAGNAME=	55cc06511f0816fbf1a59c40f1165026309699b0
+GH_TAGNAME=	9ca1d49ef773adae2a26758a61c9db3b029d93b1
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
