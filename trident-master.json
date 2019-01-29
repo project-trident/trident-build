@@ -1,11 +1,11 @@
 {
-  "os_version" : "18.12-RELEASE-U2",
+  "os_version" : "18.12-RELEASE-U3",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "trueos-stable-18.12",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "04e0ddbcc66dc3598b610dc2b602d12928cb617e",
+  "ports-github-tag" : "7f5a253b48766a20d21baef47e68282c3bb2708f",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-config": "GENERIC-NODEBUG",
@@ -144,7 +144,7 @@
     },
     "make.conf":{
       "default" : [
-	"MAKE_JOBS_NUMBER_LIMIT=4",
+	"MAKE_JOBS_NUMBER_LIMIT=6",
 	"WITH_DVD_DEVICE=/dev/cd0",
 	"WITH_CDROM_DEVICE=/dev/cd0",
 	"# Accept Licenses automatically to build all packages",
@@ -414,6 +414,7 @@
 	"print/foomatic-db",
 	"print/gutenprint",
 	"print/hplip",
+        "security/tor",
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
 	"sysutils/fusefs-simple-mtpfs",
