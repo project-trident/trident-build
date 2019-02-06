@@ -1,11 +1,11 @@
 {
-  "os_version" : "18.12-RELEASE-U3",
+  "os_version" : "18.12-RELEASE-U4",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "trueos-stable-18.12",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "b5375ce4f7f2bcdd0eaed6b2bacaa3e081c53055",
+  "ports-github-tag" : "3ce1171737eff90bb5f5ba69f3c506a7fbb90fe8",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-config": "GENERIC-NODEBUG",
