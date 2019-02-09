@@ -18,21 +18,20 @@ add_to_cache(){
   local _date=$(echo "${1}" | sed "s|\/|_|g")
   local _month=$(echo "${_date}" | cut -d _ -f 2-3)
   local _systemID="$2"
-  local _filename=`echo "$3" | sed "s|\/|_|g" | tr '[:upper:]' '[:lower:]'`
-
+  local _filename=`echo -e "$3" | sed "s|\/|_|g" | tr '[:upper:]' '[:lower:]'`
   local _tmpcache="${_cache}/${_filename}"
   if [ ! -d "${_tmpcache}" ] ; then
     mkdir -p "${_tmpcache}"
   fi
   #Now add this to the day/month files
   if [ ! -e "${_tmpcache}/${_date}" ] ; then
-    echo "Starting Day: ${_date} : File: ${_filename}"
+    echo -e "Starting Day: ${_date} : File: ${_filename}"
   fi
-  grep -qsF "${_systemID}\\n" "${_tmpcache}/${_date}"
+  grep -qsF "${_systemID}" "${_tmpcache}/${_date}"
   if [ $? -ne 0 ] ; then 
     echo "${_systemID}" >> "${_tmpcache}/${_date}"
   fi
-  grep -qsF "${_systemID}\\n" "${_tmpcache}/${_month}"
+  grep -qsF "${_systemID}" "${_tmpcache}/${_month}"
   if [ $? -ne 0 ] ; then 
     echo "${_systemID}" >> "${_tmpcache}/${_month}"
   fi
@@ -56,6 +55,11 @@ scan_logfile(){
     _date=$(echo "${line}" | cut -d "[" -f 2 | cut -d : -f 1) #Date from entry: 01/Jan/2019
     _path=$(echo "${line}" | cut -d '"' -f 2 | cut -w -f 2)
     _method=$(echo "${line}" | cut -d '"' -f 6)
+    echo "${_method}" | grep -qF "bot"
+    if [ $? -eq 0 ] ; then
+      echo "Skipping Bot Method: ${_method}"
+      continue
+    fi
     #echo "IP: ${_ip} DATE: ${_date} FILE: ${_path} METHOD: ${_method}"
     #break
     add_to_cache "${_date}" "${_ip}" "${_path}"
