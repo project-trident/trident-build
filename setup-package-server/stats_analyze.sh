@@ -3,7 +3,7 @@
 #NGINX logs scaper to determine unique visitors per day/month for a particular file
 _action="$1"
 
-_cache="/tmp/.statcache"
+_cache="${HOME}/.statcache"
 LC_ALL="C" #make grep go a little bit faster without UTF8
 
 show_usage(){
@@ -41,7 +41,18 @@ add_to_cache(){
 scan_logfile(){
   local _log="$1"
   local _fileregex="$2"
-
+  echo "${_log}" | grep -qE "(.bz2)$"
+  local _tmp
+  if [ $? -eq 0 ] ; then
+    _tmp=$(echo "${_log}" | rev | cut -d . -f 2- | rev)
+    echo "Extracting log file: ${_log}"
+    bunzip2 -k "${_log}"
+    _log="${_tmp}"
+  fi
+  if [ ! -f "${_log}" ] ; then
+    echo "Log File does not exist: ${_log}"
+    return 1
+  fi
   echo "Starting to read logfile: ${_log}"
   while read -r line ; do
     echo "${line}" | grep -qE "( - - \\[)"
@@ -65,6 +76,10 @@ scan_logfile(){
     add_to_cache "${_date}" "${_ip}" "${_path}"
   done < "${_log}"
   echo " - done"
+  if [ -n "${_tmp}" ] ; then
+    # delete the temporary uncompressed logfile
+    rm "${_tmp}"
+  fi
 }
 
 create_json_from_cache(){
