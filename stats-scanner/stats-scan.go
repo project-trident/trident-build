@@ -19,8 +19,8 @@ func exit_error(e error) {
 
 func read_file(path string, hash map[string]string) {
   tmpfile := ""
-  if S.HasSuffix(path, "bz2") {
-    tmpfile = S.TrimSuffix(path, "bz2")
+  if S.HasSuffix(path, ".bz2") {
+    tmpfile = S.TrimSuffix(path, ".bz2")
     cmd := exec.Command("bunzip2", "-k", path)
     if cmd.Run() != nil { 
       if _, err := os.Stat(tmpfile); os.IsNotExist(err) {
@@ -61,8 +61,8 @@ func parse_line(text string) []string {
     line[1] = S.Split(line[1], ":")[0]
   /* Pull out the path */
     line[2] = S.Split(words[5], " ")[1]
-      tmp, _ := url.Parse(line[2])
-      line[2] = tmp.EscapedPath()
+      tmp, err := url.Parse(line[2])
+      if err == nil { line[2] = tmp.EscapedPath() }
     line[2] = S.ToLower(line[2])
   /* Pull out the method */
     line[3] = S.Replace(words[9],"\"", "", -1)
