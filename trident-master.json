@@ -1,11 +1,11 @@
 {
-  "os_version" : "18.12-RELEASE-U6",
+  "os_version" : "18.12-RELEASE-U7",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "trueos-stable-18.12",
   "ports-github-org" : "trueos",
   "ports-github-repo" : "trueos-ports",
-  "ports-github-tag" : "d08d5280813e403ab9fbdc82de43b5fa9788b4b9",
+  "ports-github-tag" : "c174067007333b4498f84738d750802282e40c3b",
   "base-packages" : {
     "name-prefix" : "OS",
     "kernel-config": "GENERIC-NODEBUG",
@@ -101,11 +101,6 @@
     },
     {
       "type" : "port",
-      "name" : "www/falkon",
-      "local_path" : "ports-overlay/www/falkon"
-    },
-    {
-      "type" : "port",
       "name" : "sysutils/sysadm",
       "local_path" : "ports-overlay/sysutils/sysadm"
     },
@@ -174,7 +169,7 @@
 	"audio_denemo_UNSET=GTK2",
 	"audio_gmusicbrowser_SET=GSTREAMER",
 	"audio_grip_SET=FAAC FLAC GOGO",
-	"audio_mous_UNSET=SNDIO",      
+	"audio_mous_UNSET=SNDIO",
 	"audio_mp3info_SET=GTK2",
 	"audio_musicpd_SET=AAC HTTPD LAME SHOUTCAST",
 	"audio_openal-soft_SET=PORTAUDIO OSS SNDIO",
@@ -309,10 +304,11 @@
 	"sysutils_xcdroast_SET=NONROOT",
 	"textproc_rasqal_SET=MPFR",
 	"www_aria2_SET=CA_BUNDLE",
-	"www_chromium_UNSET=ALSA SNDIO",
-	"www_chromium_SET=PULSEAUDIO",
-	"www_firefox_UNSET=JACK PGO PROFILE",
-	"www_firefox_SET=PULSEAUDIO",
+	"www_chromium_UNSET=PULSEAUDIO SNDIO",
+	"www_chromium_SET=ALSA",
+        "www_falkon_UNSET=KWALLET",
+	"www_firefox_UNSET=JACK PGO PROFILE PULSEAUDIO",
+	"www_firefox_SET=ALSA",
 	"www_firefox-esr_UNSET=JACK PGO PROFILE",
 	"www_firefox-esr_SET=PULSEAUDIO",
 	"www_iridium_UNSET=SNDIO PULSEAUDIO",
