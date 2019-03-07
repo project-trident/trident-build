@@ -1,0 +1,22 @@
+$OpenBSD: patch-Makefile,v 1.12 2016/12/12 10:54:39 sthen Exp $
+--- Makefile.orig	2018-10-04 09:19:28 UTC
++++ Makefile
+@@ -190,13 +190,15 @@ generate: source/pdf/js/util.js.h
+ 
+ # --- Library ---
+ 
+-MUPDF_LIB = $(OUT)/libmupdf.a
+-THIRD_LIB = $(OUT)/libmupdf-third.a
++MUPDF_LIB = $(OUT)/libmupdf.so.$(SOVERSION)
++THIRD_LIB = $(OUT)/libmupdf-third.so.$(SOVERSION)
+ THREAD_LIB = $(OUT)/libmupdf-threads.a
+ PKCS7_LIB = $(OUT)/libmupdf-pkcs7.a
+ 
+-$(MUPDF_LIB) : $(MUPDF_OBJ)
++$(MUPDF_LIB) : $(MUPDF_OBJ) $(THIRD_LIB)
++	$(LINK_CMD) -shared -Wl,-soname -Wl,libmupdf.so.$(SOVERSION)
+ $(THIRD_LIB) : $(THIRD_OBJ)
++	$(LINK_CMD) -shared -Wl,-soname -Wl,libmupdf-third.so.$(SOVERSION)
+ $(THREAD_LIB) : $(THREAD_OBJ)
+ $(PKCS7_LIB) : $(PKCS7_OBJ)
+ 

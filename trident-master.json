@@ -41,6 +41,11 @@
     },
     {
       "type" : "port",
+      "name" : "graphics/mupdf",
+      "local_path" : "ports-overlay/graphics/mupdf"
+    },
+    {
+      "type" : "port",
       "name" : "x11/lumina",
       "local_path" : "ports-overlay/x11/lumina"
     },
