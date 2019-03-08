@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-mediaplayer
 PORTVERSION=	1.4.2
-PORTREVISION=	201902191051
+PORTREVISION=	201903080758
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -28,7 +28,7 @@ USE_QT=		core gui widgets network svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina
-GH_TAGNAME=	216055b791d2d159206c67a4a88ee5acd2142255
+GH_TAGNAME=	42ba329591e628a3a44e61e18e5185b7d72e009f
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
