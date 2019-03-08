@@ -367,7 +367,7 @@
 	"www/w3m",
 	"x11-drivers/xf86-input-evdev",
 	"x11-drivers/xf86-input-wacom",
-	"x11-fonts/noto-lite"
+	"x11-fonts/noto-basic"
 	]
     },
     "dist-packages": {
@@ -404,7 +404,7 @@
 	"x11-drivers/xf86-video-intel",
 	"x11-drivers/xf86-video-nv",
 	"x11-drivers/xf86-video-vmware",
-	"x11-fonts/noto-lite",
+	"x11-fonts/noto-basic",
 	"x11-themes/lumina-themes"
 	]
     },
