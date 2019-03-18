@@ -19,7 +19,7 @@ pipeline {
     stage('Prepare') {
       steps {
         checkout scm
-        sh 'if [ -d "build-repo" ] ; then (cd build-repo && git pull) ; else git clone git@github.com:trueos/build.git build-repo ; fi'
+        sh 'if [ -d "build-repo" ] ; then (cd build-repo && git pull) ; else git clone https://github.com/trueos/build.git build-repo ; fi'
       }
     }
     stage('Build') {
