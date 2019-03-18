@@ -17,6 +17,11 @@
     "generate-manifests" : true,
     "overlay" : [
       {
+        "type" : "port",
+        "name" : "os/src",
+        "local_path" : "ports-overlay/os/src-stable-18.12"
+      },
+      {
         "type" : "category",
         "name" : "trident",
         "local_path" : "ports-overlay/trident"
