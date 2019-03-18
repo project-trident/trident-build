@@ -52,8 +52,10 @@ pipeline {
         REMOTE_SERVER='cdn1.tn.ixsystems.com'
         REMOTE_PKG_DIR='/cdn/trident/pkg/stage'
         REMOTE_ISO_DIR='/cdn/trident/iso/stage'
+	REMOTE_MANIFESTS_DIR='/cdn/trident/iso/stage/manifests'
 	LOCAL_ISO_DIR='build-repo/release/iso/'
 	LOCAL_PKG_DIR='build-repo/release/packages/'
+	LOCAL_MANIFESTS_DIR='build-repo/release/pkg-manifests/'
       }
       steps {
         sshagent (credentials: ['Trident-publish']) {
@@ -63,6 +65,9 @@ pipeline {
           // ISO Artifacts
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
           sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_ISO_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
+          // PACKAGE MANIFESTS
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_MANIFESTS_DIR}/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_MANIFESTS_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_MANIFESTS_DIR}'
         }
       }
     }
