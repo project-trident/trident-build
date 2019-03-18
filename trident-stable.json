@@ -11,9 +11,10 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "c0589506330027efbe0d2b1417a5756bdf89c12f",
+    "github-tag" : "cf1e3da140169d9cccb1bb5cc15a167c722230f3",
     "build-all" : true,
-    "local_source" : "/usr/ports_tmp",
+    "local_source" : "/usr/trident_ports",
+    "generate-manifests" : true,
     "overlay" : [
       {
         "type" : "category",
@@ -121,11 +122,6 @@
 	"x11-fonts/noto"
       ]
     },
-    "src.conf": {
-      "default": [
-        "WITHOUT_ASSERT_DEBUG=ON"
-      ]
-    },
     "make.conf":{
       "default" : [
 	"MAKE_JOBS_NUMBER_LIMIT=6",
@@ -136,7 +132,7 @@
 	"LICENSES_ACCEPTED=NONE SDL HPLIP_PLUGIN ALASIR UDEVGAME MTA teamspeak minecraft unknown bolthole VPCEL EPSON MSPAT EULA COMMERCIAL AMAP radiator SVM-Light E2ETA LPPL10 Proprietary EUPL CPL",
 	"LICENSE_GROUPS_ACCEPTED=FSF GPL OSI COPYFREE FONTS",
 	"# Set Defaults",
-	"OPTIONS_SET=OPTIMIZED_CFLAGS THREADS RASTER ZSH DTRACE AESNI OPUS WEBP NONFREE SSE PORT_LLVM SNDIO",
+	"OPTIONS_SET=OPTIMIZED_CFLAGS THREADS RASTER ZSH DTRACE AESNI OPUS WEBP NONFREE SSE SNDIO",
 	"# Unset Defaults",
 	"OPTIONS_UNSET=UPNP LINUX GVFS HAL CONSOLEKIT TLS_SRP",
 	"# Set the default SSL",
@@ -150,8 +146,8 @@
 	"# Enable building i386 wine packages",
 	"WINE_CROSS_BUILD=yes",
         "# BASE OS BUILD OPTIONS",
-        "os_buildkernel_UNSET+=GAMES LEGACY_CONSOLE LOADER_UBOOT MAIL MAILWRAPPER PORTSNAP SENDMAIL SVNLITE SYSTEM_COMPILER SYSTEM_LINKER TELNET PF IPFILTER FLOPPY",
-	"os_buildworld_UNSET+=GAMES LEGACY_CONSOLE LOADER_UBOOT MAIL MAILWRAPPER PORTSNAP SENDMAIL SVNLITE SYSTEM_COMPILER SYSTEM_LINKER TELNET PF IPFILTER FLOPPY",
+        "os_buildkernel_UNSET+=ASSERT_DEBUG BSDINSTALL CALENDAR DMAGENT FLOPPY FREEBSD_UPDATE GAMES GNU_DIFF GNU_GREP HAST HTML IPFILTER LEGACY_CONSOLE MAIL MAILWRAPPER PF PORTSNAP SENDMAIL SHAREDOCS SVNLITE TALK",
+	"os_buildworld_UNSET+=ASSERT_DEBUG BSDINSTALL CALENDAR DMAGENT FLOPPY FREEBSD_UPDATE GAMES GNU_DIFF GNU_GREP HAST HTML IPFILTER LEGACY_CONSOLE MAIL MAILWRAPPER PF PORTSNAP SENDMAIL SHAREDOCS SVNLITE TALK",
 	"os_userland_UNSET+=TESTS",
 	"# INDIVIDUAL PORT OPTIONS (for packages)",
 	"#PLEASE: Keep this in alphabetical order!!",
@@ -330,6 +326,10 @@
 	]
     }
   },
+  "poudriere" : {
+    "jailname" : "trident-stable",
+    "portsname" : "stable"
+  },
   "poudriere-conf": [
 	"PARALLEL_JOBS=19",
 	"PREPARE_PARALLEL_JOBS=78",
@@ -340,10 +340,8 @@
   "iso" : {
     "file-name": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
     "install-script" : "/usr/local/bin/start-trident-installer",
-    "auto-install-script" : "",
-    "auto-install-packages":{
-      "default" : []
-    },
+    "name" : "trident-iso",
+    "offline-update" : false,
     "overlay" : {
       "type" : "local",
       "url" : "%%PWD%%/iso-overlay"
@@ -415,10 +413,10 @@
 	]
     }
   },
-  "pkg-repo-name": "Trident",
-  "pkg-train-name" : "Trident",
+  "pkg-repo-name": "Trident-stable",
+  "pkg-train-name" : "Trident-stable",
   "pkg-repo": {
-	  "url":"https://pkg.project-trident.org/pkg/release/${ABI}/latest",
+	  "url":"https://pkg.project-trident.org/pkg/release/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",

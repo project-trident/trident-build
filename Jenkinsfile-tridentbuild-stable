@@ -1,0 +1,62 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'Trident-Master' }
+  environment {
+    // Set the MANIFEST we want to use for this build
+    TRUEOS_MANIFEST= sh (
+		script: 'echo "${WORKSPACE}/trident-stable.json"',
+		returnStdout: true
+		).trim()
+  }
+
+  stages {
+    stage('Prepare') {
+      steps {
+        checkout scm
+        sh 'if [ -d "build-repo" ] ; then (cd build-repo && git pull) ; else git clone git@github.com:trueos/build.git build-repo ; fi'
+      }
+    }
+    stage('Build') {
+      environment {
+        SIGNING_KEY = credentials('Trident-sign')
+      }
+      steps {
+        sh 'cd ${WORKSPACE}/build-repo ; make ports'
+      }
+    }
+    stage('ISO') {
+      environment {
+        SIGNING_KEY = credentials('Trident-sign')
+      }
+      steps {
+        sh 'cd ${WORKSPACE}/build-repo ; make iso'
+      }
+    }
+    stage('Stage') {
+      environment {
+        REMOTE_USER='trident'
+        REMOTE_SERVER='cdn1.tn.ixsystems.com'
+        REMOTE_PKG_DIR='/cdn/trident/pkg/stage'
+        REMOTE_ISO_DIR='/cdn/trident/iso/stage'
+	LOCAL_ISO_DIR='build-repo/release/iso/'
+	LOCAL_PKG_DIR='build-repo/release/packages/'
+      }
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          // Packages
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR} || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_PKG_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/'
+          // ISO Artifacts
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_ISO_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
+        }
+      }
+    }
+  }
+}

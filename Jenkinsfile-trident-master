@@ -63,20 +63,16 @@ pipeline {
 
     stage('Stage') {
       environment {
-        REMOTE_USER='poseidon'
-        REMOTE_SERVER='pkg.project-trident.org'
-        REMOTE_PKG_DIR='/data/pkg/stage'
-        REMOTE_ISO_DIR='/data/iso/stage'
-        ABI= sh (
-		script: 'pkg-static -o ABI_FILE=/bin/sh config ABI',
-		returnStdout: true
-		).trim()
+        REMOTE_USER='trident'
+        REMOTE_SERVER='cdn1.tn.ixsystems.com'
+        REMOTE_PKG_DIR='/cdn/trident/pkg/stage'
+        REMOTE_ISO_DIR='/cdn/trident/iso/stage'
       }
       steps {
         sshagent (credentials: ['Trident-publish']) {
           // Packages
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/${ABI}/latest || true'
-          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-pkg-base/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/${ABI}/latest/'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR}/latest || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-pkg-base/ ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/latest/'
           // ISO Artifacts
           sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
           sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${WORKSPACE}/artifact-iso/ ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'

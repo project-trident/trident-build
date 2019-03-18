@@ -1,5 +1,5 @@
 {
-  "os_version" : "18.12-RELEASE-U7",
+  "os_version" : "18.12-RELEASE-U7.1",
   "base-github-org" : "trueos",
   "base-github-repo" : "trueos",
   "base-github-tag" : "trueos-stable-18.12",
@@ -460,7 +460,7 @@
   },
   "pkg-repo-name": "Trident",
   "pkg-repo": {
-	  "url":"https://pkg.project-trident.org/pkg/release/${ABI}/latest",
+	  "url":"https://pkg.project-trident.org/pkg/release/latest",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
