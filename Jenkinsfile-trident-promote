@@ -8,14 +8,14 @@ full weekly build images.
 pipeline {
   agent { label 'Trident-Master' }
   environment {
-        REMOTE_USER='poseidon'
-        REMOTE_SERVER='pkg.project-trident.org'
-        REMOTE_PKG_DIR_STAGE='/data/pkg/stage'
-        REMOTE_ISO_DIR_STAGE='/data/iso/stage'
-        REMOTE_PKG_DIR_RELEASE='/data/pkg/release'
-        REMOTE_ISO_DIR_RELEASE='/data/iso/release'
-        REMOTE_PKG_DIR_OLD='/data/pkg/old'
-        REMOTE_ISO_DIR_OLD='/data/iso/old'
+        REMOTE_USER='trident'
+        REMOTE_SERVER='cdn1.tn.ixsystems.com'
+        REMOTE_PKG_DIR_STAGE='/cdn/trident/pkg/stage'
+        REMOTE_ISO_DIR_STAGE='/cdn/trident/iso/stage'
+        REMOTE_PKG_DIR_RELEASE='/cdn/trident/pkg/release'
+        REMOTE_ISO_DIR_RELEASE='/cdn/trident/iso/release'
+        REMOTE_PKG_DIR_OLD='/cdn/trident/pkg/.old'
+        REMOTE_ISO_DIR_OLD='/cdn/trident/iso/.old'
   }
 
   stages {

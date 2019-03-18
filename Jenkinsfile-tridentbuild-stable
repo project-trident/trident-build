@@ -9,10 +9,7 @@ pipeline {
   agent { label 'Trident-Master' }
   environment {
     // Set the MANIFEST we want to use for this build
-    TRUEOS_MANIFEST= sh (
-		script: 'echo "${WORKSPACE}/trident-stable.json"',
-		returnStdout: true
-		).trim()
+    TRUEOS_MANIFEST= "${env.WORKSPACE}/trident-stable.json"
   }
 
   stages {
@@ -23,6 +20,12 @@ pipeline {
       }
     }
     stage('Build') {
+      post {
+        always {
+          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/**', fingerprint: true
+          archiveArtifacts artifacts: 'build-repo/release/src-logs/**', fingerprint: true
+        }
+      }
       environment {
         SIGNING_KEY = credentials('Trident-sign')
       }
@@ -31,6 +34,11 @@ pipeline {
       }
     }
     stage('ISO') {
+      post {
+        always {
+          archiveArtifacts artifacts: 'build-repo/release/iso-logs/**', fingerprint: true
+        }
+      }
       environment {
         SIGNING_KEY = credentials('Trident-sign')
       }
