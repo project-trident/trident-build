@@ -22,7 +22,10 @@ pipeline {
     stage('Build') {
       post {
         always {
-          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/**', fingerprint: true
+          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/logs/errors/**', fingerprint: true
+          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/.data.json', fingerprint: true
+        }
+        failure {
           archiveArtifacts artifacts: 'build-repo/release/src-logs/**', fingerprint: true
         }
       }
