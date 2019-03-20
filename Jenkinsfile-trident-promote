@@ -10,12 +10,12 @@ pipeline {
   environment {
         REMOTE_USER='trident'
         REMOTE_SERVER='cdn1.tn.ixsystems.com'
-        REMOTE_PKG_DIR_STAGE='/cdn/trident/pkg/stage'
-        REMOTE_ISO_DIR_STAGE='/cdn/trident/iso/stage'
-        REMOTE_PKG_DIR_RELEASE='/cdn/trident/pkg/release'
-        REMOTE_ISO_DIR_RELEASE='/cdn/trident/iso/release'
-        REMOTE_PKG_DIR_OLD='/cdn/trident/pkg/.old'
-        REMOTE_ISO_DIR_OLD='/cdn/trident/iso/.old'
+        REMOTE_PKG_DIR_STAGE='/usr/home/trident/cdn/pkg/stage'
+        REMOTE_ISO_DIR_STAGE='/usr/home/trident/cdn/iso/stage'
+        REMOTE_PKG_DIR_RELEASE='/usr/home/trident/cdn/pkg/release'
+        REMOTE_ISO_DIR_RELEASE='/usr/home/trident/cdn/iso/release'
+        REMOTE_PKG_DIR_OLD='/usr/home/trident/cdn/pkg/.old'
+        REMOTE_ISO_DIR_OLD='/usr/home/trident/cdn/iso/.old'
   }
 
   stages {
