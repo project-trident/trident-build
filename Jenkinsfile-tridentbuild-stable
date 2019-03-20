@@ -7,6 +7,9 @@ full weekly build images.
 
 pipeline {
   agent { label 'Trident-Master' }
+  options { 
+    buildDiscarder(logRotator(numToKeepStr: '10')) 
+  }
   environment {
     // Set the MANIFEST we want to use for this build
     TRUEOS_MANIFEST= "${env.WORKSPACE}/trident-stable.json"
@@ -22,7 +25,7 @@ pipeline {
     stage('Build') {
       post {
         always {
-          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/logs/errors/**', fingerprint: true
+          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/logs/errors/**'
           archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/.data.json', fingerprint: true
         }
         failure {
