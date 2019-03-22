@@ -437,10 +437,10 @@
 	]
     }
   },
-  "pkg-repo-name": "Trident-stable",
-  "pkg-train-name" : "Trident-stable",
+  "pkg-repo-name": "Trident-release",
+  "pkg-train-name" : "Trident-release",
   "pkg-repo": {
-	  "url":"https://pkg.project-trident.org/pkg/release/latest",
+	  "url":"https://pkg.project-trident.org/pkg/release",
 	  "pubKey": [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
