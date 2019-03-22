@@ -45,7 +45,7 @@
       "description" : "Follows the 6-month STABLE releases of TrueOS for the base system, with rolling updates for packages.",
       "deprecated" : false,
       "newtrain" : "",
-      "pkgurl" : "https://pkg.project-trident.org/pkg/release/Latest",
+      "pkgurl" : "https://pkg.project-trident.org/pkg/release",
       "pkgkey" : [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
@@ -85,7 +85,7 @@
       "description" : "DANGER: Staging repo for release packages. Used for pre-release QA and testing.",
       "deprecated" : false,
       "newtrain" : "",
-      "pkgurl" : "https://pkg.project-trident.org/pkg/stage/Latest",
+      "pkgurl" : "https://pkg.project-trident.org/pkg/stage",
       "pkgkey" : [
 		"-----BEGIN PUBLIC KEY-----",
 		"MIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAoBL9PbaDIU8Qd2rNR0ZN",
