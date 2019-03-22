@@ -421,7 +421,6 @@
 		"/usr/bin/cc*",
 		"/usr/bin/clang*",
 		"/usr/bin/cpp",
-		"/usr/bin/cpp",
 		"/usr/bin/c++",
 		"/usr/bin/lldb",
 		"/usr/bin/ld.lld",
