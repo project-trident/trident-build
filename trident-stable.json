@@ -391,7 +391,6 @@
 	"x11-drivers/xf86-video-intel",
 	"x11-drivers/xf86-video-nv",
 	"x11-drivers/xf86-video-vmware",
-	"x11-fonts/noto-basic",
 	"x11-themes/lumina-themes"
 	]
     },
@@ -405,7 +404,6 @@
 	"net-im/telegram-desktop",
 	"print/foomatic-db",
 	"print/gutenprint",
-	"print/hplip",
         "security/tor",
 	"sysutils/fusefs-exfat",
 	"sysutils/fusefs-ntfs",
