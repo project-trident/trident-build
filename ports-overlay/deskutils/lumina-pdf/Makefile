@@ -1,11 +1,11 @@
 # $FreeBSD$
 
 PORTNAME=	lumina-pdf
-PORTVERSION=	1.4.2
-PORTREVISION=	201903080758
+PORTVERSION=	1.4.3
+PORTREVISION=	201903221127
 CATEGORIES=	deskutils
 
-MAINTAINER=	jt@ixsystems.com
+MAINTAINER=	ken@ixsystems.com
 COMMENT=	PDF viewer from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
@@ -22,7 +22,7 @@ OPTIONS_DEFAULT=	I18N POPPLER
 
 I18N_DESC= Install localization files
 POPPLER_DESC=	Use Poppler-qt5 backend renderer
-MUPDF_DESC=		Use MuPDF backend renderer
+MUPDF_DESC=		Use MuPDF backend renderer (broken)
 
 .include <bsd.port.options.mk>
 
@@ -33,9 +33,9 @@ USE_QT=		core gui widgets network svg multimedia \
 		buildtools_build x11extras concurrent printsupport
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
-GH_PROJECT=	lumina
-GH_TAGNAME=	42ba329591e628a3a44e61e18e5185b7d72e009f
-WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
+GH_PROJECT=	lumina-pdf
+GH_TAGNAME=	2437f0f8e0e93f5e3827b40e384aed3d0f7a4eda
+WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MPOPPLER}
 QMAKE_ARGS+=	USE_POPPLER=true

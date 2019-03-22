@@ -1,19 +1,14 @@
 # $FreeBSD$
 
 PORTNAME=	lumina-calculator
-PORTVERSION=	1.4.2
-PORTREVISION=	201903080758
+PORTVERSION=	1.4.3
+PORTREVISION=	201903221127
 CATEGORIES=	deskutils
 
-MAINTAINER=	jt@ixsystems.com
+MAINTAINER=	ken@project-trident.org
 COMMENT=	Scientific calculator from the Lumina Desktop
 
 LICENSE=	BSD3CLAUSE
-
-LIB_DEPENDS+=	libxcb-ewmh.so:x11/xcb-util-wm \
-		libxcb-icccm.so:x11/xcb-util-wm \
-		libxcb-image.so:x11/xcb-util-image \
-		libxcb-util.so:x11/xcb-util
 
 CONFLICTS_INSTALL=	lumina-1.2.*
 
@@ -28,14 +23,14 @@ MAKE_JOBS_UNSAFE=yes
 
 USES=           qmake qt:5
 USE_GL=		gl
-USE_XORG=	x11 xdamage xcb
-USE_QT=		core gui widgets network svg \
-		buildtools_build x11extras concurrent multimedia
+USE_XORG=	x11
+USE_QT=		core gui widgets svg \
+		buildtools_build
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
-GH_PROJECT=	lumina
-GH_TAGNAME=	42ba329591e628a3a44e61e18e5185b7d72e009f
-WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
+GH_PROJECT=	lumina-calculator
+GH_TAGNAME=	c4ee9204db28c655aab5b7fa1382cdde70bbd6d1
+WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MI18N}
 USE_QT+= linguist_build
