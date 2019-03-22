@@ -16,22 +16,23 @@ pipeline {
         REMOTE_ISO_DIR_RELEASE='/usr/home/trident/cdn/iso/release'
         REMOTE_PKG_DIR_OLD='/usr/home/trident/cdn/pkg/.old'
         REMOTE_ISO_DIR_OLD='/usr/home/trident/cdn/iso/.old'
+	REMOTE_PKG_DIR_TMP=/usr/home/trident/cdn/pkg/.stage'
   }
 
   stages {
     stage('Promote Packages') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_OLD} || true'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_STAGE} ${REMOTE_PKG_DIR_RELEASE} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_OLD}'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_STAGE} ${REMOTE_PKG_DIR_RELEASE}'
         }
       }
     }
     stage('Promote ISOs') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_RELEASE} ${REMOTE_ISO_DIR_OLD} || true'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_STAGE} ${REMOTE_ISO_DIR_RELEASE} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_RELEASE} ${REMOTE_ISO_DIR_OLD}'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_STAGE} ${REMOTE_ISO_DIR_RELEASE}'
         }
       }
     }
@@ -47,7 +48,8 @@ pipeline {
     stage('Copy to stage') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} cp -R ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_STAGE} || true'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} cp -R ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_TMP}'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_TMP} ${REMOTE_PKG_DIR_STAGE}'
         }
       }
     }
