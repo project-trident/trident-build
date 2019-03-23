@@ -343,6 +343,7 @@
     "install-script" : "/usr/local/bin/start-trident-installer",
     "name" : "trident-iso",
     "offline-update" : false,
+    "generate-manifest" : true,
     "overlay" : {
       "type" : "local",
       "url" : "%%PWD%%/iso-overlay"
