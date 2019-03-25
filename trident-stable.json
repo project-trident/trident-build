@@ -22,6 +22,11 @@
         "local_path" : "ports-overlay/os/src-stable-18.12"
       },
       {
+        "type" : "port",
+        "name" : "os/manifest",
+        "local_path" : "ports-overlay/os/manifest"
+      },
+      {
         "type" : "category",
         "name" : "trident",
         "local_path" : "ports-overlay/trident"
@@ -151,7 +156,9 @@
 	"WINE_CROSS_BUILD=yes",
         "# BASE OS BUILD OPTIONS",
         "os_buildkernel_UNSET+=ASSERT_DEBUG BSDINSTALL CALENDAR DMAGENT FLOPPY FREEBSD_UPDATE GAMES GNU_DIFF GNU_GREP HAST HTML IPFILTER MAIL MAILWRAPPER PF PORTSNAP SENDMAIL SHAREDOCS SVNLITE TALK",
+        "os_buildkernel_SET+=LEGACY_CONSOLE",
 	"os_buildworld_UNSET+=ASSERT_DEBUG BSDINSTALL CALENDAR DMAGENT FLOPPY FREEBSD_UPDATE GAMES GNU_DIFF GNU_GREP HAST HTML IPFILTER MAIL MAILWRAPPER PF PORTSNAP SENDMAIL SHAREDOCS SVNLITE TALK",
+        "os_buildworld_SET+=LEGACY_CONSOLE",
 	"os_userland_UNSET+=TESTS",
 	"# INDIVIDUAL PORT OPTIONS (for packages)",
 	"#PLEASE: Keep this in alphabetical order!!",
