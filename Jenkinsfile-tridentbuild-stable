@@ -26,10 +26,10 @@ pipeline {
       post {
         always {
           archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/.data.json', fingerprint: true
-	  sh 'if [ -d build-repo/release/port-logs-errors ] ; then rm -r build-repo/release/port-logs-errors ; fi'
-	  sh 'mkdir -p build-repo/release/port-logs-errors'
-	  sh 'cp build-repo/release/port-logs/latest/logs/errors/*.log build-repo/release/port-logs-errors/.'
-          archiveArtifacts artifacts: 'build-repo/release/port-logs-errors', fingerprint: true
+          sh 'if [ -d build-repo/release/port-logs-errors ] ; then rm -r build-repo/release/port-logs-errors ; fi'
+          sh 'mkdir -p build-repo/release/port-logs-errors'
+          sh 'cp build-repo/release/port-logs/latest/logs/errors/* build-repo/release/port-logs-errors/.'
+          archiveArtifacts artifacts: 'build-repo/release/port-logs-errors/**', fingerprint: true
         }
         failure {
           archiveArtifacts artifacts: 'build-repo/release/src-logs/**', fingerprint: true
