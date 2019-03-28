@@ -1,5 +1,5 @@
 {
-  "os_version" : "18.12-RELEASE-U8",
+  "os_version" : "18.12-RELEASE-U9",
   "base-packages" : {
     "kernel-flags" : {
       "default" : [
@@ -11,7 +11,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "cf1e3da140169d9cccb1bb5cc15a167c722230f3",
+    "github-tag" : "a6d2fa435dd07babe855071283962365d2bc81c6",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
