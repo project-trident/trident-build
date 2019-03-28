@@ -1,10 +1,10 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201903251318
+PORTVERSION=	201903280846
 CATEGORIES=	trident
 
-MAINTAINER=	jt@ixsystems.com
+MAINTAINER=	ken@project-trident.org
 COMMENT=	Core distribution files and utilities for Project Trident
 
 LICENSE=	BSD2CLAUSE
@@ -16,6 +16,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		${LOCALBASE}/bin/sysadm-client:sysutils/sysadm-client \
 		${LOCALBASE}/bin/xdg-open:devel/xdg-utils \
 		manifest>=0:os/manifest \
+		jq>=0:textproc/jq \
 		sysup>=0:sysutils/sysup \
 		cups-filters>=0:print/cups-filters \
 		lumina>=0:x11/lumina \
@@ -38,7 +39,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	0ce6c8dae44f09e3c8cae743ca9f43e2d3e2b651
+GH_TAGNAME=	fa88f52a1d6236e830151dd4d5486edcc80d7dc2
 
 NO_BUILD=	yes
 
