@@ -3,7 +3,7 @@
     {
       "name" : "Trident",
       "description" : "Follows the 6-month STABLE releases of TrueOS for the base system, with rolling updates for packages.",
-      "deprecated" : false,
+      "deprecated" : true,
       "newtrain" : "Trident-release",
       "pkgurl" : "https://pkg.project-trident.org/pkg/release/${ABI}/latest",
       "pkgkey" : [
