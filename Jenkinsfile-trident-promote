@@ -16,7 +16,7 @@ pipeline {
         REMOTE_ISO_DIR_RELEASE='/usr/home/trident/cdn/iso/release'
         REMOTE_PKG_DIR_OLD='/usr/home/trident/cdn/pkg/.old'
         REMOTE_ISO_DIR_OLD='/usr/home/trident/cdn/iso/.old'
-	REMOTE_PKG_DIR_TMP=/usr/home/trident/cdn/pkg/.stage'
+	REMOTE_PKG_DIR_TMP='/usr/home/trident/cdn/pkg/.stage'
   }
 
   stages {
