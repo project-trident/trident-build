@@ -251,6 +251,7 @@
 	"net_boinc-client_SET=SKINS",
 	"net_krdc_SET=FREERDP",
 	"net_miniupnpd_SET=PF_ENABLE_FILTER_RULES",
+	"net_openldap24-client_SET=GSSAPI",
 	"net_samba-libsmbclient_SET=ADS",
 	"net_samba36_SET=ADS WINBIND ACL_SUPPORT PAM_SMBPASS AIO_SUPPORT EXP_MODULES LDAP",
 	"net_samba41_SET=ADS WINBIND ACL_SUPPORT PAM_SMBPASS AIO_SUPPORT EXP_MODULES LDAP",
