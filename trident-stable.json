@@ -114,8 +114,6 @@
     ],
     "build" :  {
       "default" : [
-	"audio/virtual_oss",
-	"audio/virtual_oss_ctl",
 	"editors/libreoffice",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose",
