@@ -14,41 +14,20 @@ pipeline {
         REMOTE_ISO_DIR_STAGE='/usr/home/trident/cdn/iso/stage'
         REMOTE_PKG_DIR_RELEASE='/usr/home/trident/cdn/pkg/release'
         REMOTE_ISO_DIR_RELEASE='/usr/home/trident/cdn/iso/release'
-        REMOTE_PKG_DIR_OLD='/usr/home/trident/cdn/pkg/.old'
-        REMOTE_ISO_DIR_OLD='/usr/home/trident/cdn/iso/.old'
   }
 
   stages {
     stage('Promote Packages') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_RELEASE} ${REMOTE_PKG_DIR_OLD}'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_PKG_DIR_STAGE} ${REMOTE_PKG_DIR_RELEASE}'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rsync -av --delete-after --delay-updates ${REMOTE_PKG_DIR_STAGE}/ ${REMOTE_PKG_DIR_RELEASE}'
         }
       }
     }
     stage('Promote ISOs') {
       steps {
         sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_RELEASE} ${REMOTE_ISO_DIR_OLD}'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mv -f ${REMOTE_ISO_DIR_STAGE} ${REMOTE_ISO_DIR_RELEASE}'
-        }
-      }
-    }
-    stage('Delete Old') {
-      steps {
-        sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rm -rf ${REMOTE_ISO_DIR_OLD} || true'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rm -rf ${REMOTE_PKG_DIR_OLD} || true'
-
-        }
-      }
-    }
-    stage('Copy to stage') {
-      steps {
-        sshagent (credentials: ['Trident-publish']) {
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR_STAGE}'
-          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rsync -av ${REMOTE_PKG_DIR_RELEASE}/ ${REMOTE_PKG_DIR_STAGE}'
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rsync -av --delete-after --delay-updates ${REMOTE_ISO_DIR_STAGE}/ ${REMOTE_ISO_DIR_RELEASE}'
         }
       }
     }
