@@ -305,7 +305,7 @@
 	"www_aria2_SET=CA_BUNDLE",
 	"www_chromium_UNSET=PULSEAUDIO SNDIO",
 	"www_chromium_SET=ALSA",
-        "www_falkon_UNSET=KWALLET",
+        "www_falkon_UNSET=KDEINTEGRATION",
 	"www_firefox_UNSET=JACK PGO PROFILE PULSEAUDIO",
 	"www_firefox_SET=ALSA",
 	"www_firefox-esr_UNSET=JACK PGO PROFILE",
