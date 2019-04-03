@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-calculator
 PORTVERSION=	1.4.3
-PORTREVISION=	201903221127
+PORTREVISION=	201904031537
 CATEGORIES=	deskutils
 
 MAINTAINER=	ken@project-trident.org
@@ -29,7 +29,7 @@ USE_QT=		core gui widgets svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina-calculator
-GH_TAGNAME=	c4ee9204db28c655aab5b7fa1382cdde70bbd6d1
+GH_TAGNAME=	0d776c7a6488bf2f1dd08c078f25094ec5f3eeeb
 WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MI18N}
