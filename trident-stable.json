@@ -1,6 +1,7 @@
 {
   "os_version" : "18.12-RELEASE-U9",
   "base-packages" : {
+    "trueos-branch" : "trueos-stable-18.12-cleanbuild",
     "kernel-flags" : {
       "default" : [
         "KERNCONF=GENERIC-NODEBUG"
@@ -16,16 +17,6 @@
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
     "overlay" : [
-      {
-        "type" : "port",
-        "name" : "os/src",
-        "local_path" : "ports-overlay/os/src-stable-18.12"
-      },
-      {
-        "type" : "port",
-        "name" : "os/manifest",
-        "local_path" : "ports-overlay/os/manifest"
-      },
       {
         "type" : "category",
         "name" : "trident",
