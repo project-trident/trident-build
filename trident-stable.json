@@ -12,7 +12,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "cfbdcfbbc0505ce94f08b552d3f26125b4d82a6d",
+    "github-tag" : "9126194b63350ef9d910c2545ae4bdce887cc2f0",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
@@ -26,11 +26,6 @@
         "type" : "port",
         "name" : "x11/pcdm",
         "local_path" : "ports-overlay/x11/pcdm"
-      },
-      {
-        "type" : "port",
-        "name" : "graphics/mupdf",
-        "local_path" : "ports-overlay/graphics/mupdf"
       },
       {
         "type" : "port",
