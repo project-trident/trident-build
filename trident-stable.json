@@ -1,7 +1,7 @@
 {
   "os_version" : "19.04-RELEASE",
   "base-packages" : {
-    "trueos-branch" : "v20190412 ",
+    "trueos-branch" : "v20190412",
     "kernel-flags" : {
       "default" : [
         "KERNCONF=GENERIC-NODEBUG"
