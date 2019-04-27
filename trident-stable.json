@@ -94,6 +94,11 @@
       },
       {
         "type" : "port",
+        "name" : "sysutils/pc-sysinstall",
+        "local_path" : "ports-overlay/sysutils/pc-sysinstall"
+      },
+      {
+        "type" : "port",
         "name" : "sysutils/sysadm",
         "local_path" : "ports-overlay/sysutils/sysadm"
       },
@@ -172,7 +177,6 @@
 	"comms_morse_SET=OSS",
 	"deskutils_spice-gtk_UNSET=GSTREAMER",
 	"devel_gdb_SET=PYTHON",
-	"devel_git_SET=SVN",
 	"devel_libmemcached_UNSET=DTRACE",
 	"editors_libreoffice_SET=SYSTRAY",
 	"editors_libreoffice_UNSET=JAVA",
@@ -357,7 +361,7 @@
     },
     "dist-packages": {
       "default" : [
-	"devel/git",
+	"devel/git-lite",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
 	"graphics/intel-backlight",
