@@ -1,8 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	lumina-calculator
-PORTVERSION=	1.4.3
-PORTREVISION=	201904031537
+PORTVERSION=	1.5.0
+PORTREVISION=	201904271343
 CATEGORIES=	deskutils
 
 MAINTAINER=	ken@project-trident.org
@@ -29,7 +29,7 @@ USE_QT=		core gui widgets svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina-calculator
-GH_TAGNAME=	0d776c7a6488bf2f1dd08c078f25094ec5f3eeeb
+GH_TAGNAME=	ccb792fc713aa7163fffd37fc20c83ffe9ca7523
 WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MI18N}

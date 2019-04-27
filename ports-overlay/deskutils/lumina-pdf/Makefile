@@ -1,8 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	lumina-pdf
-PORTVERSION=	1.4.3
-PORTREVISION=	201904031537
+PORTVERSION=	1.5.0
+PORTREVISION=	201904271343
 CATEGORIES=	deskutils
 
 MAINTAINER=	ken@ixsystems.com
@@ -34,7 +34,7 @@ USE_QT=		core gui widgets network svg multimedia \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina-pdf
-GH_TAGNAME=	f0f69e0204005c29454159e74090bee6767beec0
+GH_TAGNAME=	645ed591ef91c3607d3ab87dd86f7acfd08b05c9
 WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MPOPPLER}

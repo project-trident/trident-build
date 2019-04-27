@@ -1,8 +1,8 @@
 # $FreeBSD$
 
 PORTNAME=	lumina-photo
-PORTVERSION=	1.4.2
-PORTREVISION=	201904031532
+PORTVERSION=	1.5.0
+PORTREVISION=	201904271343
 CATEGORIES=	deskutils
 
 MAINTAINER=	jt@ixsystems.com
@@ -27,7 +27,7 @@ USE_QT=		core gui widgets network svg \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina
-GH_TAGNAME=	8d5f1e04d7e4f24a4026804d62abe64883419bf2
+GH_TAGNAME=	98c7e363cd3a8e1bc08225215fed93adaa6ad132
 WRKSRC_SUBDIR=	src-qt5/desktop-utils/${PORTNAME}
 
 .if${PORT_OPTIONS:MI18N}
