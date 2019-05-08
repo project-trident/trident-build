@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201904170847
+PORTVERSION=	201905080911
 CATEGORIES=	trident
 
 MAINTAINER=	ken@project-trident.org
@@ -16,6 +16,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		${LOCALBASE}/bin/sysadm-client:sysutils/sysadm-client \
 		${LOCALBASE}/bin/xdg-open:devel/xdg-utils \
 		manifest>=0:os/manifest \
+		ca_root_nss>=0:security/ca_root_nss \
 		jq>=0:textproc/jq \
 		sysup>=0:sysutils/sysup \
 		cups-filters>=0:print/cups-filters \
@@ -39,7 +40,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	a549d9866f9d3d8c4595e50b2b310e91bdc5c7b5
+GH_TAGNAME=	846f2602aa744b725b18ae70bb4e2ea084d7d36d
 
 NO_BUILD=	yes
 
