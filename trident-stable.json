@@ -1,5 +1,5 @@
 {
-  "os_version" : "19.04-RELEASE",
+  "os_version" : "19.04-U1",
   "base-packages" : {
     "trueos-branch" : "v20190412",
     "kernel-flags" : {
@@ -12,11 +12,16 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "63d4e67cb75b8eb36c947a53635d25a34cd47550",
+    "github-tag" : "2deb650e0f2016c1c2b1a32b833a8f752f860e02",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
     "overlay" : [
+      {
+        "type" : "port",
+        "name" : "os/manifest",
+        "local_path" : "ports-overlay/os/manifest"
+      },
       {
         "type" : "category",
         "name" : "trident",
@@ -91,11 +96,6 @@
         "type" : "port",
         "name" : "sysutils/pc-networkmanager",
         "local_path" : "ports-overlay/sysutils/pc-networkmanager"
-      },
-      {
-        "type" : "port",
-        "name" : "sysutils/pc-sysinstall",
-        "local_path" : "ports-overlay/sysutils/pc-sysinstall"
       },
       {
         "type" : "port",
@@ -276,6 +276,7 @@
 	"print_qpdfview_SET=QT5 DJVU",
 	"print_xfce4-print_UNSET=LPR",
 	"security_ca_root_nss_UNSET=ETCSYMLINK",
+	"security_ca_root_nss_SET=LOCALSYMLINK",
 	"security_dehydrated_SET=BASH",
 	"security_dehydrated_UNSET=ZSH",
 	"security_gnupg_SET=GPGSM SCDAEMON",
