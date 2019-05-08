@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	pcdm
-PORTVERSION=	201903251341
+PORTVERSION=	201905080839
 CATEGORIES=	x11
 
 MAINTAINER=	jmaloney@ixsystems.com
@@ -13,6 +13,7 @@ LICENSE=	BSD2CLAUSE
 RUN_DEPENDS=    xorg-minimal>=0:x11/xorg-minimal \
 		xhost:x11/xhost \
 		setxkbmap:x11/setxkbmap \
+		pc-sysinstall:sysutils/pc-sysinstall \
 		${LOCALBASE}/bin/qsudo:sysutils/qsudo
 
 WRKSRC_SUBDIR=  src-qt5
@@ -27,6 +28,6 @@ USE_QT=        core gui network svg multimedia imageformats \
 USE_GITHUB=	yes
 GH_ACCOUNT=	trueos
 GH_PROJECT=	pcdm
-GH_TAGNAME=	10311f772667793cb9f21c564b5ee3926c607acf
+GH_TAGNAME=	9c85a33577ab984ab1267f05d0060a160918c62b
 
 .include <bsd.port.mk>
