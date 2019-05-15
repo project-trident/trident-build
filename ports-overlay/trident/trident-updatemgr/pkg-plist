@@ -2,6 +2,7 @@ bin/trident-updatemgr
 etc/xdg/autostart/trident-updatemgr-autostart.desktop
 sbin/.susysup
 share/applications/trident-updatemgr.desktop
+share/trident/scripts/delete_be_multi.sh
 share/trident-updatemgr/i18n/tri-umgr_af.qm
 share/trident-updatemgr/i18n/tri-umgr_ar.qm
 share/trident-updatemgr/i18n/tri-umgr_az.qm
