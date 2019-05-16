@@ -1,7 +1,7 @@
 {
-  "os_version" : "19.04-U1",
+  "os_version" : "19.05",
   "base-packages" : {
-    "trueos-branch" : "v20190412",
+    "trueos-branch" : "v20190516",
     "kernel-flags" : {
       "default" : [
         "KERNCONF=GENERIC-NODEBUG"
@@ -12,7 +12,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "c4d60a720162de283ba12d1f31c28305fa0e49a2",
+    "github-tag" : "03c1143d98251844c8f030dedf66aa2a1580a809",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
