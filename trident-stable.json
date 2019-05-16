@@ -1,12 +1,7 @@
 {
   "os_version" : "19.05",
   "base-packages" : {
-    "trueos-branch" : "v20190516",
-    "kernel-flags" : {
-      "default" : [
-        "KERNCONF=GENERIC-NODEBUG"
-      ]
-    }
+    "trueos-branch" : "v20190516"
   },
   "ports" : {
     "type" : "github-tar",
