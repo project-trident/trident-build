@@ -30,6 +30,7 @@ pipeline {
           sh 'mkdir -p build-repo/release/port-logs-errors'
           sh 'cp build-repo/release/port-logs/latest/logs/errors/* build-repo/release/port-logs-errors/.'
           archiveArtifacts artifacts: 'build-repo/release/port-logs-errors/**', fingerprint: true
+	  'sh chlfags -R noschg build-repo'
         }
         failure {
           archiveArtifacts artifacts: 'build-repo/release/src-logs/**', fingerprint: true
