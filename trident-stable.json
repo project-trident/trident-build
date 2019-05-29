@@ -6,15 +6,15 @@
 		"KERNCONF=GENERIC-NODEBUG"
 	]
     },
-    "trueos-branch" : "v20190516",
-    "branch" : "v20190516",
+    "trueos-branch" : "v20190529",
+    "branch" : "v20190529",
     "repo" : "https://github.com/trueos/trueos"
   },
   "ports" : {
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "f3df1a1dfe4a3affd04485a1859c89f2ec7aae10",
+    "github-tag" : "4d910688fcb0f865e4cd4e4bf2786e81bd294199",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
