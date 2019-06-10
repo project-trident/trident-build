@@ -6,8 +6,8 @@
 		"KERNCONF=GENERIC-NODEBUG"
 	]
     },
-    "trueos-branch" : "freebsd/stable/12",
-    "branch" : "freebsd/stable/12",
+    "trueos-branch" : "trueos/master",
+    "branch" : "trueos/master",
     "repo" : "https://github.com/trueos/trueos"
   },
   "ports" : {
