@@ -1,0 +1,85 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'Trident-Master' }
+  options { 
+    buildDiscarder(logRotator(numToKeepStr: '10')) 
+  }
+  environment {
+    // Set the MANIFEST we want to use for this build
+    TRUEOS_MANIFEST= "${env.WORKSPACE}/trident-edge.json"
+  }
+
+  stages {
+    stage('Prepare') {
+      steps {
+        checkout scm
+        sh 'if [ -d "build-repo" ] ; then (cd build-repo && git pull) ; else git clone https://github.com/trueos/build.git build-repo ; fi'
+      }
+    }
+    stage('Build') {
+      post {
+        always {
+          archiveArtifacts artifacts: 'build-repo/release/port-logs/latest/.data.json', fingerprint: true
+          sh 'if [ -d build-repo/release/port-logs-errors ] ; then rm -r build-repo/release/port-logs-errors ; fi'
+          sh 'mkdir -p build-repo/release/port-logs-errors'
+          sh 'cp build-repo/release/port-logs/latest/logs/errors/* build-repo/release/port-logs-errors/.'
+          archiveArtifacts artifacts: 'build-repo/release/port-logs-errors/**', fingerprint: true
+	  sh 'chflags -R noschg build-repo'
+        }
+        failure {
+          archiveArtifacts artifacts: 'build-repo/release/src-logs/**', fingerprint: true
+        }
+      }
+      environment {
+        SIGNING_KEY = credentials('Trident-sign')
+      }
+      steps {
+        sh 'cd ${WORKSPACE}/build-repo ; make ports'
+      }
+    }
+    stage('ISO') {
+      post {
+        always {
+          archiveArtifacts artifacts: 'build-repo/release/iso-logs/**', fingerprint: true
+        }
+      }
+      environment {
+        SIGNING_KEY = credentials('Trident-sign')
+      }
+      steps {
+        sh 'cd ${WORKSPACE}/build-repo ; make iso'
+      }
+    }
+    stage('Stage') {
+      environment {
+        REMOTE_USER='trident'
+        REMOTE_SERVER='cdn1.tn.ixsystems.com'
+        REMOTE_PKG_DIR='/usr/home/trident/cdn/pkg/edge'
+        REMOTE_ISO_DIR='/usr/home/trident/cdn/iso/edge'
+	REMOTE_MANIFESTS_DIR='/usr/home/trident/cdn/iso/edge/manifests'
+	LOCAL_ISO_DIR='build-repo/release/iso/'
+	LOCAL_PKG_DIR='build-repo/release/packages/'
+	LOCAL_MANIFESTS_DIR='build-repo/release/pkg-manifests/'
+      }
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          // Packages
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_PKG_DIR} || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_PKG_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:/${REMOTE_PKG_DIR}/'
+          // ISO Artifacts
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_ISO_DIR}/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_ISO_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_ISO_DIR}'
+          // PACKAGE MANIFESTS
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} mkdir -p ${REMOTE_MANIFESTS_DIR}/ || true'
+          sh 'rsync -av --delete-after --delay-updates -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ${LOCAL_MANIFESTS_DIR} ${REMOTE_USER}@${REMOTE_SERVER}:${REMOTE_MANIFESTS_DIR}'
+        }
+      }
+    }
+  }
+}

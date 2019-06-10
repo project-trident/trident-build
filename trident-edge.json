@@ -1,5 +1,5 @@
 {
-  "os_version" : "19.05-U1",
+  "os_version" : "TOS-19.06",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
@@ -343,7 +343,7 @@
 	"NOHANG_TIME=14400"
   ],
   "iso" : {
-    "file-name": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
+    "file-name": "Trident-x64-%%TRUEOS_VERSION%%-%%DATE%%",
     "install-script" : "/usr/local/bin/start-trident-installer",
     "name" : "trident-iso",
     "offline-update" : false,

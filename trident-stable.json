@@ -1,5 +1,5 @@
 {
-  "os_version" : "19.05-U1",
+  "os_version" : "FBSD-12",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
@@ -335,15 +335,15 @@
     }
   },
   "poudriere" : {
-    "jailname" : "trident-stable",
-    "portsname" : "stable"
+    "jailname" : "trident-fbsd",
+    "portsname" : "fbsd"
   },
   "poudriere-conf": [
 	"ALLOW_MAKE_JOBS=yes",
 	"NOHANG_TIME=14400"
   ],
   "iso" : {
-    "file-name": "Trident-%%TRUEOS_VERSION%%-x64-%%DATE%%",
+    "file-name": "Trident-x64-%%TRUEOS_VERSION%%-%%DATE%%",
     "install-script" : "/usr/local/bin/start-trident-installer",
     "name" : "trident-iso",
     "offline-update" : false,
