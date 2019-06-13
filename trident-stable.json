@@ -3,7 +3,7 @@
   "base-packages" : {
     "kernel-flags": {
 	"default": [
-		"KERNCONF=GENERIC-NODEBUG"
+		"KERNCONF=GENERIC"
 	]
     },
     "trueos-branch" : "freebsd/stable/12",
