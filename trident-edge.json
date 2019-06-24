@@ -6,8 +6,8 @@
 		"KERNCONF=GENERIC-NODEBUG"
 	]
     },
-    "trueos-branch" : "54782fc53e7ef7e1349b06b4058284319dfad27e",
-    "branch" : "54782fc53e7ef7e1349b06b4058284319dfad27e",
+    "trueos-branch" : "v2019062000",
+    "branch" : "v2019062000",
     "repo" : "https://github.com/trueos/trueos"
   },
   "ports" : {
