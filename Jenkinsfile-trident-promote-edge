@@ -1,0 +1,37 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'JenkinsJail' }
+  environment {
+        REMOTE_USER='trident'
+        REMOTE_SERVER='cdn1.tn.ixsystems.com'
+        REMOTE_PKG_DIR_STAGE='/usr/home/trident/cdn/pkg/edge'
+        REMOTE_ISO_DIR_STAGE='/usr/home/trident/cdn/iso/edge'
+        REMOTE_PKG_DIR_RELEASE='/usr/home/trident/cdn/pkg/release'
+        REMOTE_ISO_DIR_RELEASE='/usr/home/trident/cdn/iso/release'
+  }
+
+  stages {
+    stage('Promote Packages') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rsync -av --delete-after --delay-updates ${REMOTE_PKG_DIR_STAGE}/ ${REMOTE_PKG_DIR_RELEASE}'
+        }
+      }
+    }
+    stage('Promote ISOs') {
+      steps {
+        sshagent (credentials: ['Trident-publish']) {
+          sh 'ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_USER}@${REMOTE_SERVER} rsync -av --delete-after --delay-updates ${REMOTE_ISO_DIR_STAGE}/ ${REMOTE_ISO_DIR_RELEASE}'
+        }
+      }
+    }
+
+  }
+
+}
