@@ -6,7 +6,7 @@
 		"KERNCONF=GENERIC-NODEBUG"
 	]
     },
-    "branch" : "trueos/master",
+    "branch" : "v20190701",
     "repo" : "https://github.com/trueos/trueos"
   },
   "ports" : {
