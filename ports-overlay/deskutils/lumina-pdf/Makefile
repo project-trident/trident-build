@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-pdf
 PORTVERSION=	1.5.0
-PORTREVISION=	201904271343
+PORTREVISION=	201907010802
 CATEGORIES=	deskutils
 
 MAINTAINER=	ken@ixsystems.com
@@ -34,7 +34,7 @@ USE_QT=		core gui widgets network svg multimedia \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina-pdf
-GH_TAGNAME=	645ed591ef91c3607d3ab87dd86f7acfd08b05c9
+GH_TAGNAME=	eef6e1fb9aabddddb97b6358e684b2d2b60f17e2
 WRKSRC_SUBDIR=	src-qt5
 
 .if${PORT_OPTIONS:MPOPPLER}

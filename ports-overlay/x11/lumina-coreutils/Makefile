@@ -2,7 +2,7 @@
 
 PORTNAME=	lumina-coreutils
 PORTVERSION=	1.5.0
-PORTREVISION=	201904271343
+PORTREVISION=	201907010811
 CATEGORIES=	x11
 
 MAINTAINER=	jt@ixsystems.com
@@ -32,7 +32,7 @@ USE_QT=			core gui widgets network svg imageformats \
 USE_GITHUB=	yes
 GH_ACCOUNT=	lumina-desktop
 GH_PROJECT=	lumina
-GH_TAGNAME=	98c7e363cd3a8e1bc08225215fed93adaa6ad132
+GH_TAGNAME=	c69632ce530bf5a9806b63c081c3a4a48360d98d
 WRKSRC_SUBDIR=	src-qt5/core-utils
 
 .if${PORT_OPTIONS:MI18N}
