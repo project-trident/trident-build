@@ -1,20 +1,19 @@
 {
-  "os_version" : "TOS-19.06",
+  "os_version" : "TOS-19.07",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
 		"KERNCONF=GENERIC-NODEBUG"
 	]
     },
-    "trueos-branch" : "v2019062000",
-    "branch" : "v2019062000",
+    "branch" : "trueos/master",
     "repo" : "https://github.com/trueos/trueos"
   },
   "ports" : {
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "8bcaaa24672bb45f4df9044200668b0b7c833c01",
+    "github-tag" : "a677bf6ad3a569380768516445ed2f530645d8b7",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
