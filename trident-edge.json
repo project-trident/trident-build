@@ -109,6 +109,9 @@
         "local_path" : "ports-overlay/sysutils/sysadm-client"
       }
     ],
+    "blacklist" : [
+      "sysutils/hal"
+    ],
     "build" :  {
       "default" : [
 	"editors/libreoffice",
