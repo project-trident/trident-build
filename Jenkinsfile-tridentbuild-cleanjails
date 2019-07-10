@@ -1,0 +1,22 @@
+/*
+
+This is the default Jenkins Pipeline file used to create our
+full weekly build images.
+
+*/
+
+pipeline {
+  agent { label 'Trident-Master' }
+  options { 
+    buildDiscarder(logRotator(numToKeepStr: '10')) 
+  }
+
+  stages {
+    stage('Clean') {
+      steps {
+        sh '/root/cleanjails.sh'
+      }
+    }
+ 
+  }
+}
