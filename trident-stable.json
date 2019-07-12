@@ -110,6 +110,9 @@
         "local_path" : "ports-overlay/sysutils/sysadm-client"
       }
     ],
+    "blacklist" : [
+      "sysutils/hal"
+    ],
     "build" :  {
       "default" : [
 	"editors/libreoffice",
@@ -277,8 +280,6 @@
 	"print_qpdfview_UNSET=QT4",
 	"print_qpdfview_SET=QT5 DJVU",
 	"print_xfce4-print_UNSET=LPR",
-	"security_ca_root_nss_UNSET=ETCSYMLINK",
-	"security_ca_root_nss_SET=LOCALSYMLINK",
 	"security_dehydrated_SET=BASH",
 	"security_dehydrated_UNSET=ZSH",
 	"security_gnupg_SET=GPGSM SCDAEMON",
