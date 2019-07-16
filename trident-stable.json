@@ -340,7 +340,8 @@
   },
   "poudriere-conf": [
 	"ALLOW_MAKE_JOBS=yes",
-	"NOHANG_TIME=14400"
+	"NOHANG_TIME=14400",
+	"USE_TMPFS=all"
   ],
   "iso" : {
     "file-name": "Trident-x64-%%TRUEOS_VERSION%%-%%DATE%%",
