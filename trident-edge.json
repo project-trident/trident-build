@@ -341,7 +341,7 @@
   "poudriere-conf": [
 	"ALLOW_MAKE_JOBS=yes",
 	"NOHANG_TIME=14400",
-	"USE_TMPFS=all"
+	"USE_TMPFS='wrkdir data localbase'"
   ],
   "iso" : {
     "file-name": "Trident-x64-%%TRUEOS_VERSION%%-%%DATE%%",
