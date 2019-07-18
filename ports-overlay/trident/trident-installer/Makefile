@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-installer
-PORTVERSION=	201907150946
+PORTVERSION=	201907180812
 CATEGORIES=	trident
 
 MAINTAINER=	ken@ixsystems.com
@@ -14,7 +14,7 @@ RUN_DEPENDS=	lumina-coreutils>=0:x11/lumina-coreutils \
 		jq>=0:textproc/jq \
 		cursor-chameleon-pearl>=0:x11-themes/cursor-chameleon-pearl \
 		xinit>=0:x11/xinit \
-		drm-kmod>=0:graphics/drm-kmod \
+		${NONEXISTENT}:graphics/drm-kmod \
 		xorg-minimal>=0:x11/xorg-minimal \
 		xf86-video-scfb>=0:x11-drivers/xf86-video-scfb \
 		setxkbmap>=0:x11/setxkbmap \
@@ -27,7 +27,7 @@ USE_QT=	core gui widgets svg concurrent \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-installer
-GH_TAGNAME=	8c2a576402d5efbc899f51ff0287d9a9638e4b9f
+GH_TAGNAME=	645c8ead143a0bfde46e7d42788054d09955dd09
 WRKSRC_SUBDIR=	src-qt5
 
 .include <bsd.port.mk>
