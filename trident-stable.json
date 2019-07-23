@@ -343,6 +343,7 @@
   },
   "poudriere-conf": [
 	"ALLOW_MAKE_JOBS=yes",
+	"MAKE_JOBS_NUMBER=5",
 	"NOHANG_TIME=14400",
 	"USE_TMPFS=all"
   ],
