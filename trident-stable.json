@@ -110,10 +110,7 @@
       }
     ],
     "blacklist" : [
-      "sysutils/hal",
-      "devel/arm-none-eabi-gcc",
-      "lang/gcc9",
-      "science/quantum-espresso-pseudopotentials"
+      "sysutils/hal"
     ],
     "build" :  {
       "default" : [
