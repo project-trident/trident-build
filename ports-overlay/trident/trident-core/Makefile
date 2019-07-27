@@ -1,7 +1,7 @@
 # $FreeBSD$
 
 PORTNAME=	trident-core
-PORTVERSION=	201907230849
+PORTVERSION=	201907270831
 CATEGORIES=	trident
 
 MAINTAINER=	ken@project-trident.org
@@ -26,7 +26,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		xorg-minimal>=0:x11/xorg-minimal \
 		cuse4bsd-kmod>=0:multimedia/cuse4bsd-kmod \
 		webcamd>=0:multimedia/webcamd \
-		${NONEXISTENT}:graphics/drm-kmod \
+		/boot/modules/drm.ko:graphics/drm-kmod \
 		xf86-video-scfb>=0:x11-drivers/xf86-video-scfb \
 		xdg-user-dirs>=0:devel/xdg-user-dirs \
 		trident-icons>=0:trident/trident-icons \
@@ -40,7 +40,7 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 USE_GITHUB=	yes
 GH_ACCOUNT=	project-trident
 GH_PROJECT=	trident-core
-GH_TAGNAME=	316d6cb4010dee77207bc123fe37f3eda0023fb3
+GH_TAGNAME=	eb5070a97c6264ec04aba38c9e0417678b4ef27b
 
 NO_BUILD=	yes
 
