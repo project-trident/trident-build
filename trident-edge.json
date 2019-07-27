@@ -357,6 +357,8 @@
     "iso-packages": {
       "default" : [
 	"sysutils/diskscrub",
+        "sysutils/pc-installdialog",
+	"graphics/drm-kmod",
 	"trident/trident-installer",
 	"www/w3m",
 	"x11-drivers/xf86-input-evdev",
@@ -369,6 +371,7 @@
 	"devel/git-lite",
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
+	"graphics/drm-kmod",
 	"graphics/intel-backlight",
 	"multimedia/openh264",
 	"multimedia/libdvdcss",

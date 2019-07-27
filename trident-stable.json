@@ -1,5 +1,5 @@
 {
-  "os_version" : "TOS-12",
+  "os_version" : "TOS-12-U1",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
@@ -356,7 +356,9 @@
     },
     "iso-packages": {
       "default" : [
+        "graphics/drm-kmod",
 	"sysutils/diskscrub",
+	"sysutils/pc-installdialog",
 	"trident/trident-installer",
 	"www/w3m",
 	"x11-drivers/xf86-input-evdev",
@@ -370,6 +372,7 @@
 	"emulators/open-vm-tools",
 	"emulators/virtualbox-ose-additions",
 	"graphics/intel-backlight",
+        "graphics/drm-kmod",
 	"multimedia/openh264",
 	"multimedia/libdvdcss",
 	"multimedia/libbluray",
