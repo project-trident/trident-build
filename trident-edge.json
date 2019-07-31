@@ -181,6 +181,7 @@
 	"comms_morse_SET=OSS",
 	"deskutils_spice-gtk_UNSET=GSTREAMER",
 	"devel_gdb_SET=PYTHON",
+	"devel_gvfs_UNSET=CDDA GPHOTO2 HAL",
 	"devel_libmemcached_UNSET=DTRACE",
 	"editors_libreoffice_SET=SYSTRAY",
 	"editors_libreoffice_UNSET=JAVA",
