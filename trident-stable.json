@@ -107,6 +107,11 @@
         "type" : "port",
         "name" : "sysutils/sysadm-client",
         "local_path" : "ports-overlay/sysutils/sysadm-client"
+      },
+      {
+        "type" : "port",
+        "name" : "sysutils/qsudo",
+        "local_path" : "ports-overlay/sysutils/qsudo"
       }
     ],
     "blacklist" : [
