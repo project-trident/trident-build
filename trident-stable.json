@@ -13,7 +13,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "6eb9a6fecdc89c9d206066ecc334dad00b8b71b8",
+    "github-tag" : "555bcbe9acb32e3a0cff79b9efecdb365972afe3",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
