@@ -1,5 +1,5 @@
 {
-  "os_version" : "TOS-19.08-U1",
+  "os_version" : "TOS-19.09",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
@@ -13,7 +13,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "555bcbe9acb32e3a0cff79b9efecdb365972afe3",
+    "github-tag" : "186a676757528bf459e0f9b912b3a68da3587258",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
