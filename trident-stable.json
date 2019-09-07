@@ -40,6 +40,11 @@
       },
       {
         "type" : "port",
+        "name" : "x11-themes/lumina-themes",
+        "local_path" : "ports-overlay/x11-themes/lumina-themes"
+      },
+      {
+        "type" : "port",
         "name" : "x11/lumina-core",
         "local_path" : "ports-overlay/x11/lumina-core"
       },
