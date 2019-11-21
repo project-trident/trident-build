@@ -1,5 +1,5 @@
 {
-  "os_version" : "TOS-12-U12",
+  "os_version" : "TOS-12-U13",
   "base-packages" : {
     "kernel-flags": {
 	"default": [
@@ -13,7 +13,7 @@
     "type" : "github-tar",
     "github-org" : "trueos",
     "github-repo" : "trueos-ports",
-    "github-tag" : "5d52dc4cad7fe4dc0ba3915ba2f1d398bbd735a2",
+    "github-tag" : "7b1834b3d19c2cff6929df6a1542af63334df450",
     "build-all" : true,
     "local_source" : "/usr/trident_ports",
     "generate-manifests" : true,
