@@ -2,6 +2,7 @@
 
 PORTNAME=	trident-core
 PORTVERSION=	201910070837
+PORTREVISION=	1
 CATEGORIES=	trident
 
 MAINTAINER=	ken@project-trident.org
@@ -23,7 +24,6 @@ RUN_DEPENDS=	${LOCALBASE}/sbin/PCDMd:x11/pcdm \
 		lumina>=0:x11/lumina \
 		foomatic-db>=0:print/foomatic-db \
 		xorg-minimal>=0:x11/xorg-minimal \
-		cuse4bsd-kmod>=0:multimedia/cuse4bsd-kmod \
 		webcamd>=0:multimedia/webcamd \
 		/boot/modules/drm.ko:graphics/drm-kmod \
 		xf86-video-scfb>=0:x11-drivers/xf86-video-scfb \
